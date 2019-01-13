@@ -1,0 +1,56 @@
+<resources>
+    <!-- Name for the application [CHAR LIMIT=12] -->
+    <string name="app_name">Robotronix_Scouting_App</string>
+    <string name="edit_message">Enter a message</string>
+    <string name="button_send">Send</string>
+
+
+    <!-- Label for overflow menu option that deletes all scout data in the app [CHAR LIMIT=20] -->
+    <string name="action_delete_all_entries">Delete All Scouts</string>
+
+    <!-- Title for the activity to add a new scout [CHAR LIMIT=20] -->
+    <string name="editor_activity_title_new_scout">Add a Scout</string>
+
+
+    <!-- Toast message in editor when new scout has been successfully inserted [CHAR LIMIT=NONE] -->
+    <string name="editor_insert_scout_successful">Scout info saved</string>
+
+    <!-- Toast message in editor when new scout has been successfully inserted [CHAR LIMIT=NONE] -->
+    <string name="editor_update_scout_successful">Scout info updated</string>
+
+    <!-- Toast message in editor when new scout has failed to be inserted [CHAR LIMIT=NONE] -->
+    <string name="editor_insert_scout_failed">Error with saving scout</string>
+
+    <!-- Toast message in editor when new scout has failed to be inserted [CHAR LIMIT=NONE] -->
+    <string name="missing_robot_failed">Error, missing robot number!</string>
+
+    <!-- Toast message in editor when new scout has failed to be inserted [CHAR LIMIT=NONE] -->
+    <string name="missing_match_failed">Error, missing match number!</string>
+
+    <!-- Toast message in editor when new scout has failed to be inserted [CHAR LIMIT=NONE] -->
+    <string name="create_match_failed">Error, match number 0 is reserve for Pit scouting!</string>
+
+    <!-- Toast message in editor when new scout has failed to be inserted [CHAR LIMIT=NONE] -->
+    <string name="missing_scouter_failed">Error, missing scouter name!</string>
+
+    <!-- Toast message in editor when new scout has failed to be inserted [CHAR LIMIT=NONE] -->
+    <string name="missing_event_failed">Error, missing event name!</string>
+
+    <!-- Toast message in editor when new scout has failed to be inserted [CHAR LIMIT=NONE] -->
+    <string name="missing_tablet_failed">Error, missing tablet name!</string>
+
+    <!-- Toast message in editor when new scout has been successfully inserted [CHAR LIMIT=NONE] -->
+    <string name="exportDB_scout_successful">Database export successfull</string>
+
+    <!-- Toast message in editor when new scout has failed to be inserted [CHAR LIMIT=NONE] -->
+    <string name="exportDB_scout_failed">Error with database export</string>
+
+    <!-- Toast message in editor when new scout has failed to be inserted [CHAR LIMIT=NONE] -->
+    <string name="queryDB_scout_failed">Error with database query</string>
+
+
+
+    <string name="title_activity_scout_match">ScoutMatch</string>
+
+
+</resources>
