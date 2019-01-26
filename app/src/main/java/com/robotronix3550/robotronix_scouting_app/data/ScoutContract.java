@@ -196,7 +196,44 @@ public final class ScoutContract {
          */
         public final static String COLUMN_SCOUT_ROBOT_WEIGHT = "robot_weight";
 
-
+        public final static String COLUMN_SCOUT_SAND_CARGO_LVL1 = "SandCargoLvl1";
+        public final static String COLUMN_SCOUT_SAND_PANEL_LVL1 = "SandPanelLvl1";
+        public final static String COLUMN_SCOUT_SAND_CARGO_LVL2 = "SandCargoLvl2";
+        public final static String COLUMN_SCOUT_SAND_PANEL_LVL2 = "SandPanelLvl2";
+        public final static String COLUMN_SCOUT_SAND_CARGO_LVL3 = "SandCargoLvl3";
+        public final static String COLUMN_SCOUT_SAND_PANEL_LVL3 = "SandPanelLvl2";
+        public final static String COLUMN_SCOUT_TELE_CARGO_LVL1 = "TeleCargoLvl1";
+        public final static String COLUMN_SCOUT_TELE_PANEL_LVL1 = "TelePanelLvl1";
+        public final static String COLUMN_SCOUT_TELE_CARGO_LVL2 = "TeleCargoLvl2";
+        public final static String COLUMN_SCOUT_TELE_PANEL_LVL2 = "TelePanelLvl2";
+        public final static String COLUMN_SCOUT_TELE_PANEL_LVL3 = "TeleCargoLvl3";
+        public final static String COLUMN_SCOUT_TELE_CARGO_LVL3 = "TeleCargoLvl3";
+        public final static String COLUMN_SCOUT_TELE_BLOCKS = "TeleBlocks";
+        public final static String COLUMN_SCOUT_TELE_PINS = "TelePins";
+        public final static String COLUMN_SCOUT_TELE_HAB_LVL1 = "TeleHabLvl1";
+        public final static String COLUMN_SCOUT_TELE_HAB_LVL2 = "TeleHabLvl2";
+        public final static String COLUMN_SCOUT_TELE_HAB_LVL3 = "TeleHabLvl3";
+        public final static String COLUMN_SCOUT_SAND_HAB_LVL1 = "SandHabLvl1";
+        public final static String COLUMN_SCOUT_SAND_HAB_LVL2 = "TeleHabLvl2";
+        public final static String COLUMN_SCOUT_SAND_HAB_LVL3 = "TeleHabLvl3";
+                /*
+                + ScoutEntry.COLUMN_SCOUT_SAND_PANEL_CARGOSHIP (boolean)
+                + ScoutEntry.COLUMN_SCOUT_SAND_PICKUP (boolean)
+                + ScoutEntry.COLUMN_SCOUT_SAND_LVL1 (boolean)
+                + ScoutEntry.COLUMN_SCOUT_SAND_LVL2 (boolean)
+                + ScoutEntry.COLUMN_SCOUT_TELE_CARGO_CARGOSHIP (int)
+                + ScoutEntry.COLUMN_SCOUT_TELE_PANEL_CARGOSHIP (int)
+                + ScoutEntry.COLUMN_SCOUT_TELE_PANEL_ROCKETLVL1 (int)
+                + ScoutEntry.COLUMN_SCOUT_TELE_CARGO_ROCKETLVL1 (int)
+                + ScoutEntry.COLUMN_SCOUT_TELE_PANEL_ROCKETLVL2(int)
+                + ScoutEntry.COLUMN_SCOUT_TELE_CARGO_ROCKETLVL2(int)
+                + ScoutEntry.COLUMN_SCOUT_TELE_PANEL_ROCKETLVL3(int)
+                + ScoutEntry.COLUMN_SCOUT_TELE_CARGO_ROCKETLVL3(int)
+                + ScoutEntry.COLUMN_SCOUT_END_LVL1(boolean)
+                + ScoutEntry.COLUMN_SCOUT_END_LVL2(boolean)
+                + ScoutEntry.COLUMN_SCOUT_END_LVL3(boolean)
+                + ScoutEntry.COLUMN_SCOUT_END_BROKEN(boolean)
+                */
         /**
          * Returns robot is valid.
          */

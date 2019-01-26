@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -20,27 +21,44 @@ import com.robotronix3550.robotronix_scouting_app.data.ScoutContract.ScoutEntry;
 import com.robotronix3550.robotronix_scouting_app.data.ScoutInfo;
 
 import static com.robotronix3550.robotronix_scouting_app.CreateMatchActivity.PREFS_SCOUTER;
+import static com.robotronix3550.robotronix_scouting_app.R.id.TxtCountBlock;
+import static com.robotronix3550.robotronix_scouting_app.R.id.TxtCountPins;
+import static com.robotronix3550.robotronix_scouting_app.R.id.lvl1Button;
 
 public class ScoutMatchActivity extends AppCompatActivity {
 
     public static final String TAG = ScoutMatchActivity.class.getSimpleName();
 
-    Integer mCubeExchangeCnt;
-    Integer mCubeAllySwitchCnt;
-    Integer mCubeEnemySwitchCnt;
-    Integer mCubeScaleCnt;
     Integer mRobot;
-    Integer mMatch;
     String mScouter;
-    Integer auto_line;
-    Integer auto_pick;
-    Integer auto_scale;
-    Integer auto_switch;
+    Integer mMatch;
+    Boolean SandTele;
 
-    Integer end_help;
-    Integer end_broken;
-    Integer end_climb;
-    Integer end_park;
+    Integer mSandCargoLvl1;
+    Integer mSandPanelLvl1;
+    Integer mSandCargoLvl2;
+    Integer mSandPanelLvl2;
+    Integer mSandCargoLvl3;
+    Integer mSandPanelLvl3;
+
+    Integer mTeleCargoLvl1;
+    Integer mTelePanelLvl1;
+    Integer mTeleCargoLvl2;
+    Integer mTelePanelLvl2;
+    Integer mTeleCargoLvl3;
+    Integer mTelePanelLvl3;
+
+    Boolean mTeleHabLvl1;
+    Boolean mTeleHabLvl2;
+    Boolean mTeleHabLvl3;
+
+    Boolean mSandHabLvl1;
+    Boolean mSandHabLvl2;
+    Boolean mSandHabLvl3;
+
+    Integer mTeleBlocks;
+    Integer mTelePin;
+
 
     Integer alliance_score;
     Integer enemy_score;
@@ -49,28 +67,22 @@ public class ScoutMatchActivity extends AppCompatActivity {
     private EditText mMatchEditText;
 
     /** EditText field to enter the scout's robot */
-    private EditText mRobotEditText;
-
-    private TextView mCubeExchangeText;
-
-    private TextView mCubeAllySwitchText;
-
-    private TextView mCubeEnemySwitchText;
-
-    private TextView mCubeScaleText;
-
-
-    private ToggleButton mLineTogglebutton;
-    private ToggleButton mPickTogglebutton;
-    private ToggleButton mSwitchTogglebutton;
-    private ToggleButton mScaleTogglebutton;
-    private ToggleButton mHelpTogglebutton;
-    private ToggleButton mBrokenTogglebutton;
-    private ToggleButton mClimbTogglebutton;
-    private ToggleButton mParkTogglebutton;
+    private ToggleButton HabLvl1;
+    private ToggleButton HabLvl2;
+    private ToggleButton HabLvl3;
+    private Switch SandTeleSwitch;
 
     private EditText AllyScoreEditText;
     private EditText EnemyScoreEditText;
+    private TextView TxtCntPanelLvl1;
+    private TextView TxtCntPanelLvl2;
+    private TextView TxtCntPanelLvl3;
+    private TextView TxtCntCargoLvl1;
+    private TextView TxtCntCargoLvl2;
+    private TextView TxtCntCargoLvl3;
+    private TextView TxtCountBlocks;
+    private TextView TxtCountPins;
+
 
     private SharedPreferences mPrefs;
 
@@ -86,24 +98,24 @@ public class ScoutMatchActivity extends AppCompatActivity {
         mCurrentScoutUri = intent.getData();
 
         // Capture the layout's TextView and set the string as its text
-        mMatchEditText = findViewById(R.id.MatchEditText);
-        mRobotEditText = findViewById(R.id.RobotEditText);
-        mCubeExchangeText = (TextView) findViewById(R.id.ExchangeCntTextView);
-        mCubeAllySwitchText = (TextView) findViewById(R.id.AllySwitchTextView);
-        mCubeEnemySwitchText = (TextView) findViewById(R.id.EnemySwitchCntTextView);
-        mCubeScaleText = (TextView) findViewById(R.id.ScaleCntTextView);
+        SandTeleSwitch = findViewById(R.id.SandTeleSwitch);
+        HabLvl1 = findViewById(R.id.lvl1Button);
+        HabLvl2 = findViewById(R.id.lvl2Button);
+        HabLvl3 = findViewById(R.id.lvl3Button);
 
-        mLineTogglebutton = (ToggleButton) findViewById(R.id.LineToggleButton);
-        mPickTogglebutton = (ToggleButton) findViewById(R.id.PickToggleButton);
-        mScaleTogglebutton = (ToggleButton) findViewById(R.id.ScaleToggleButton);
-        mSwitchTogglebutton = (ToggleButton) findViewById(R.id.SwitchToggleButton);
-        mHelpTogglebutton = (ToggleButton) findViewById(R.id.HelpToggleButton);
-        mBrokenTogglebutton = (ToggleButton) findViewById(R.id.BrokenToggleButton);
-        mClimbTogglebutton = (ToggleButton) findViewById(R.id.ClimbToggleButton);
-        mParkTogglebutton = (ToggleButton) findViewById(R.id.ParkToggleButton);
+        TxtCntPanelLvl1 = findViewById(R.id.TxtCntPanelLvl1);
+        TxtCntPanelLvl2 = findViewById(R.id.TxtCntPanelLvl2);
+        TxtCntPanelLvl3 = findViewById(R.id.TxtCntPanelLvl3);
+        TxtCntCargoLvl1 = findViewById(R.id.TxtCntCargoLvl1);
+        TxtCntCargoLvl2 = findViewById(R.id.TxtCntCargoLvl2);
+        TxtCntCargoLvl3 = findViewById(R.id.TxtCntCargoLvl3);
+        TxtCountPins = findViewById(R.id.TxtCountPins);
+        TxtCountBlocks = findViewById(R.id.TxtCountBlock);
 
-        AllyScoreEditText = findViewById(R.id.AllyScoreEditText);
-        EnemyScoreEditText = findViewById(R.id.EnemyScoreEditText);
+        AllyScoreEditText = findViewById(R.id.editNumber1);
+        EnemyScoreEditText = findViewById(R.id.editNumber2);
+
+        SandTele = SandTeleSwitch.isChecked();
 
         // Comes from rotating the tablet
         //
@@ -117,20 +129,48 @@ public class ScoutMatchActivity extends AppCompatActivity {
             mScouter = mPrefs.getString("PREF_SCOUTER", "Prenom");
             mMatch = mPrefs.getInt("PREF_MATCH", 98);
 
-            mCubeScaleCnt = savedInstanceState.getInt("Scale_count");
-            mCubeExchangeCnt = savedInstanceState.getInt("Exchange_count");
-            mCubeAllySwitchCnt = savedInstanceState.getInt("Ally_switch_count");
-            mCubeEnemySwitchCnt = savedInstanceState.getInt("Enemy_switch_count");
+            /*
+            TxtCntPlvl1 = savedInstanceState.getInt("Panel_Lvl1");
+            TxtCntPlvl2 = savedInstanceState.getInt("Panel_Lvl2");
+            TxtCntPlvl3 = savedInstanceState.getInt("Panel_lvl3");
+            TxtCntClvl1 = savedInstanceState.getInt("Cargo_lvl1");
+            TxtCntClvl2 = savedInstanceState.getInt("Cargo_lvl2");
+            TxtCntClvl3 = savedInstanceState.getInt("Cargo_lvl3");
 
-            auto_line = 0;
-            auto_pick = 0;
-            auto_scale = 0;
-            auto_switch = 0;
+            TxtViewCount7 = savedInstanceState.getInt("Pins");
+            TxtViewCount8 = savedInstanceState.getInt("Blocks");
+            //AllyScoreEditText = savedInstanceState.getInt("Ally_score");
+            //EnemyScoreEditText = savedInstanceState.getInt("Enemy_score");
+            */
 
-            end_help = 0;
-            end_broken = 0;
-            end_climb = 0;
-            end_park = 0;
+            mSandCargoLvl1 = 0;
+            mSandCargoLvl2 = 0;
+            mSandCargoLvl3 = 0;
+            mSandPanelLvl1 = 0;
+            mSandPanelLvl2 = 0;
+            mSandPanelLvl2 = 0;
+            mSandPanelLvl3 = 0;
+
+            mTeleCargoLvl1 = 0;
+            mTeleCargoLvl2 = 0;
+            mTeleCargoLvl3 = 0;
+            mTelePanelLvl1 = 0;
+            mTelePanelLvl2 = 0;
+            mTelePanelLvl3 = 0;
+            mTeleBlocks = 0;
+            mTelePin = 0;
+
+            mSandHabLvl1 = false;
+            mSandHabLvl2 = false;
+            mSandHabLvl3 = false;
+
+            mTeleHabLvl1 = false;
+            mTeleHabLvl2 = false;
+            mTeleHabLvl3 = false;
+
+
+            alliance_score = 0;
+            enemy_score = 0;
 
             alliance_score = 0;
             enemy_score = 0;
@@ -149,21 +189,29 @@ public class ScoutMatchActivity extends AppCompatActivity {
             mMatch = mPrefs.getInt("PREF_MATCH", 0); // increment match number
 
 
-            mCubeExchangeCnt = 0;
-            mCubeAllySwitchCnt = 0;
-            mCubeEnemySwitchCnt = 0;
-            mCubeScaleCnt = 0;
+            mSandCargoLvl1 = 0;
+            mSandCargoLvl2 = 0;
+            mSandCargoLvl3 = 0;
+            mSandPanelLvl1 = 0;
+            mSandPanelLvl2 = 0;
+            mSandPanelLvl2 = 0;
+            mSandPanelLvl3 = 0;
 
-            auto_line = 0;
-            auto_pick = 0;
-            auto_scale = 0;
-            auto_switch = 0;
+            mTeleCargoLvl1 = 0;
+            mTeleCargoLvl2 = 0;
+            mTeleCargoLvl3 = 0;
+            mTelePanelLvl1 = 0;
+            mTelePanelLvl2 = 0;
+            mTelePanelLvl3 = 0;
+            mTeleBlocks = 0;
+            mTelePin = 0;
 
-            end_help = 0;
-            end_broken = 0;
-            end_climb = 0;
-            end_park = 0;
-
+            mSandHabLvl1 = false;
+            mSandHabLvl2 = false;
+            mSandHabLvl3 = false;
+            mTeleHabLvl1 = false;
+            mTeleHabLvl2 = false;
+            mTeleHabLvl3 = false;
             alliance_score = 0;
             enemy_score = 0;
 
@@ -189,18 +237,18 @@ public class ScoutMatchActivity extends AppCompatActivity {
                 int robotColIdx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_ROBOT);
                 int scouterColIdx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_SCOUTER);
 
-                int autoLineColIdx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_AUTO_LINE);
-                int autoPickColIdx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_AUTO_CUBE);
-                int autoScaleColIdx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_AUTO_SCALE);
-                int autoSwitchColIdx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_AUTO_SWITCH);
-                int endBrokenColIdx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_TELE_BROKEN);
-                int endHelpColIdx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_TELE_HELP_CLIMB);
-                int endClimbColIdx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_TELE_CLIMB);
-                int endParkColIdx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_TELE_PARK);
-                int teleExchColIdx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_TELE_EXCHANGE);
-                int teleAllySwitchColIdx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_TELE_ALLY_SWITCH);
-                int teleEnemySwitchColIdx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_TELE_ENEMY_SWITCH);
-                int teleScaleColIdx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_TELE_SCALE);
+                int SandCargoLvl1Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_SAND_CARGO_LVL1 );
+                int SandPanelLvl1Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_SAND_PANEL_LVL1);
+                int SandCargoLvl2Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_SAND_CARGO_LVL2);
+                int SandPanelLvl2Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_SAND_PANEL_LVL2);
+                int SandCargoLvl3Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_SAND_CARGO_LVL3);
+                int SandPanelLvl3Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_SAND_PANEL_LVL3);
+                int TeleCargoLvl1Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_TELE_CARGO_LVL1);
+                int TeleCargoLvl2Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_TELE_CARGO_LVL2);
+                int TeleCargoLvl3Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_TELE_CARGO_LVL3);
+                int TelePanelLvl1Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_TELE_PANEL_LVL1);
+                int TelePanelLvl2Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_TELE_PANEL_LVL2);
+                int TelePanelLvl3Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_TELE_PANEL_LVL3);
 
                 int gameAllyScoreColIdx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_GAME_ALLY_SCORE);
                 int gameEnemyScoreColIdx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_GAME_ENEMY_SCORE);
@@ -221,19 +269,19 @@ public class ScoutMatchActivity extends AppCompatActivity {
                 mRobot = cursor.getInt(robotColIdx);
                 mScouter = cursor.getString(scouterColIdx);
 
-                mCubeExchangeCnt = cursor.getInt(teleExchColIdx);
-                mCubeAllySwitchCnt = cursor.getInt(teleAllySwitchColIdx);
-                mCubeEnemySwitchCnt = cursor.getInt(teleEnemySwitchColIdx);
-                mCubeScaleCnt = cursor.getInt(teleScaleColIdx);
-                auto_line = cursor.getInt(autoLineColIdx);
-                auto_pick = cursor.getInt(autoPickColIdx);
-                auto_scale = cursor.getInt(autoScaleColIdx);
-                auto_switch = cursor.getInt(autoSwitchColIdx);
+                mSandCargoLvl1 = cursor.getInt(SandCargoLvl1Idx);
+                mSandCargoLvl2 = cursor.getInt(SandCargoLvl2Idx);
+                mSandCargoLvl3 = cursor.getInt(SandCargoLvl3Idx);
+                mTeleCargoLvl1 = cursor.getInt(TeleCargoLvl1Idx);
+                mTeleCargoLvl2 = cursor.getInt(TeleCargoLvl2Idx);
+                mTeleCargoLvl3 = cursor.getInt(TeleCargoLvl3Idx);
 
-                end_help = cursor.getInt(endHelpColIdx);
-                end_broken = cursor.getInt(endBrokenColIdx);
-                end_climb = cursor.getInt(endClimbColIdx);
-                end_park = cursor.getInt(endParkColIdx);
+                mSandPanelLvl1 = cursor.getInt(SandPanelLvl1Idx);
+                mSandPanelLvl2 = cursor.getInt(SandPanelLvl2Idx);
+                mSandPanelLvl3 = cursor.getInt(SandPanelLvl3Idx);
+                mTelePanelLvl1 = cursor.getInt(TelePanelLvl1Idx);
+                mTelePanelLvl2 = cursor.getInt(TelePanelLvl2Idx);
+                mTelePanelLvl3 = cursor.getInt(TelePanelLvl3Idx);
 
                 alliance_score = cursor.getInt(gameAllyScoreColIdx);
                 enemy_score = cursor.getInt(gameEnemyScoreColIdx);
@@ -252,117 +300,238 @@ public class ScoutMatchActivity extends AppCompatActivity {
         }
 
         // Capture the layout's TextView and set the string as its text
-        mMatchEditText.setText(mMatch.toString());
-        mRobotEditText.setText(mRobot.toString());
-        mCubeExchangeText.setText(mCubeExchangeCnt.toString());
-        mCubeAllySwitchText.setText(mCubeAllySwitchCnt.toString());
-        mCubeEnemySwitchText.setText(mCubeEnemySwitchCnt.toString());
-        mCubeScaleText.setText(mCubeScaleCnt.toString());
-
-        boolean bauto_line = true;
-        if(auto_line == 0)  bauto_line = false;
-
-        boolean bauto_pick = true;
-        if(auto_pick == 0)  bauto_pick = false;
-
-        boolean bauto_switch = true;
-        if(auto_switch == 0)  bauto_switch = false;
-
-        boolean bauto_scale = true;
-        if(auto_scale == 0)  bauto_scale = false;
-
-        boolean bend_help = true;
-        if(end_help == 0)  bend_help = false;
-
-        boolean bend_climb = true;
-        if(end_climb == 0)  bend_climb = false;
-
-        boolean bend_broken = true;
-        if(end_broken == 0)  bend_broken = false;
-
-        boolean bend_park = true;
-        if(end_park == 0)  bend_park = false;
-
-        mLineTogglebutton.setChecked(bauto_line);
-        mPickTogglebutton.setChecked(bauto_pick);
-        mScaleTogglebutton.setChecked(bauto_scale);
-        mSwitchTogglebutton.setChecked(bauto_switch);
-
-        mHelpTogglebutton.setChecked(bend_help);
-        mClimbTogglebutton.setChecked(bend_climb);
-        mBrokenTogglebutton.setChecked(bend_broken);
-        mParkTogglebutton.setChecked(bend_park);
-
-    }
-
-    public void incCubeExchangeCnt(View view) {
-        mCubeExchangeCnt++;
-        TextView cubeExchangeText = (TextView) findViewById(R.id.ExchangeCntTextView);
-        cubeExchangeText.setText(mCubeExchangeCnt.toString());
-    }
-
-    public void decCubeExchangeCnt(View view) {
-
-        if(mCubeExchangeCnt > 0) {
-            mCubeExchangeCnt--;
+        //mMatchEditText.setText(mMatch.toString());
+        //mRobotEditText.setText(mRobot.toString());
+        if (SandTele == false){
+            TxtCntPanelLvl1.setText(mSandPanelLvl1.toString());
+            TxtCntPanelLvl2.setText(mSandPanelLvl2.toString());
+            TxtCntPanelLvl3.setText(mSandPanelLvl3.toString());
+            TxtCntCargoLvl1.setText(mSandCargoLvl1.toString());
+            TxtCntCargoLvl2.setText(mSandCargoLvl2.toString());
+            TxtCntCargoLvl3.setText(mSandCargoLvl3.toString());
+            HabLvl1.setChecked(mSandHabLvl1);
+            HabLvl2.setChecked(mSandHabLvl2);
+            HabLvl3.setChecked(mSandHabLvl3);
+            HabLvl1.setChecked(mTeleHabLvl1);
+            HabLvl2.setChecked(mTeleHabLvl2);
+            HabLvl3.setChecked(mTeleHabLvl3);
         }
-        TextView cubeExchangeText = (TextView) findViewById(R.id.ExchangeCntTextView);
-        cubeExchangeText.setText(mCubeExchangeCnt.toString());
-    }
+        else {
+            HabLvl1.setChecked(mSandHabLvl1);
+            HabLvl2.setChecked(mSandHabLvl2);
+            HabLvl3.setChecked(mSandHabLvl3);
+            HabLvl1.setChecked(mTeleHabLvl1);
+            HabLvl2.setChecked(mTeleHabLvl2);
+            HabLvl3.setChecked(mTeleHabLvl3);
+            TxtCntPanelLvl1.setText(mTelePanelLvl1.toString());
+            TxtCntPanelLvl2.setText(mTelePanelLvl2.toString());
+            TxtCntPanelLvl3.setText(mTelePanelLvl3.toString());
+            TxtCntCargoLvl1.setText(mTeleCargoLvl1.toString());
+            TxtCntCargoLvl2.setText(mTeleCargoLvl2.toString());
+            TxtCntCargoLvl3.setText(mTeleCargoLvl3.toString());
 
-    public void incCubeAllySwitchCnt(View view) {
-        mCubeAllySwitchCnt++;
-        TextView cubeAllySwitchText = (TextView) findViewById(R.id.AllySwitchTextView);
-        cubeAllySwitchText.setText(mCubeAllySwitchCnt.toString());
-    }
-
-    public void decCubeAllySwitchCnt(View view) {
-        if(mCubeAllySwitchCnt > 0) {
-            mCubeAllySwitchCnt--;
         }
-        TextView cubeAllySwitchText = (TextView) findViewById(R.id.AllySwitchTextView);
-        cubeAllySwitchText.setText(mCubeAllySwitchCnt.toString());
     }
 
-    public void incCubeEnemySwitchCnt(View view) {
-        mCubeEnemySwitchCnt++;
-        TextView cubeEnemySwitchText = (TextView) findViewById(R.id.EnemySwitchCntTextView);
-        cubeEnemySwitchText.setText(mCubeEnemySwitchCnt.toString());
+    public void switchToTele(View view) {
+
+        SandTele = SandTeleSwitch.isChecked();
     }
 
-    public void decCubeEnemySwitchCnt(View view) {
-        if(mCubeEnemySwitchCnt > 0) {
-            mCubeEnemySwitchCnt--;
+    public void IncPanelLvl1(View view) {
+        TextView TxtCntPanelLvl1 = (TextView) findViewById(R.id.TxtCntPanelLvl1);
+        // SandTele == true -> TeleOp
+        // SandTele == false -> Sandstorm
+        if( SandTele ) {
+            mTelePanelLvl1++;
+            TxtCntPanelLvl1.setText(mTelePanelLvl1.toString());
+        } else {
+            mSandPanelLvl1++;
+            TxtCntPanelLvl1.setText(mSandPanelLvl1.toString());
         }
-        TextView cubeEnemySwitchText = (TextView) findViewById(R.id.EnemySwitchCntTextView);
-        cubeEnemySwitchText.setText(mCubeEnemySwitchCnt.toString());
     }
 
-    public void incCubeScaleCnt(View view) {
-        mCubeScaleCnt++;
-        TextView cubeScaleText = (TextView) findViewById(R.id.ScaleCntTextView);
-        cubeScaleText.setText(mCubeScaleCnt.toString());
-    }
-
-    public void decCubeScaleCnt(View view) {
-        if(mCubeScaleCnt > 0) {
-            mCubeScaleCnt--;
+    public void DecPanelLvl1(View view) {
+        TextView TxtCntPanelLvl1 = (TextView) findViewById(R.id.TxtCntPanelLvl1);
+        if( SandTele ) {
+            if(mTelePanelLvl1 > 0) {
+                mTelePanelLvl1--;
+            }
+            TxtCntPanelLvl1.setText(mTelePanelLvl1.toString());
+        } else {
+            if(mSandPanelLvl1 > 0) {
+                mSandPanelLvl1--;
+            }
+            TxtCntPanelLvl1.setText(mSandPanelLvl1.toString());
         }
-        TextView cubeScaleText = (TextView) findViewById(R.id.ScaleCntTextView);
-        cubeScaleText.setText(mCubeScaleCnt.toString());
     }
 
+    public void IncCargoLvl1(View view) {
+        TextView TxtCntClvl1 = (TextView) findViewById(R.id.TxtCntCargoLvl1);
+        if( SandTele ) {
+            mTeleCargoLvl1++;
+            TxtCntClvl1.setText(mTeleCargoLvl1.toString());
+        } else {
+            mSandCargoLvl1++;
+            TxtCntClvl1.setText(mSandCargoLvl1.toString());
+        }
+    }
+
+    public void DecCargoLvl1(View view) {
+        TextView TxtCntCargoLvl1 = (TextView) findViewById(R.id.TxtCntCargoLvl1);
+        if( SandTele ) {
+            if(mTeleCargoLvl1 > 0) {
+                mTeleCargoLvl1--;
+            }
+            TxtCntCargoLvl1.setText(mTeleCargoLvl1.toString());
+        } else {
+            if(mSandCargoLvl1 > 0) {
+                mSandCargoLvl1--;
+            }
+            TxtCntCargoLvl1.setText(mSandCargoLvl1.toString());
+        }
+
+    }
+
+    public void IncPanelLvl2(View view) {
+        TextView TxtCntPanelLvl2 = (TextView) findViewById(R.id.TxtCntPanelLvl2);
+        if( SandTele ) {
+            mTelePanelLvl2++;
+            TxtCntPanelLvl2.setText(mTelePanelLvl2.toString());
+        } else {
+            mSandPanelLvl2++;
+            TxtCntPanelLvl2.setText(mSandPanelLvl2.toString());
+        }
+    }
+
+    public void DecPanelLvl2(View view) {
+        TextView TxtCntPanelLvl2= (TextView) findViewById(R.id.TxtCntPanelLvl2);
+        if( SandTele ) {
+            if(mTelePanelLvl2 > 0) {
+                mTelePanelLvl2--;
+            }
+            TxtCntPanelLvl2.setText(mTelePanelLvl2.toString());
+        } else {
+            if(mSandPanelLvl2 > 0) {
+                mSandPanelLvl2--;
+            }
+            TxtCntPanelLvl2.setText(mSandPanelLvl2.toString());
+        }
+    }
+
+
+    public void IncCargoLvl2(View view) {
+        TextView TxtCntCargoLvl2 = (TextView) findViewById(R.id.TxtCntCargoLvl2);
+        if( SandTele ) {
+            mTeleCargoLvl2++;
+            TxtCntCargoLvl2.setText(mTeleCargoLvl2.toString());
+        } else {
+            mSandCargoLvl2++;
+            TxtCntCargoLvl2.setText(mSandCargoLvl2.toString());
+        }
+    }
+
+    public void DecCargoLvl2(View view) {
+        TextView TxtCntCargoLvl2 = (TextView) findViewById(R.id.TxtCntCargoLvl2);
+        if( SandTele ) {
+            if(mTeleCargoLvl2 > 0) {
+                mTeleCargoLvl2--;
+            }
+            TxtCntCargoLvl2.setText(mTeleCargoLvl2.toString());
+        } else {
+            if(mSandCargoLvl2 > 0) {
+                mSandCargoLvl2--;
+            }
+            TxtCntCargoLvl2.setText(mSandCargoLvl2.toString());
+        }
+    }
+
+    public void IncPanelLvl3(View view) {
+        TextView TxtCntPanelLvl3 = (TextView) findViewById(R.id.TxtCntPanelLvl3);
+        if( SandTele ) {
+            mTelePanelLvl3++;
+            TxtCntPanelLvl3.setText(mTelePanelLvl3.toString());
+        } else {
+            mSandPanelLvl3++;
+            TxtCntPanelLvl3.setText(mSandPanelLvl3.toString());
+        }
+    }
+    public void DecPanelLvl3(View view) {
+        TextView TxtCntPanelLvl2 = (TextView) findViewById(R.id.TxtCntPanelLvl3);
+        if( SandTele ) {
+            if(mTelePanelLvl3 > 0) {
+                mTelePanelLvl3--;
+            }
+            TxtCntPanelLvl3.setText(mTelePanelLvl3.toString());
+        } else {
+            if(mSandPanelLvl3 > 0) {
+                mSandPanelLvl3--;
+            }
+            TxtCntPanelLvl3.setText(mSandPanelLvl3.toString());
+        }
+    }
+
+    public void IncCargoLvl3(View view) {
+        TextView TxtCntCargoLvl3 = (TextView) findViewById(R.id.TxtCntCargoLvl3);
+        if( SandTele ) {
+            mTeleCargoLvl3++;
+            TxtCntCargoLvl3.setText(mTeleCargoLvl3.toString());
+        } else {
+            mSandCargoLvl3++;
+            TxtCntCargoLvl3.setText(mSandCargoLvl3.toString());
+        }
+    }
+    public void DecCargoLvl3(View view) {
+        TextView TxtCntCargoLvl3 = (TextView) findViewById(R.id.TxtCntCargoLvl3);
+        if( SandTele ) {
+            if(mTeleCargoLvl3 > 0) {
+                mTeleCargoLvl3--;
+            }
+            TxtCntCargoLvl3.setText(mTeleCargoLvl3.toString());
+        } else {
+            if(mSandCargoLvl3 > 0) {
+                mSandCargoLvl3--;
+            }
+            TxtCntCargoLvl3.setText(mSandCargoLvl3.toString());
+        }
+    }
+    public void IncPins(View view) {
+        TextView TxtCountPins = (TextView) findViewById(R.id.TxtCountPins);
+        mTelePin++;
+    }
+
+    public void DecPins(View view) {
+        TextView TxtCountPins = (TextView) findViewById(R.id.TxtCountPins);
+        if(mTelePin > 0) {
+            mTelePin--;
+        }
+    }
+    public void IncBlocks(View view) {
+        TextView TxtCountView8 = (TextView) findViewById(R.id.TxtCountBlock);
+        mTeleBlocks++;
+    }
+
+    public void DecBlocks(View view) {
+        TextView TxtCountBlocks = (TextView) findViewById(R.id.TxtCountBlock);
+        if(mTeleBlocks > 0) {
+            mTeleBlocks--;
+        }
+    }
     @Override
     protected void onSaveInstanceState(Bundle outState)
     {
 
         super.onSaveInstanceState(outState);
-        outState.putInt("Scale_count", Integer.parseInt(mCubeScaleText.getText().toString().trim()));
-        outState.putInt("Ally_switch_count", Integer.parseInt(mCubeAllySwitchText.getText().toString().trim()));
-        outState.putInt("Enemy_switch_count", Integer.parseInt(mCubeEnemySwitchText.getText().toString().trim()));
-        outState.putInt("Exchange_count", Integer.parseInt(mCubeExchangeText.getText().toString().trim()));
-        // outState.putInt("Ally_score", Integer.parseInt(AllyScoreEditText.getText().toString().trim()));
-        // outState.putInt("Enemy_score", Integer.parseInt(EnemyScoreEditText.getText().toString().trim()));
+        outState.putInt("Panel_Lvl1", Integer.parseInt(TxtCntPanelLvl1.getText().toString().trim()));
+        outState.putInt("Panel_Lvl2", Integer.parseInt(TxtCntPanelLvl2.getText().toString().trim()));
+        outState.putInt("Panel_lvl3", Integer.parseInt(TxtCntPanelLvl3.getText().toString().trim()));
+        outState.putInt("Cargo_lvl1", Integer.parseInt(TxtCntCargoLvl1.getText().toString().trim()));
+        outState.putInt("Cargo_lvl2", Integer.parseInt(TxtCntCargoLvl2.getText().toString().trim()));
+        outState.putInt("Cargo_lvl3", Integer.parseInt(TxtCntCargoLvl3.getText().toString().trim()));
+        outState.putInt("Pins", Integer.parseInt(TxtCountPins.getText().toString().trim()));
+        outState.putInt("Blocks", Integer.parseInt(TxtCountBlocks.getText().toString().trim()));
+        outState.putInt("Ally_score", Integer.parseInt(AllyScoreEditText.getText().toString().trim()));
+        outState.putInt("Enemy_score", Integer.parseInt(EnemyScoreEditText.getText().toString().trim()));
 
 
 
@@ -373,11 +542,11 @@ public class ScoutMatchActivity extends AppCompatActivity {
         // Use trim to eliminate leading or trailing white space
 
 
-        String matchString = mMatchEditText.getText().toString().trim();
-        String robotString = mRobotEditText.getText().toString().trim();
+        //String matchString = mMatchEditText.getText().toString().trim();
+        //String robotString = mRobotEditText.getText().toString().trim();
 
-        mMatch = Integer.parseInt(matchString);
-        mRobot = Integer.parseInt(robotString);
+        //mMatch = Integer.parseInt(matchString);
+        //mRobot = Integer.parseInt(robotString);
 
         String AllianceScoreString = AllyScoreEditText.getText().toString().trim();
         String EnemyScoreString = EnemyScoreEditText.getText().toString().trim();
@@ -393,69 +562,88 @@ public class ScoutMatchActivity extends AppCompatActivity {
             enemy_score = Integer.parseInt(EnemyScoreString);
         }
 
-        if(mLineTogglebutton.isChecked())
-            auto_line = 1;
+        if(HabLvl1.isChecked())
+            mSandHabLvl1 = true;
         else
-            auto_line = 0;
+            mSandHabLvl1 = false;
 
-        if(mPickTogglebutton.isChecked())
-            auto_pick = 1;
+        if(HabLvl2.isChecked())
+            mSandHabLvl2 = true;
         else
-            auto_pick = 0;
+            mSandHabLvl2 = false;
 
-        if(mScaleTogglebutton.isChecked())
-            auto_scale= 1;
+        if(HabLvl3.isChecked())
+            mSandHabLvl3= true;
         else
-            auto_scale = 0;
-
-        if(mSwitchTogglebutton.isChecked())
-            auto_switch = 1;
+            mSandHabLvl3= false;
+        if(HabLvl1.isChecked())
+            mTeleHabLvl1 = true;
         else
-            auto_switch = 0;
+            mTeleHabLvl1 = false;
 
-        if(mHelpTogglebutton.isChecked())
-            end_help = 1;
+        if(HabLvl2.isChecked())
+            mTeleHabLvl2 = true;
         else
-            end_help = 0;
+            mTeleHabLvl2 = false;
 
-        if(mBrokenTogglebutton.isChecked())
-            end_broken = 1;
+        if(HabLvl3.isChecked())
+            mTeleHabLvl3= true;
         else
-            end_broken = 0;
+            mTeleHabLvl3= false;
+        /*
+         public final static String COLUMN_SCOUT_SAND_CARGO_LVL1 = "SandCargoLvl1";
+        public final static String COLUMN_SCOUT_SAND_PANEL_LVL1 = "SandPanelLvl1";
+        public final static String COLUMN_SCOUT_SAND_CARGO_LVL2 = "SandCargoLvl2";
+        public final static String COLUMN_SCOUT_SAND_PANEL_LVL2 = "SandPanelLvl2";
+        public final static String COLUMN_SCOUT_SAND_CARGO_LVL3 = "SandCargoLvl3";
+        public final static String COLUMN_SCOUT_SAND_PANEL_LVL3 = "SandPanelLvl2";
+        public final static String COLUMN_SCOUT_TELE_CARGO_LVL1 = "TeleCargoLvl1";
+        public final static String COLUMN_SCOUT_TELE_PANEL_LVL1 = "TelePanelLvl1";
+        public final static String COLUMN_SCOUT_TELE_CARGO_LVL2 = "TeleCargoLvl2";
+        public final static String COLUMN_SCOUT_TELE_PANEL_LVL2 = "TelePanelLvl2";
+        public final static String COLUMN_SCOUT_TELE_PANEL_LVL3 = "TeleCargoLvl3";
+        public final static String COLUMN_SCOUT_TELE_CARGO_LVL3 = "TeleCargoLvl3";
+        public final static String COLUMN_SCOUT_TELE_BLOCKS = "TeleBlocks";
+        public final static String COLUMN_SCOUT_TELE_PINS = "TelePins";
+        */
 
-        if(mClimbTogglebutton.isChecked())
-            end_climb = 1;
-        else
-            end_climb = 0;
-
-        if(mParkTogglebutton.isChecked())
-            end_park = 1;
-        else
-            end_park = 0;
-
-
-        // Create a ContentValues object where column names are the keys,
-        // and scout attributes from the editor are the values.
+        /*Create a ContentValues object where column names are the keys,
+          and scout attributes from the editor are the values.*/
         ContentValues values = new ContentValues();
         values.put(ScoutEntry.COLUMN_SCOUT_SCOUTER, mScouter);
         values.put(ScoutEntry.COLUMN_SCOUT_MATCH, mMatch);
         values.put(ScoutEntry.COLUMN_SCOUT_ROBOT, mRobot);
 
-        values.put(ScoutEntry.COLUMN_SCOUT_TELE_EXCHANGE, mCubeExchangeCnt );
-        values.put(ScoutEntry.COLUMN_SCOUT_TELE_ALLY_SWITCH, mCubeAllySwitchCnt );
-        values.put(ScoutEntry.COLUMN_SCOUT_TELE_SCALE, mCubeScaleCnt );
-        values.put(ScoutEntry.COLUMN_SCOUT_TELE_ENEMY_SWITCH, mCubeEnemySwitchCnt );
+        values.put(ScoutEntry.COLUMN_SCOUT_SAND_CARGO_LVL1,mSandCargoLvl1 );
+        values.put(ScoutEntry.COLUMN_SCOUT_TELE_CARGO_LVL1,mTeleCargoLvl1);
+        values.put(ScoutEntry.COLUMN_SCOUT_SAND_CARGO_LVL2,mSandCargoLvl2 );
+        values.put(ScoutEntry.COLUMN_SCOUT_TELE_CARGO_LVL2,mTeleCargoLvl2);
+        values.put(ScoutEntry.COLUMN_SCOUT_SAND_CARGO_LVL3,mSandCargoLvl3);
+        values.put(ScoutEntry.COLUMN_SCOUT_TELE_CARGO_LVL3,mTeleCargoLvl3);
+
+        values.put(ScoutEntry.COLUMN_SCOUT_SAND_PANEL_LVL1,mSandPanelLvl1);
+        values.put(ScoutEntry.COLUMN_SCOUT_TELE_PANEL_LVL1,mTelePanelLvl1);
+        values.put(ScoutEntry.COLUMN_SCOUT_SAND_PANEL_LVL2,mSandPanelLvl2);
+        values.put(ScoutEntry.COLUMN_SCOUT_TELE_PANEL_LVL2,mTelePanelLvl2);
+        values.put(ScoutEntry.COLUMN_SCOUT_SAND_PANEL_LVL3,mSandPanelLvl3);
+        values.put(ScoutEntry.COLUMN_SCOUT_TELE_PANEL_LVL3,mSandPanelLvl3);
+        values.put(ScoutEntry.COLUMN_SCOUT_TELE_PINS,mTelePin);
+        values.put(ScoutEntry.COLUMN_SCOUT_TELE_BLOCKS,mTeleBlocks);
 
 
-        values.put(ScoutEntry.COLUMN_SCOUT_AUTO_LINE, auto_line );
-        values.put(ScoutEntry.COLUMN_SCOUT_AUTO_CUBE, auto_pick );
-        values.put(ScoutEntry.COLUMN_SCOUT_AUTO_SCALE, auto_scale );
-        values.put(ScoutEntry.COLUMN_SCOUT_AUTO_SWITCH, auto_switch );
+        values.put(ScoutEntry.COLUMN_SCOUT_TELE_HAB_LVL1,mTeleHabLvl1);
+        values.put(ScoutEntry.COLUMN_SCOUT_TELE_HAB_LVL2,mTeleHabLvl2);
+        values.put(ScoutEntry.COLUMN_SCOUT_TELE_HAB_LVL3,mTeleHabLvl3);
+        values.put(ScoutEntry.COLUMN_SCOUT_SAND_HAB_LVL1,mSandHabLvl1);
+        values.put(ScoutEntry.COLUMN_SCOUT_SAND_HAB_LVL2,mSandHabLvl2);
+        values.put(ScoutEntry.COLUMN_SCOUT_SAND_HAB_LVL3,mSandHabLvl3);
 
+        /*
         values.put(ScoutEntry.COLUMN_SCOUT_TELE_HELP_CLIMB, end_help );
         values.put(ScoutEntry.COLUMN_SCOUT_TELE_BROKEN, end_broken );
         values.put(ScoutEntry.COLUMN_SCOUT_TELE_CLIMB, end_climb );
         values.put(ScoutEntry.COLUMN_SCOUT_TELE_PARK, end_park );
+        */
 
         values.put(ScoutEntry.COLUMN_SCOUT_GAME_ALLY_SCORE, alliance_score);
         values.put(ScoutEntry.COLUMN_SCOUT_GAME_ENEMY_SCORE, enemy_score);
