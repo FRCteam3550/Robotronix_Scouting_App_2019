@@ -26,20 +26,14 @@
 
             <Switch
                 android:id="@+id/SandTeleSwitch"
-                android:layout_width="35dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:text="Sandstorm"
-                android:textColor="#ffffff"
-                tools:onClick="switchToTele" />
-
-            <TextView
-                android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:text="Tele"
-                android:textColor="#ffffff" />
+                android:text="Mode"
+                android:textColor="#ffffff"
+                android:textOn="Tele"
+                android:textSize="25dp"
+                tools:textOff="Sand" />
 
             <Space
                 android:layout_width="wrap_content"

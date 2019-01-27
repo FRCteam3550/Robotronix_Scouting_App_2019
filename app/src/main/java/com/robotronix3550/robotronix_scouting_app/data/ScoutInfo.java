@@ -1,5 +1,7 @@
 package com.robotronix3550.robotronix_scouting_app.data;
 
+import com.robotronix3550.robotronix_scouting_app.R;
+
 /**
  * Created by tsinanyp on 2/16/2018.
  */
@@ -39,6 +41,136 @@ public class ScoutInfo {
         db_id = id;
         Match = match;
         Robot = robot;
+
+        switch( robot ) {
+            case 229: robotImageId = R.drawable.robot_229;
+                break;
+            case 296: robotImageId = R.drawable.robot_296;
+                break;
+            case 1511: robotImageId = R.drawable.robot_1511;
+                break;
+            case 2095: robotImageId = R.drawable.robot_2095;
+                break;
+            case 2234: robotImageId = R.drawable.robot_2234;
+                break;
+            case 2626: robotImageId = R.drawable.robot_2626;
+                break;
+            case 3117: robotImageId = R.drawable.robot_3117;
+                break;
+            case 3360: robotImageId = R.drawable.robot_3360;
+                break;
+            case 3379: robotImageId = R.drawable.robot_3379;
+                break;
+            case 3386: robotImageId = R.drawable.robot_3386;
+                break;
+            case 3510: robotImageId = R.drawable.robot_3510;
+                break;
+            case 3532: robotImageId = R.drawable.robot_3532;
+                break;
+            case 3533: robotImageId = R.drawable.robot_3544;
+                break;
+            case 3550: robotImageId = R.drawable.robot_3550;
+                break;
+            case 3975: robotImageId = R.drawable.robot_3975;
+                break;
+            case 3981: robotImageId = R.drawable.robot_3981;
+                break;
+            case 3985: robotImageId = R.drawable.robot_3985;
+                break;
+            case 3986: robotImageId = R.drawable.robot_3986;
+                break;
+            case 3988: robotImageId = R.drawable.robot_3988;
+                break;
+            case 3990: robotImageId = R.drawable.robot_3990;
+                break;
+            case 3996: robotImageId = R.drawable.robot_3996;
+                break;
+            case 4594: robotImageId = R.drawable.robot_4594;
+                break;
+            case 4930: robotImageId = R.drawable.robot_4930;
+                break;
+            case 4942: robotImageId = R.drawable.robot_4942;
+                break;
+            case 4947: robotImageId = R.drawable.robot_4947;
+                break;
+            case 4950: robotImageId = R.drawable.robot_4950;
+                break;
+            case 4952: robotImageId = R.drawable.robot_4952;
+                break;
+            case 4955: robotImageId = R.drawable.robot_4955;
+                break;
+            case 4957: robotImageId = R.drawable.robot_4957;
+                break;
+            case 5095: robotImageId = R.drawable.robot_5095;
+                break;
+            case 5179: robotImageId = R.drawable.robot_5179;
+                break;
+            case 5439: robotImageId = R.drawable.robot_5439;
+                break;
+            case 5440: robotImageId = R.drawable.robot_5440;
+                break;
+            case 5443: robotImageId = R.drawable.robot_5443;
+                break;
+            case 5528: robotImageId = R.drawable.robot_5528;
+                break;
+            case 5553: robotImageId = R.drawable.robot_5553;
+                break;
+            case 5570: robotImageId = R.drawable.robot_5570;
+                break;
+            case 5618: robotImageId = R.drawable.robot_5618;
+                break;
+            case 5659: robotImageId = R.drawable.robot_5659;
+                break;
+            case 5800: robotImageId = R.drawable.robot_5800;
+                break;
+            case 5865: robotImageId = R.drawable.robot_5865;
+                break;
+            case 5910: robotImageId = R.drawable.robot_5910;
+                break;
+            case 5952: robotImageId = R.drawable.robot_5952;
+                break;
+            case 6431: robotImageId = R.drawable.robot_6431;
+                break;
+            case 6540: robotImageId = R.drawable.robot_6540;
+                break;
+            case 6622: robotImageId = R.drawable.robot_6622;
+                break;
+            case 6851: robotImageId = R.drawable.robot_6851;
+                break;
+            case 6869: robotImageId = R.drawable.robot_6869;
+                break;
+            case 6872: robotImageId = R.drawable.robot_6872;
+                break;
+            case 6929: robotImageId = R.drawable.robot_6929;
+                break;
+            case 6953: robotImageId = R.drawable.robot_6953;
+                break;
+            case 7053: robotImageId = R.drawable.robot_7053;
+                break;
+            case 7116: robotImageId = R.drawable.robot_7116;
+                break;
+            case 7134: robotImageId = R.drawable.robot_7134;
+                break;
+            case 7162: robotImageId = R.drawable.robot_7162;
+                break;
+            case 7471: robotImageId = R.drawable.robot_7471;
+                break;
+            case 7555: robotImageId = R.drawable.robot_7555;
+                break;
+            case 7574: robotImageId = R.drawable.robot_7574;
+                break;
+            case 7590: robotImageId = R.drawable.robot_7590;
+                break;
+            case 7605: robotImageId = R.drawable.robot_7605;
+                break;
+            case 7615: robotImageId = R.drawable.robot_7615;
+                break;
+            case 7700: robotImageId = R.drawable.robot_7700;
+                break;
+
+                default: robotImageId = R.drawable.robotronixlogo;
+            break;
+        }
     }
 
     public Integer getDb_id() {

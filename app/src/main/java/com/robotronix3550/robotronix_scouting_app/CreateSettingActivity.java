@@ -86,12 +86,51 @@ public class CreateSettingActivity extends AppCompatActivity {
         fileNameTextView.setText(mFileName);
 
     }
-    public void fonction1(View view){
-        // mEvent = mEventEditText.getText().toString().trim();
-        mEvent="finger lakes";
-        fl++;
-        mEvent ="finger lakes"+ fl.toString();
-        mEventEditText.setText(mEvent);
+    public void importSchedule(View view){
+
+        mTablet = mTabletNameEditText.getText().toString().trim();
+
+        if( mTablet.equals("")) {
+
+            Toast.makeText(this, getString(R.string.missing_tablet_failed),
+                    Toast.LENGTH_LONG).show();
+
+        } else {
+
+            /* read specific csv file based on tablet name.  this file contains the schedule for
+             * of match to scout based on tablet
+             * tab1 : blue 1 ; tab2 : blue 2 ; tab3 : blue 3
+             * tab4 : red 1  ; tab5 : red 4  ; tab6 : red 6
+             *
+             * */
+            mFileName = "scout_schedule_" + mTablet + ".csv";
+
+            // Insert a new scout into the provider, returning the content URI for the new scout.
+            Bundle bu = getContentResolver().call(ScoutContract.ScoutEntry.CONTENT_URI, "importSchedule", mFileName, null);
+
+            // Show a toast message depending on whether or not the insertion was successful
+            if (bu == null) {
+                // If the new content URI is null, then there was an error with insertion.
+                Toast.makeText(this, getString(R.string.exportDB_scout_failed),
+                        Toast.LENGTH_LONG).show();
+            } else {
+                // Otherwise, the insertion was successful and we can display a toast.
+                Toast.makeText(this, getString(R.string.exportDB_scout_successful),
+                        Toast.LENGTH_LONG).show();
+
+
+            }
+
+            SharedPreferences.Editor ed = mPrefs.edit();
+            ed.putString("PREF_TABLET", mTablet);
+            ed.putString("PREF_EVENT", mEvent);
+            ed.putString("PREF_FILENAME", mFileName);
+            ed.putBoolean( "PREF_SCHEDULE", true);
+            ed.commit();
+
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
 
     }
 

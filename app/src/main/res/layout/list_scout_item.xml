@@ -2,6 +2,7 @@
 
 <!-- Layout for a single list item -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
@@ -12,7 +13,8 @@
     <ImageView
         android:id="@+id/list_robot_icon"
         android:layout_width="50dp"
-        android:layout_height="50dp"/>
+        android:layout_height="50dp"
+        app:srcCompat="@mipmap/ic_launcher_round" />
 
     <LinearLayout
         android:layout_width="0dp"

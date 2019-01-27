@@ -303,6 +303,19 @@ public class ScoutProvider extends ContentProvider {
 
     }
 
+    public void importSchedule(String FileName ) {
+
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        try {
+            dbExport.export(db, FileName);
+            Log.e(LOG_TAG, "Called export on sqliteExporter");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }
 

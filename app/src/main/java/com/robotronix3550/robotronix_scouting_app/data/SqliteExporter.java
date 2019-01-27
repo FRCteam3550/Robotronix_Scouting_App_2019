@@ -1,18 +1,23 @@
 package com.robotronix3550.robotronix_scouting_app.data;
 
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.util.Log;
 
 import com.opencsv.CSVWriter;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.robotronix3550.robotronix_scouting_app.data.ScoutDBHelper;
 import com.robotronix3550.robotronix_scouting_app.data.ScoutContract.ScoutEntry;
 
 /**
@@ -30,6 +35,110 @@ public class SqliteExporter {
 
     public static final String DB_SCOUTING_DB_VERSION_KEY = "dbVersion";
     public static final String DB_SCOUTING_TABLE_NAME = "table";
+
+    public static String importSchedule(SQLiteDatabase db, String fileName ) throws IOException{
+
+        if( !FileUtils.isExternalStorageReadable() ){
+            throw new IOException("Cannot read to external storage");
+        }
+
+        File DocumentDir = FileUtils.getDocumentDir("Scouting");
+
+        File ScheduleFile = new File(DocumentDir, fileName);
+
+        boolean success = ScheduleFile.createNewFile();
+        if(!success){
+            boolean readable = ScheduleFile.canRead();
+            if(!readable ) {
+                throw new IOException("Failed to create the schedule file");
+            }
+        }
+        FileReader rFile = new FileReader( ScheduleFile );
+        BufferedReader buffer = new BufferedReader(rFile);
+
+        String line = "";
+        Uri newUri = null;
+
+        db.beginTransaction();
+        try {
+            while ((line = buffer.readLine()) != null) {
+                String[] colums = line.split(",");
+                /*
+                if (colums.length != 4) {
+                    Log.d("CSVParser", "Skipping Bad CSV Row");
+                    continue;
+                }
+                */
+                ContentValues cv = new ContentValues();
+                cv.put(ScoutEntry.COLUMN_SCOUT_MATCH, colums[0].trim());
+                cv.put(ScoutEntry.COLUMN_SCOUT_ROBOT, colums[1].trim());
+                /*
+                mettre des valeurs par default ...
+                 */
+                //newUri = getContentResolver().insert(ScoutEntry.CONTENT_URI, cv);
+
+                db.insert(ScoutEntry.TABLE_NAME, null, cv);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        db.setTransactionSuccessful();
+        db.endTransaction();
+
+        return ScheduleFile.getAbsolutePath();
+
+        /*
+
+        FileReader file = new FileReader(fileName);
+        BufferedReader buffer = new BufferedReader(file);
+        String line = "";
+        String tableName ="TABLE_NAME";
+        String columns = "_id, name, dt1, dt2, dt3";
+        String str1 = "INSERT INTO " + tableName + " (" + columns + ") values(";
+        String str2 = ");";
+
+        db.beginTransaction();
+        while ((line = buffer.readLine()) != null) {
+            StringBuilder sb = new StringBuilder(str1);
+            String[] str = line.split(",");
+            sb.append("'" + str[0] + "',");
+            sb.append(str[1] + "',");
+            sb.append(str[2] + "',");
+            sb.append(str[3] + "'");
+            sb.append(str[4] + "'");
+            sb.append(str2);
+            db.execSQL(sb.toString());
+        }
+        db.setTransactionSuccessful();
+        db.endTransaction();
+
+        BufferedReader buffer = new BufferedReader(new InputStreamReader(inStream));
+        String line = "";
+        db.beginTransaction();
+        try {
+            while ((line = buffer.readLine()) != null) {
+                String[] colums = line.split(",");
+                if (colums.length != 4) {
+                    Log.d("CSVParser", "Skipping Bad CSV Row");
+                    continue;
+                }
+                ContentValues cv = new ContentValues(3);
+                cv.put(dbCol0, colums[0].trim());
+                cv.put(dbCol1, colums[1].trim());
+                cv.put(dbCol2, colums[2].trim());
+                cv.put(dbCol3, colums[3].trim());
+                cv.put(dbCol4, colums[4].trim());
+                db.insert(TABLE, null, cv);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        db.setTransactionSuccessful();
+        db.endTransaction();
+        */
+
+
+    }
 
     public static String export(SQLiteDatabase db, String fileName ) throws IOException{
         if( !FileUtils.isExternalStorageWritable() ){

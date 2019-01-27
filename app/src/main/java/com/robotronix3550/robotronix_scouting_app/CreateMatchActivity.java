@@ -3,18 +3,29 @@ package com.robotronix3550.robotronix_scouting_app;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 //import android.widget.Spinner;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.robotronix3550.robotronix_scouting_app.data.ScoutContract;
+import com.robotronix3550.robotronix_scouting_app.data.ScoutInfo;
+
 
 public class CreateMatchActivity extends AppCompatActivity {
+
+    public static final String TAG = CreateMatchActivity.class.getSimpleName();
 
     /** EditText field to enter the scout's scouter name */
     private EditText mNameEditText;
@@ -25,9 +36,21 @@ public class CreateMatchActivity extends AppCompatActivity {
     /** EditText field to enter the scout's robot */
     private EditText mRobotEditText;
 
-    String mScouter;
+    private CheckBox mScheduledMatchCheckedBox;
 
+    private ImageView mRobotImage;
+
+    String mScouter;
     Integer mMatch;
+    Integer mRobot;
+
+    Integer db_id;
+    Integer db_match;
+    Integer db_robot;
+
+    Boolean mScheduledMatch;
+
+    ScoutInfo RobotInfo;
 
     private SharedPreferences mPrefs;
 
@@ -51,6 +74,7 @@ public class CreateMatchActivity extends AppCompatActivity {
         mPrefs = getSharedPreferences(PREFS_SCOUTER, MODE_PRIVATE);
         mScouter = mPrefs.getString("PREF_SCOUTER", "Prenom");
         mMatch = mPrefs.getInt("PREF_MATCH", 0) + 1; // increment match number
+        mScheduledMatch = mPrefs.getBoolean("PREF_SCHEDULED", false);
 
         String message = "Scouter un Match";
 
@@ -62,14 +86,120 @@ public class CreateMatchActivity extends AppCompatActivity {
         mNameEditText = (EditText) findViewById(R.id.scoutNameEditText);
         mMatchEditText = (EditText) findViewById(R.id.matchNoEditText);
         mRobotEditText = (EditText) findViewById(R.id.robotNoEditText);
+        mScheduledMatchCheckedBox = findViewById(R.id.ScheduleMatchCheckedBox);
+        mRobotImage = (ImageView) findViewById(R.id.RobotImageToScout);
 
-        // Display value on text widget
+        String[] column = null;  // return all columns
+        String selection = null; // return all rows
+        String[] selectionArgs = null; // not used
+        String sortOrder = null;  // unordered
+
+        if( mScheduledMatch ){
+
+            Cursor cursor = getContentResolver().query(ScoutContract.ScoutEntry.CONTENT_URI, column, selection, selectionArgs, sortOrder);
+            // Show a toast message depending on whether or not the insertion was successful
+            if (cursor == null) {
+
+                Toast.makeText(this, getString(R.string.queryDB_scout_failed),
+                        Toast.LENGTH_LONG).show();
+            } else {
+
+                try{
+                    if (cursor.moveToFirst()) {
+                        while ( !cursor.isAfterLast() ) {
+                            db_id = cursor.getInt(0);
+                            db_match = cursor.getInt(1);
+                            db_robot = cursor.getInt(2);
+
+                            if( db_match == mMatch && db_robot == mRobot ) {
+                                RobotInfo = new ScoutInfo(db_id, db_match, db_robot);
+                                break;
+                            } else {
+                                cursor.moveToNext();
+                            }
+                        }
+                    }
+                }
+                catch(Exception throwable){
+                    Log.e(TAG, "Could not get the table names from db", throwable);
+                }
+                finally{
+                    if(cursor!=null)
+                        cursor.close();
+                }
+
+            }
+
+            if (RobotInfo != null ) {
+
+                mMatchEditText.setText(RobotInfo.getMatch().toString());
+                mRobotEditText.setText(RobotInfo.getRobot().toString());
+                mRobotImage.setImageResource(RobotInfo.getRobotImageId());
+
+            } else {
+
+                mMatchEditText.setText(mMatch);
+                mRobotImage.setImageResource(R.drawable.robotronixlogo);
+
+            }
+
+        } else {
+            mMatchEditText.setText(mMatch.toString());
+            mRobotImage.setImageResource(R.drawable.robotronixlogo);
+        }
+
+
+
+        // Display other values on screen
         mNameEditText.setText(mScouter);
-        mMatchEditText.setText(mMatch.toString());
+
+        mRobotEditText.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+
+                // you can call or do what you want with your EditText here
+
+                // yourEditText...
+                //changeRobotImage();
+                String robotString = mRobotEditText.getText().toString().trim();
+                String matchString = mMatchEditText.getText().toString().trim();
+
+                if (!robotString.equals("")) {
+                    mRobot = Integer.parseInt(robotString);
+                    mMatch = Integer.parseInt(matchString);
+
+                    ScoutInfo RobotInfo = new ScoutInfo(0, mMatch, mRobot);
+                    mRobotImage.setImageResource(RobotInfo.getRobotImageId());
+                }
+
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
+
 
     }
 
 
+    /**
+     * Get user input from editor and save new scout into database.
+     */
+/*
+    public void changeRobotImage() {
+
+        String robotString = mRobotEditText.getText().toString().trim();
+        String matchString = mMatchEditText.getText().toString().trim();
+
+        mRobot = Integer.parseInt(robotString);
+        mMatch = Integer.parseInt(matchString);
+
+        ScoutInfo RobotInfo = new ScoutInfo(0, mMatch, mRobot);
+        mRobotImage.setImageResource(RobotInfo.getRobotImageId());
+
+    }
+*/
     /**
      * Get user input from editor and save new scout into database.
      */
@@ -79,8 +209,6 @@ public class CreateMatchActivity extends AppCompatActivity {
         mScouter = mNameEditText.getText().toString().trim();
         String matchString = mMatchEditText.getText().toString().trim();
         String robotString = mRobotEditText.getText().toString().trim();
-        int match;
-        int robot;
 
         if (matchString.equals("")) {
 
@@ -104,7 +232,7 @@ public class CreateMatchActivity extends AppCompatActivity {
         }else {
 
             mMatch = Integer.parseInt(matchString);
-            robot = Integer.parseInt(robotString);
+            mRobot = Integer.parseInt(robotString);
 
             SharedPreferences.Editor ed = mPrefs.edit();
             ed.putString("PREF_SCOUTER", mScouter);
@@ -114,7 +242,7 @@ public class CreateMatchActivity extends AppCompatActivity {
             Intent intent = new Intent(this, ScoutMatchActivity.class);
             // intent.putExtra(EXTRA_SCOUTER, mScouter);
             // intent.putExtra(EXTRA_MATCH, match);
-            intent.putExtra(EXTRA_ROBOT, robot);
+            intent.putExtra(EXTRA_ROBOT, mRobot);
 
             startActivity(intent);
         }

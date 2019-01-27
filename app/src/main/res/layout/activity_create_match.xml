@@ -27,13 +27,52 @@
                 android:id="@+id/titleMatchTextView"
                 android:layout_width="120dp"
                 android:layout_height="50dp"
-                android:layout_marginStart="16dp"
                 android:layout_weight="1"
                 android:text="bla"
+                android:textColor="#ffffff"
                 android:textSize="30sp"
                 app:layout_constraintStart_toStartOf="parent"
-                android:textColor="#ffffff"
                 tools:layout_editor_absoluteY="24dp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="67dp"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/textView26"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Match cédulé ?"
+                android:textColor="#ffffff"
+                android:textSize="24sp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <CheckBox
+                android:id="@+id/ScheduleMatchCheckedBox"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="Oui"
+                android:textColor="#ffffff"
+                android:textSize="24sp" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -118,11 +157,34 @@
                 android:layout_weight="1"
                 android:backgroundTint="#ffffff"
                 android:ems="10"
-                android:textColor="#ffffff"
                 android:inputType="number"
                 android:singleLine="true"
+                android:textColor="#ffffff"
                 app:layout_constraintStart_toStartOf="@+id/robotNoTextView"
                 tools:layout_editor_absoluteY="218dp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/RobotImageToScout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/robotronixlogo" />
 
             <Space
                 android:layout_width="wrap_content"

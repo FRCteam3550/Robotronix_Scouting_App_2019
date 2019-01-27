@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -116,6 +117,19 @@ public class ScoutMatchActivity extends AppCompatActivity {
         EnemyScoreEditText = findViewById(R.id.editNumber2);
 
         SandTele = SandTeleSwitch.isChecked();
+        SandTeleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (SandTeleSwitch.isChecked()) {
+                    SandTeleSwitch.setText("Tele");
+                    SandTele = true;
+                } else {
+                    SandTeleSwitch.setText("Sandstorm");
+                    SandTele = false;
+                }
+
+                updateTxtCnt();
+            }
+        });
 
         // Comes from rotating the tablet
         //
@@ -302,6 +316,12 @@ public class ScoutMatchActivity extends AppCompatActivity {
         // Capture the layout's TextView and set the string as its text
         //mMatchEditText.setText(mMatch.toString());
         //mRobotEditText.setText(mRobot.toString());
+
+        updateTxtCnt();
+    }
+
+    public void updateTxtCnt() {
+
         if (SandTele == false){
             TxtCntPanelLvl1.setText(mSandPanelLvl1.toString());
             TxtCntPanelLvl2.setText(mSandPanelLvl2.toString());
@@ -331,12 +351,9 @@ public class ScoutMatchActivity extends AppCompatActivity {
             TxtCntCargoLvl3.setText(mTeleCargoLvl3.toString());
 
         }
+
     }
 
-    public void switchToTele(View view) {
-
-        SandTele = SandTeleSwitch.isChecked();
-    }
 
     public void IncPanelLvl1(View view) {
         TextView TxtCntPanelLvl1 = (TextView) findViewById(R.id.TxtCntPanelLvl1);
