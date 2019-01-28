@@ -88,83 +88,10 @@ public final class ScoutContract {
         public final static String COLUMN_SCOUT_SCOUTER ="scouter";
 
         /**
-         * Robot cross the line in autonomous mode
+         * Match number
          * Type: BOOL (INTEGER)
          */
-        public final static String COLUMN_SCOUT_AUTO_LINE = "auto_line";
-
-        /**
-         * Robot deposit a cube into the switch in autonomous mode
-         * Type: BOOL (INTEGER)
-         */
-        public final static String COLUMN_SCOUT_AUTO_SWITCH = "auto_switch";
-
-        /**
-         * Robot deposit a cube into the scale in autonomous mode
-         * Type: BOOL (INTEGER)
-         */
-        public final static String COLUMN_SCOUT_AUTO_SCALE = "auto_scale";
-
-        /**
-         * Robot pick a cube in autonomous mode
-         * Type: BOOL (INTEGER)
-         */
-        public final static String COLUMN_SCOUT_AUTO_CUBE = "auto_cube";
-
-        /**
-         * Robot push a cube in exchange in teleop mode
-         * Type: INTEGER
-         */
-        public final static String COLUMN_SCOUT_TELE_EXCHANGE = "tele_exchange";
-
-        /**
-         * Robot put a cube in ally switch in teleop mode
-         * Type: INTEGER
-         */
-        public final static String COLUMN_SCOUT_TELE_ALLY_SWITCH = "tele_ally_switch";
-
-        /**
-         * Robot put a cube in scale in teleop mode
-         * Type: INTEGER
-         */
-        public final static String COLUMN_SCOUT_TELE_SCALE = "tele_scale";
-
-
-        /**
-         * Robot put a cube in enemy switch in teleop mode
-         * Type: INTEGER
-         */
-        public final static String COLUMN_SCOUT_TELE_ENEMY_SWITCH = "tele_enemy_switch";
-
-        /**
-         * Robot pick a cube on the ground in teleop mode
-         * Type: INTEGER
-         */
-        public final static String COLUMN_SCOUT_TELE_CUBE = "tele_cube";
-
-        /**
-         * Robot receive a cube from portal in teleop mode
-         * Type: INTEGER
-         */
-        public final static String COLUMN_SCOUT_TELE_PORTAL = "tele_portal";
-
-        /**
-         * Robot climb at end of game
-         * Type: BOOL (INTEGER)
-         */
-        public final static String COLUMN_SCOUT_TELE_CLIMB = "climb";
-
-        /**
-         * Robot help other robots to climb at end of game
-         * Type: BOOL (INTEGER)
-         */
-        public final static String COLUMN_SCOUT_TELE_HELP_CLIMB = "help_climb";
-
-        /**
-         * Robot park at end of game
-         * Type: BOOL (INTEGER)
-         */
-        public final static String COLUMN_SCOUT_TELE_PARK = "park";
+        public final static String COLUMN_SCOUT_SCHEDULE_MATCH ="schedule_match";
 
         /**
          * Robot get incapacitated during the game
@@ -216,24 +143,7 @@ public final class ScoutContract {
         public final static String COLUMN_SCOUT_SAND_HAB_LVL1 = "SandHabLvl1";
         public final static String COLUMN_SCOUT_SAND_HAB_LVL2 = "TeleHabLvl2";
         public final static String COLUMN_SCOUT_SAND_HAB_LVL3 = "TeleHabLvl3";
-                /*
-                + ScoutEntry.COLUMN_SCOUT_SAND_PANEL_CARGOSHIP (boolean)
-                + ScoutEntry.COLUMN_SCOUT_SAND_PICKUP (boolean)
-                + ScoutEntry.COLUMN_SCOUT_SAND_LVL1 (boolean)
-                + ScoutEntry.COLUMN_SCOUT_SAND_LVL2 (boolean)
-                + ScoutEntry.COLUMN_SCOUT_TELE_CARGO_CARGOSHIP (int)
-                + ScoutEntry.COLUMN_SCOUT_TELE_PANEL_CARGOSHIP (int)
-                + ScoutEntry.COLUMN_SCOUT_TELE_PANEL_ROCKETLVL1 (int)
-                + ScoutEntry.COLUMN_SCOUT_TELE_CARGO_ROCKETLVL1 (int)
-                + ScoutEntry.COLUMN_SCOUT_TELE_PANEL_ROCKETLVL2(int)
-                + ScoutEntry.COLUMN_SCOUT_TELE_CARGO_ROCKETLVL2(int)
-                + ScoutEntry.COLUMN_SCOUT_TELE_PANEL_ROCKETLVL3(int)
-                + ScoutEntry.COLUMN_SCOUT_TELE_CARGO_ROCKETLVL3(int)
-                + ScoutEntry.COLUMN_SCOUT_END_LVL1(boolean)
-                + ScoutEntry.COLUMN_SCOUT_END_LVL2(boolean)
-                + ScoutEntry.COLUMN_SCOUT_END_LVL3(boolean)
-                + ScoutEntry.COLUMN_SCOUT_END_BROKEN(boolean)
-                */
+
         /**
          * Returns robot is valid.
          */

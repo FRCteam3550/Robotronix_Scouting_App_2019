@@ -132,6 +132,7 @@ public class ScoutPitActivity extends AppCompatActivity {
                 int drivetrainColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_ROBOT_DRIVETRAIN);
                 int scouterColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_SCOUTER);
 
+                /*
                 int autoLineColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_AUTO_LINE);
                 int autoPickColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_AUTO_CUBE);
                 int autoScaleColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_AUTO_SCALE);
@@ -144,6 +145,7 @@ public class ScoutPitActivity extends AppCompatActivity {
                 int teleScaleColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_TELE_SCALE);
                 int telePortalColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_TELE_PORTAL);
                 int telePickColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_TELE_CUBE);
+                */
 
                 /*
                 int count = cursor.getCount();
@@ -163,6 +165,7 @@ public class ScoutPitActivity extends AppCompatActivity {
                 mWeight = cursor.getInt(weightColIdx);
                 mScouter = cursor.getString(scouterColIdx);
 
+                /*
                 auto_line = cursor.getInt(autoLineColIdx);
                 auto_pick = cursor.getInt(autoPickColIdx);
                 auto_scale = cursor.getInt(autoScaleColIdx);
@@ -175,6 +178,7 @@ public class ScoutPitActivity extends AppCompatActivity {
                 tele_scale = cursor.getInt(teleScaleColIdx);
                 tele_portal = cursor.getInt(telePortalColIdx);
                 tele_pick = cursor.getInt(telePickColIdx);
+                */
 
                 mRobotEditText.setText(mRobot.toString());
                 mRobotDrivetrainEditText.setText(mDrivetrain.toString());
@@ -335,6 +339,7 @@ public class ScoutPitActivity extends AppCompatActivity {
             values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_MATCH, 0);
             values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_ROBOT, robot);
 
+            /*
             values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_AUTO_LINE, auto_line);
             values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_AUTO_CUBE, auto_pick);
             values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_AUTO_SCALE, auto_scale);
@@ -350,6 +355,8 @@ public class ScoutPitActivity extends AppCompatActivity {
             values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_TELE_CLIMB, tele_climb);
             values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_TELE_HELP_CLIMB, tele_help);
             values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_TELE_PARK, 0);
+            */
+
             values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_TELE_BROKEN, 0);
 
             values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_GAME_ALLY_SCORE, 0);
