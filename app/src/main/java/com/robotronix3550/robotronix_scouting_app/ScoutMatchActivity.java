@@ -49,13 +49,13 @@ public class ScoutMatchActivity extends AppCompatActivity {
     Integer mTeleCargoLvl3;
     Integer mTelePanelLvl3;
 
-    Boolean mTeleHabLvl1;
-    Boolean mTeleHabLvl2;
-    Boolean mTeleHabLvl3;
+    Integer mTeleHabLvl1;
+    Integer mTeleHabLvl2;
+    Integer mTeleHabLvl3;
 
-    Boolean mSandHabLvl1;
-    Boolean mSandHabLvl2;
-    Boolean mSandHabLvl3;
+    Integer mSandHabLvl1;
+    Integer mSandHabLvl2;
+    Integer mSandHabLvl3;
 
     Integer mTeleBlocks;
     Integer mTelePin;
@@ -119,6 +119,9 @@ public class ScoutMatchActivity extends AppCompatActivity {
         SandTele = SandTeleSwitch.isChecked();
         SandTeleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                saveHabLvlState();
+
                 if (SandTeleSwitch.isChecked()) {
                     SandTeleSwitch.setText("Tele");
                     SandTele = true;
@@ -126,7 +129,6 @@ public class ScoutMatchActivity extends AppCompatActivity {
                     SandTeleSwitch.setText("Sandstorm");
                     SandTele = false;
                 }
-
                 updateTxtCnt();
             }
         });
@@ -174,13 +176,13 @@ public class ScoutMatchActivity extends AppCompatActivity {
             mTeleBlocks = 0;
             mTelePin = 0;
 
-            mSandHabLvl1 = false;
-            mSandHabLvl2 = false;
-            mSandHabLvl3 = false;
+            mSandHabLvl1 = 0;
+            mSandHabLvl2 = 0;
+            mSandHabLvl3 = 0;
 
-            mTeleHabLvl1 = false;
-            mTeleHabLvl2 = false;
-            mTeleHabLvl3 = false;
+            mTeleHabLvl1 = 0;
+            mTeleHabLvl2 = 0;
+            mTeleHabLvl3 = 0;
 
 
             alliance_score = 0;
@@ -220,12 +222,12 @@ public class ScoutMatchActivity extends AppCompatActivity {
             mTeleBlocks = 0;
             mTelePin = 0;
 
-            mSandHabLvl1 = false;
-            mSandHabLvl2 = false;
-            mSandHabLvl3 = false;
-            mTeleHabLvl1 = false;
-            mTeleHabLvl2 = false;
-            mTeleHabLvl3 = false;
+            mSandHabLvl1 = 0;
+            mSandHabLvl2 = 0;
+            mSandHabLvl3 = 0;
+            mTeleHabLvl1 = 0;
+            mTeleHabLvl2 = 0;
+            mTeleHabLvl3 = 0;
             alliance_score = 0;
             enemy_score = 0;
 
@@ -251,18 +253,27 @@ public class ScoutMatchActivity extends AppCompatActivity {
                 int robotColIdx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_ROBOT);
                 int scouterColIdx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_SCOUTER);
 
-                int SandCargoLvl1Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_SAND_CARGO_LVL1 );
+                int SandCargoLvl1Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_SAND_CARGO_LVL1);
                 int SandPanelLvl1Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_SAND_PANEL_LVL1);
                 int SandCargoLvl2Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_SAND_CARGO_LVL2);
                 int SandPanelLvl2Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_SAND_PANEL_LVL2);
                 int SandCargoLvl3Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_SAND_CARGO_LVL3);
                 int SandPanelLvl3Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_SAND_PANEL_LVL3);
+
                 int TeleCargoLvl1Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_TELE_CARGO_LVL1);
                 int TeleCargoLvl2Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_TELE_CARGO_LVL2);
                 int TeleCargoLvl3Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_TELE_CARGO_LVL3);
                 int TelePanelLvl1Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_TELE_PANEL_LVL1);
                 int TelePanelLvl2Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_TELE_PANEL_LVL2);
                 int TelePanelLvl3Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_TELE_PANEL_LVL3);
+
+                int SandHabLvl1Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_SAND_HAB_LVL1);
+                int SandHabLvl2Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_SAND_HAB_LVL2);
+                int SandHabLvl3Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_SAND_HAB_LVL3);
+
+                int TeleHabLvl1Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_TELE_HAB_LVL1);
+                int TeleHabLvl2Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_TELE_HAB_LVL2);
+                int TeleHabLvl3Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_TELE_HAB_LVL3);
 
                 int gameAllyScoreColIdx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_GAME_ALLY_SCORE);
                 int gameEnemyScoreColIdx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_GAME_ENEMY_SCORE);
@@ -297,6 +308,14 @@ public class ScoutMatchActivity extends AppCompatActivity {
                 mTelePanelLvl2 = cursor.getInt(TelePanelLvl2Idx);
                 mTelePanelLvl3 = cursor.getInt(TelePanelLvl3Idx);
 
+                mSandHabLvl1 = cursor.getInt(SandHabLvl1Idx);
+                mSandHabLvl2 = cursor.getInt(SandHabLvl2Idx);
+                mSandHabLvl3 = cursor.getInt(SandHabLvl3Idx);
+
+                mTeleHabLvl1 = cursor.getInt(TeleHabLvl1Idx);
+                mTeleHabLvl2 = cursor.getInt(TeleHabLvl2Idx);
+                mTeleHabLvl3 = cursor.getInt(TeleHabLvl3Idx);
+
                 alliance_score = cursor.getInt(gameAllyScoreColIdx);
                 enemy_score = cursor.getInt(gameEnemyScoreColIdx);
 
@@ -320,7 +339,60 @@ public class ScoutMatchActivity extends AppCompatActivity {
         updateTxtCnt();
     }
 
+    public void saveHabLvlState() {
+
+        if( SandTele ) {
+
+            if(HabLvl1.isChecked())
+                mTeleHabLvl1 = 1;
+            else
+                mTeleHabLvl1 = 0;
+
+            if(HabLvl2.isChecked())
+                mTeleHabLvl2 = 1;
+            else
+                mTeleHabLvl2 = 0;
+
+            if(HabLvl3.isChecked())
+                mTeleHabLvl3= 1;
+            else
+                mTeleHabLvl3= 0;
+
+        } else {
+
+            if(HabLvl1.isChecked())
+                mSandHabLvl1 = 1;
+            else
+                mSandHabLvl1 = 0;
+
+            if(HabLvl2.isChecked())
+                mSandHabLvl2 = 1;
+            else
+                mSandHabLvl2 = 0;
+
+            if(HabLvl3.isChecked())
+                mSandHabLvl3= 1;
+            else
+                mSandHabLvl3= 0;
+        }
+
+    }
+
     public void updateTxtCnt() {
+
+        boolean bSandHabLvl1 = false;
+        boolean bSandHabLvl2 = false;
+        boolean bSandHabLvl3 = false;
+        boolean bTeleHabLvl1 = false;
+        boolean bTeleHabLvl2 = false;
+        boolean bTeleHabLvl3 = false;
+
+        if( mSandHabLvl1 != 0) bSandHabLvl1 = true;
+        if( mSandHabLvl2 != 0) bSandHabLvl2 = true;
+        if( mSandHabLvl3 != 0) bSandHabLvl3 = true;
+        if( mTeleHabLvl1 != 0) bTeleHabLvl1 = true;
+        if( mTeleHabLvl2 != 0) bTeleHabLvl2 = true;
+        if( mTeleHabLvl3 != 0) bTeleHabLvl3 = true;
 
         if (SandTele == false){
             TxtCntPanelLvl1.setText(mSandPanelLvl1.toString());
@@ -329,20 +401,14 @@ public class ScoutMatchActivity extends AppCompatActivity {
             TxtCntCargoLvl1.setText(mSandCargoLvl1.toString());
             TxtCntCargoLvl2.setText(mSandCargoLvl2.toString());
             TxtCntCargoLvl3.setText(mSandCargoLvl3.toString());
-            HabLvl1.setChecked(mSandHabLvl1);
-            HabLvl2.setChecked(mSandHabLvl2);
-            HabLvl3.setChecked(mSandHabLvl3);
-            HabLvl1.setChecked(mTeleHabLvl1);
-            HabLvl2.setChecked(mTeleHabLvl2);
-            HabLvl3.setChecked(mTeleHabLvl3);
+            HabLvl1.setChecked(bSandHabLvl1);
+            HabLvl2.setChecked(bSandHabLvl2);
+            HabLvl3.setChecked(bSandHabLvl3);
         }
         else {
-            HabLvl1.setChecked(mSandHabLvl1);
-            HabLvl2.setChecked(mSandHabLvl2);
-            HabLvl3.setChecked(mSandHabLvl3);
-            HabLvl1.setChecked(mTeleHabLvl1);
-            HabLvl2.setChecked(mTeleHabLvl2);
-            HabLvl3.setChecked(mTeleHabLvl3);
+            HabLvl1.setChecked(bTeleHabLvl1);
+            HabLvl2.setChecked(bTeleHabLvl2);
+            HabLvl3.setChecked(bTeleHabLvl3);
             TxtCntPanelLvl1.setText(mTelePanelLvl1.toString());
             TxtCntPanelLvl2.setText(mTelePanelLvl2.toString());
             TxtCntPanelLvl3.setText(mTelePanelLvl3.toString());
@@ -579,50 +645,8 @@ public class ScoutMatchActivity extends AppCompatActivity {
             enemy_score = Integer.parseInt(EnemyScoreString);
         }
 
-        if(HabLvl1.isChecked())
-            mSandHabLvl1 = true;
-        else
-            mSandHabLvl1 = false;
+        saveHabLvlState();
 
-        if(HabLvl2.isChecked())
-            mSandHabLvl2 = true;
-        else
-            mSandHabLvl2 = false;
-
-        if(HabLvl3.isChecked())
-            mSandHabLvl3= true;
-        else
-            mSandHabLvl3= false;
-        if(HabLvl1.isChecked())
-            mTeleHabLvl1 = true;
-        else
-            mTeleHabLvl1 = false;
-
-        if(HabLvl2.isChecked())
-            mTeleHabLvl2 = true;
-        else
-            mTeleHabLvl2 = false;
-
-        if(HabLvl3.isChecked())
-            mTeleHabLvl3= true;
-        else
-            mTeleHabLvl3= false;
-        /*
-         public final static String COLUMN_SCOUT_SAND_CARGO_LVL1 = "SandCargoLvl1";
-        public final static String COLUMN_SCOUT_SAND_PANEL_LVL1 = "SandPanelLvl1";
-        public final static String COLUMN_SCOUT_SAND_CARGO_LVL2 = "SandCargoLvl2";
-        public final static String COLUMN_SCOUT_SAND_PANEL_LVL2 = "SandPanelLvl2";
-        public final static String COLUMN_SCOUT_SAND_CARGO_LVL3 = "SandCargoLvl3";
-        public final static String COLUMN_SCOUT_SAND_PANEL_LVL3 = "SandPanelLvl2";
-        public final static String COLUMN_SCOUT_TELE_CARGO_LVL1 = "TeleCargoLvl1";
-        public final static String COLUMN_SCOUT_TELE_PANEL_LVL1 = "TelePanelLvl1";
-        public final static String COLUMN_SCOUT_TELE_CARGO_LVL2 = "TeleCargoLvl2";
-        public final static String COLUMN_SCOUT_TELE_PANEL_LVL2 = "TelePanelLvl2";
-        public final static String COLUMN_SCOUT_TELE_PANEL_LVL3 = "TeleCargoLvl3";
-        public final static String COLUMN_SCOUT_TELE_CARGO_LVL3 = "TeleCargoLvl3";
-        public final static String COLUMN_SCOUT_TELE_BLOCKS = "TeleBlocks";
-        public final static String COLUMN_SCOUT_TELE_PINS = "TelePins";
-        */
 
         /*Create a ContentValues object where column names are the keys,
           and scout attributes from the editor are the values.*/
