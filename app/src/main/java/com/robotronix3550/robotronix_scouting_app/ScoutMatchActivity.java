@@ -643,7 +643,7 @@ public class ScoutMatchActivity extends AppCompatActivity {
         values.put(ScoutEntry.COLUMN_SCOUT_SAND_PANEL_LVL2,mSandPanelLvl2);
         values.put(ScoutEntry.COLUMN_SCOUT_TELE_PANEL_LVL2,mTelePanelLvl2);
         values.put(ScoutEntry.COLUMN_SCOUT_SAND_PANEL_LVL3,mSandPanelLvl3);
-        values.put(ScoutEntry.COLUMN_SCOUT_TELE_PANEL_LVL3,mSandPanelLvl3);
+        values.put(ScoutEntry.COLUMN_SCOUT_TELE_PANEL_LVL3,mTelePanelLvl3);
         values.put(ScoutEntry.COLUMN_SCOUT_TELE_PINS,mTelePin);
         values.put(ScoutEntry.COLUMN_SCOUT_TELE_BLOCKS,mTeleBlocks);
 
