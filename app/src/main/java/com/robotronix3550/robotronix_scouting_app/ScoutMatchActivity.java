@@ -515,6 +515,7 @@ public class ScoutMatchActivity extends AppCompatActivity {
     public void IncPins(View view) {
         TextView TxtCountPins = (TextView) findViewById(R.id.TxtCountPins);
         mTelePin++;
+        TxtCountPins.setText(mTelePin.toString());
     }
 
     public void DecPins(View view) {
@@ -522,10 +523,12 @@ public class ScoutMatchActivity extends AppCompatActivity {
         if(mTelePin > 0) {
             mTelePin--;
         }
+        TxtCountPins.setText(mTelePin.toString());
     }
     public void IncBlocks(View view) {
-        TextView TxtCountView8 = (TextView) findViewById(R.id.TxtCountBlock);
+        TextView TxtCountBlocks = (TextView) findViewById(R.id.TxtCountBlock);
         mTeleBlocks++;
+        TxtCountBlocks.setText(mTeleBlocks.toString());
     }
 
     public void DecBlocks(View view) {
@@ -533,6 +536,7 @@ public class ScoutMatchActivity extends AppCompatActivity {
         if(mTeleBlocks > 0) {
             mTeleBlocks--;
         }
+        TxtCountBlocks.setText(mTeleBlocks.toString());
     }
     @Override
     protected void onSaveInstanceState(Bundle outState)
