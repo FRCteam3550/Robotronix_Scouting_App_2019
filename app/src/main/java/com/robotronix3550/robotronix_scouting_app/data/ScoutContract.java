@@ -128,21 +128,25 @@ public final class ScoutContract {
         public final static String COLUMN_SCOUT_SAND_CARGO_LVL2 = "SandCargoLvl2";
         public final static String COLUMN_SCOUT_SAND_PANEL_LVL2 = "SandPanelLvl2";
         public final static String COLUMN_SCOUT_SAND_CARGO_LVL3 = "SandCargoLvl3";
-        public final static String COLUMN_SCOUT_SAND_PANEL_LVL3 = "SandPanelLvl2";
+        public final static String COLUMN_SCOUT_SAND_PANEL_LVL3 = "SandPanelLvl3";
+
         public final static String COLUMN_SCOUT_TELE_CARGO_LVL1 = "TeleCargoLvl1";
         public final static String COLUMN_SCOUT_TELE_PANEL_LVL1 = "TelePanelLvl1";
         public final static String COLUMN_SCOUT_TELE_CARGO_LVL2 = "TeleCargoLvl2";
         public final static String COLUMN_SCOUT_TELE_PANEL_LVL2 = "TelePanelLvl2";
         public final static String COLUMN_SCOUT_TELE_PANEL_LVL3 = "TeleCargoLvl3";
-        public final static String COLUMN_SCOUT_TELE_CARGO_LVL3 = "TeleCargoLvl3";
-        public final static String COLUMN_SCOUT_TELE_BLOCKS = "TeleBlocks";
-        public final static String COLUMN_SCOUT_TELE_PINS = "TelePins";
-        public final static String COLUMN_SCOUT_TELE_HAB_LVL1 = "TeleHabLvl1";
-        public final static String COLUMN_SCOUT_TELE_HAB_LVL2 = "TeleHabLvl2";
-        public final static String COLUMN_SCOUT_TELE_HAB_LVL3 = "TeleHabLvl3";
-        public final static String COLUMN_SCOUT_SAND_HAB_LVL1 = "SandHabLvl1";
-        public final static String COLUMN_SCOUT_SAND_HAB_LVL2 = "TeleHabLvl2";
-        public final static String COLUMN_SCOUT_SAND_HAB_LVL3 = "TeleHabLvl3";
+        public final static String COLUMN_SCOUT_TELE_CARGO_LVL3 = "TelePanelLvl3";
+
+        public final static String COLUMN_SCOUT_TELE_BLOCKS     = "TeleBlocks";
+        public final static String COLUMN_SCOUT_TELE_PINS       = "TelePins";
+
+        public final static String COLUMN_SCOUT_TELE_HAB_LVL1   = "TeleHabLvl1";
+        public final static String COLUMN_SCOUT_TELE_HAB_LVL2   = "TeleHabLvl2";
+        public final static String COLUMN_SCOUT_TELE_HAB_LVL3   = "TeleHabLvl3";
+
+        public final static String COLUMN_SCOUT_SAND_HAB_LVL1   = "SandHabLvl1";
+        public final static String COLUMN_SCOUT_SAND_HAB_LVL2   = "SandHabLvl2";
+        public final static String COLUMN_SCOUT_SAND_HAB_LVL3   = "SandHabLvl3";
 
         /**
          * Returns robot is valid.
