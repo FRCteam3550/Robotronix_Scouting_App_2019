@@ -58,7 +58,7 @@ public class CreateSettingActivity extends AppCompatActivity {
         mPrefs = getPreferences(MODE_PRIVATE);
         // mPrefs = getSharedPreferences(PREFS_SCOUTER, MODE_PRIVATE);
         mTablet = mPrefs.getString("PREF_TABLET", "tab1");
-        mEvent = mPrefs.getString("PREF_EVENT", "det");
+        mEvent = mPrefs.getString("PREF_EVENT", "mtl");
 
         String message = "Paramètres";
 
@@ -115,7 +115,7 @@ public class CreateSettingActivity extends AppCompatActivity {
                         Toast.LENGTH_LONG).show();
             } else {
                 // Otherwise, the insertion was successful and we can display a toast.
-                Toast.makeText(this, getString(R.string.exportDB_scout_successful),
+                Toast.makeText(this, getString(R.string.importSchedule_scout_successful),
                         Toast.LENGTH_LONG).show();
 
 
@@ -125,7 +125,7 @@ public class CreateSettingActivity extends AppCompatActivity {
             ed.putString("PREF_TABLET", mTablet);
             ed.putString("PREF_EVENT", mEvent);
             ed.putString("PREF_FILENAME", mFileName);
-            ed.putBoolean( "PREF_SCHEDULE", true);
+            //ed.putBoolean( "PREF_SCHEDULE", true);
             ed.commit();
 
             Intent intent = new Intent(this, MainActivity.class);

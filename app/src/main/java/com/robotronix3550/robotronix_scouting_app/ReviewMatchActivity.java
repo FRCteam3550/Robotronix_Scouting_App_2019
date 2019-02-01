@@ -44,12 +44,14 @@ public class ReviewMatchActivity extends AppCompatActivity {
         Integer db_id;
         Integer db_match;
         Integer db_robot;
+        String db_scouter;
+        Integer db_schedule;
         Cursor cursor = getContentResolver().query(ScoutContract.ScoutEntry.CONTENT_URI, column, selection, selectionArgs, sortOrder);
 
         // Show a toast message depending on whether or not the insertion was successful
         if (cursor == null) {
 
-            ReviewInfos.add(new ScoutInfo(0, 10, 3550));
+            ReviewInfos.add(new ScoutInfo(0, 10, 3550, "", 0));
             // If the new content URI is null, then there was an error with insertion.
             Toast.makeText(this, getString(R.string.queryDB_scout_failed),
                     Toast.LENGTH_LONG).show();
@@ -57,11 +59,20 @@ public class ReviewMatchActivity extends AppCompatActivity {
 
             try{
                 if (cursor.moveToFirst()) {
+
+                    int matchColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_MATCH);
+                    int robotColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_ROBOT);
+                    int scouterColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_SCOUTER);
+                    int scheduleColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_SCHEDULE_MATCH);
+
                     while ( !cursor.isAfterLast() ) {
                         db_id = cursor.getInt(0);
-                        db_match = cursor.getInt( 1);
-                        db_robot = cursor.getInt(2);
-                        ReviewInfos.add(new ScoutInfo(db_id, db_match, db_robot));
+                        db_match = cursor.getInt( matchColIdx);
+                        db_robot = cursor.getInt(robotColIdx);
+                        db_scouter = cursor.getString(scouterColIdx);
+                        db_schedule = cursor.getInt(scheduleColIdx);
+
+                        ReviewInfos.add(new ScoutInfo(db_id, db_match, db_robot, db_scouter, db_schedule));
                         cursor.moveToNext();
                     }
                 }
@@ -91,39 +102,47 @@ public class ReviewMatchActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
+                Uri currentScoutUri;
+                String scouter;
+
                 // Get the {@link Word} object at the given position the user clicked on
                 ScoutInfo info = ReviewInfos.get(position);
+                Log.d("REVIEW", "position : " + position);
+                Log.d("REVIEW", "id : " + id);
+                Log.d("REVIEW", "info match : " + info.getMatch());
+                Log.d("REVIEW", "info robot : " + info.getRobot());
+                Log.d("REVIEW", "info Schedule Match : " + info.getScheduleMatch());
+                Log.d("REVIEW", "info scouter : " + info.getScouter());
+
 
                 if( info.getMatch() == 0 ) {
 
                     Intent intent = new Intent(getBaseContext(), ScoutPitActivity.class);
-                    // intent.putExtra(EXTRA_DB_ID, info.getDb_id());
-                    Log.d("REVIEW", "position : " + position);
-                    Log.d("REVIEW", "id : " + id);
-                    Log.d("REVIEW", "info match : " + info.getMatch());
-                    Log.d("REVIEW", "info robot : " + info.getRobot());
-
-                    Uri currentScoutUri = ContentUris.withAppendedId(ScoutContract.ScoutEntry.CONTENT_URI, (position+1));
+                    currentScoutUri = ContentUris.withAppendedId(ScoutContract.ScoutEntry.CONTENT_URI, (position+1));
                     intent.setData(currentScoutUri);
-                    Log.d("REVIEW", "uri : " + currentScoutUri.toString());
-
                     startActivity(intent);
+
                 } else {
 
-                    Intent intent = new Intent(getBaseContext(), ScoutMatchActivity.class);
-                    Log.d("REVIEW", "position : " + position);
-                    Log.d("REVIEW", "id : " + id);
-                    Log.d("REVIEW", "info match : " + info.getMatch());
-                    Log.d("REVIEW", "info robot : " + info.getRobot());
+                    scouter = info.getScouter();
 
-                    Uri currentScoutUri = ContentUris.withAppendedId(ScoutContract.ScoutEntry.CONTENT_URI, (position+1));
-                    intent.setData(currentScoutUri);
-                    Log.d("REVIEW", "uri : " + currentScoutUri.toString());
+                    if( info.getScheduleMatch() && (scouter == null || scouter.equals("")) ) {
 
-                    //intent.putExtra(EXTRA_DB_ID, info.getDb_id());
-                    startActivity(intent);
+                        Intent intent = new Intent(getBaseContext(), CreateMatchActivity.class);
+                        currentScoutUri = ContentUris.withAppendedId(ScoutContract.ScoutEntry.CONTENT_URI, (position + 1));
+                        intent.setData(currentScoutUri);
+                        startActivity(intent);
 
+                    } else {
+
+                        Intent intent = new Intent(getBaseContext(), ScoutMatchActivity.class);
+                        currentScoutUri = ContentUris.withAppendedId(ScoutContract.ScoutEntry.CONTENT_URI, (position + 1));
+                        intent.setData(currentScoutUri);
+                        startActivity(intent);
+                    }
                 }
+                //Log.d("REVIEW", "uri : " + currentScoutUri.toString());
+
                 //Toast.makeText(this, "hello match : ", //  + info.getMatch().toString(),      // getString(R.string.queryDB_scout_failed),
                 //        Toast.LENGTH_LONG).show();
 

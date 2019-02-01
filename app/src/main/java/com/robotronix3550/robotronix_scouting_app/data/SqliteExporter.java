@@ -61,6 +61,10 @@ public class SqliteExporter {
 
         db.beginTransaction();
         try {
+            // first line is Match and Robot
+            line = buffer.readLine();
+
+            // Read scheduled matches
             while ((line = buffer.readLine()) != null) {
                 String[] colums = line.split(",");
                 /*
@@ -72,6 +76,8 @@ public class SqliteExporter {
                 ContentValues cv = new ContentValues();
                 cv.put(ScoutEntry.COLUMN_SCOUT_MATCH, colums[0].trim());
                 cv.put(ScoutEntry.COLUMN_SCOUT_ROBOT, colums[1].trim());
+                cv.put(ScoutEntry.COLUMN_SCOUT_SCHEDULE_MATCH, 1 );
+
                 /*
                 mettre des valeurs par default ...
                  */
@@ -86,57 +92,6 @@ public class SqliteExporter {
         db.endTransaction();
 
         return ScheduleFile.getAbsolutePath();
-
-        /*
-
-        FileReader file = new FileReader(fileName);
-        BufferedReader buffer = new BufferedReader(file);
-        String line = "";
-        String tableName ="TABLE_NAME";
-        String columns = "_id, name, dt1, dt2, dt3";
-        String str1 = "INSERT INTO " + tableName + " (" + columns + ") values(";
-        String str2 = ");";
-
-        db.beginTransaction();
-        while ((line = buffer.readLine()) != null) {
-            StringBuilder sb = new StringBuilder(str1);
-            String[] str = line.split(",");
-            sb.append("'" + str[0] + "',");
-            sb.append(str[1] + "',");
-            sb.append(str[2] + "',");
-            sb.append(str[3] + "'");
-            sb.append(str[4] + "'");
-            sb.append(str2);
-            db.execSQL(sb.toString());
-        }
-        db.setTransactionSuccessful();
-        db.endTransaction();
-
-        BufferedReader buffer = new BufferedReader(new InputStreamReader(inStream));
-        String line = "";
-        db.beginTransaction();
-        try {
-            while ((line = buffer.readLine()) != null) {
-                String[] colums = line.split(",");
-                if (colums.length != 4) {
-                    Log.d("CSVParser", "Skipping Bad CSV Row");
-                    continue;
-                }
-                ContentValues cv = new ContentValues(3);
-                cv.put(dbCol0, colums[0].trim());
-                cv.put(dbCol1, colums[1].trim());
-                cv.put(dbCol2, colums[2].trim());
-                cv.put(dbCol3, colums[3].trim());
-                cv.put(dbCol4, colums[4].trim());
-                db.insert(TABLE, null, cv);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        db.setTransactionSuccessful();
-        db.endTransaction();
-        */
-
 
     }
 
