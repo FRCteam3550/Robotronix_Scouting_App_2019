@@ -12,6 +12,7 @@ public class ScoutInfo {
     Integer Match;
     Integer Robot;
     String  Scouter;
+    Boolean ScheduleMatch;
 
     Integer Auto_line;
     Integer Auto_switch;
@@ -37,10 +38,16 @@ public class ScoutInfo {
 
     Integer robotImageId;
 
-    public ScoutInfo(Integer id, Integer match, Integer robot) {
+    public ScoutInfo(Integer id, Integer match, Integer robot, String scouter, Integer schedule) {
         db_id = id;
         Match = match;
         Robot = robot;
+        Scouter = scouter;
+
+        if (schedule == 1)
+            ScheduleMatch = true;
+        else
+            ScheduleMatch = false;
 
         switch( robot ) {
             case 229: robotImageId = R.drawable.robot_229;
@@ -196,6 +203,10 @@ public class ScoutInfo {
     public void setRobot(Integer robot) {
         Robot = robot;
     }
+
+    public Boolean getScheduleMatch() { return ScheduleMatch; }
+
+    public void setScheduleMatch(Boolean match) { ScheduleMatch = match; }
 
     public String getScouter() {
         return Scouter;

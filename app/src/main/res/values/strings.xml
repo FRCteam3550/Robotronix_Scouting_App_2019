@@ -48,6 +48,11 @@
     <!-- Toast message in editor when new scout has failed to be inserted [CHAR LIMIT=NONE] -->
     <string name="queryDB_scout_failed">Error with database query</string>
 
+    <!-- Toast message in editor when new scout has been successfully inserted [CHAR LIMIT=NONE] -->
+    <string name="importSchedule_scout_successful">import Schedule successfull</string>
+
+    <!-- Toast message in editor when new scout has failed to be inserted [CHAR LIMIT=NONE] -->
+    <string name="importSchedule_scout_failed">Error import Schedule</string>
 
 
     <string name="title_activity_scout_match">ScoutMatch</string>

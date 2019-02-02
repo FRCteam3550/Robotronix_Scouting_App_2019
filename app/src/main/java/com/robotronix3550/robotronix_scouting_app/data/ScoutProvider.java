@@ -285,6 +285,11 @@ public class ScoutProvider extends ContentProvider {
             // Do whatever it is you need to do
             exportDB( arg );
             return bu;
+        } if(method.equals("importSchedule")) {
+
+            importSchedule( arg );
+            return bu;
+
         } else {
             return null;
         }
@@ -308,8 +313,8 @@ public class ScoutProvider extends ContentProvider {
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
         try {
-            dbExport.export(db, FileName);
-            Log.e(LOG_TAG, "Called export on sqliteExporter");
+            dbExport.importSchedule(db, FileName);
+            Log.e(LOG_TAG, "Called importSchedule on sqliteExporter");
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -33,6 +33,8 @@ public class ScoutMatchActivity extends AppCompatActivity {
     Integer mRobot;
     String mScouter;
     Integer mMatch;
+    Integer mScheduledMatch;
+
     Boolean SandTele;
 
     Integer mSandCargoLvl1;
@@ -133,17 +135,16 @@ public class ScoutMatchActivity extends AppCompatActivity {
             }
         });
 
+        mPrefs = getSharedPreferences(PREFS_SCOUTER, MODE_PRIVATE);
+
         // Comes from rotating the tablet
         //
         if( savedInstanceState != null ) {
 
-            // mMatch = intent.getIntExtra(CreateMatchActivity.EXTRA_MATCH, 0);
             mRobot = intent.getIntExtra(CreateMatchActivity.EXTRA_ROBOT, 0);
-
-            // mPrefs = getPreferences(MODE_PRIVATE);
-            mPrefs = getSharedPreferences(PREFS_SCOUTER, MODE_PRIVATE);
             mScouter = mPrefs.getString("PREF_SCOUTER", "Prenom");
             mMatch = mPrefs.getInt("PREF_MATCH", 98);
+            // mScheduledMatch = 0;????
 
             /*
             TxtCntPlvl1 = savedInstanceState.getInt("Panel_Lvl1");
@@ -196,13 +197,10 @@ public class ScoutMatchActivity extends AppCompatActivity {
             // Comes from the CreateMatchActivity
             //
 
-            //mMatch = intent.getIntExtra(CreateMatchActivity.EXTRA_MATCH, 0);
             mRobot = intent.getIntExtra(CreateMatchActivity.EXTRA_ROBOT, 0);
-
-            //mPrefs = getPreferences(MODE_PRIVATE);
-            mPrefs = getSharedPreferences(PREFS_SCOUTER, MODE_PRIVATE);
             mScouter = mPrefs.getString("PREF_SCOUTER", "Prenom");
             mMatch = mPrefs.getInt("PREF_MATCH", 0); // increment match number
+            mScheduledMatch = 0;
 
 
             mSandCargoLvl1 = 0;
@@ -232,7 +230,7 @@ public class ScoutMatchActivity extends AppCompatActivity {
             enemy_score = 0;
 
         } else {
-            // Get Data Database (from ReviewMatchActivity)
+            // Get Data Database (from ReviewMatchActivity or from a schedule match)
             //
 
             String[] column = null;  // return all columns
@@ -252,6 +250,7 @@ public class ScoutMatchActivity extends AppCompatActivity {
                 int matchColIdx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_MATCH);
                 int robotColIdx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_ROBOT);
                 int scouterColIdx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_SCOUTER);
+                int scheduleColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_SCHEDULE_MATCH);
 
                 int SandCargoLvl1Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_SAND_CARGO_LVL1);
                 int SandPanelLvl1Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_SAND_PANEL_LVL1);
@@ -275,6 +274,10 @@ public class ScoutMatchActivity extends AppCompatActivity {
                 int TeleHabLvl2Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_TELE_HAB_LVL2);
                 int TeleHabLvl3Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_TELE_HAB_LVL3);
 
+                int TeleBlocksIdx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_TELE_BLOCKS);
+                int TelePinsIdx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_TELE_PINS);
+                int TeleBrokenIdx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_TELE_BROKEN);
+
                 int gameAllyScoreColIdx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_GAME_ALLY_SCORE);
                 int gameEnemyScoreColIdx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_GAME_ENEMY_SCORE);
 
@@ -291,8 +294,19 @@ public class ScoutMatchActivity extends AppCompatActivity {
 
                 // db_id = cursor.getInt(0);
                 mMatch = cursor.getInt(matchColIdx);
+                Log.d(TAG, "match : " + mMatch);
                 mRobot = cursor.getInt(robotColIdx);
-                mScouter = cursor.getString(scouterColIdx);
+                Log.d(TAG, "robot : " + mRobot);
+
+                mScheduledMatch = cursor.getInt(scheduleColIdx);
+                Log.d(TAG, "schedule : " + mScheduledMatch);
+
+                if( mScheduledMatch == 1) {
+                    mScouter = mPrefs.getString("PREF_SCOUTER", "Prenom");
+                } else {
+                    mScouter = cursor.getString(scouterColIdx);
+                }
+                Log.d(TAG, "scouter : " + mScouter);
 
                 mSandCargoLvl1 = cursor.getInt(SandCargoLvl1Idx);
                 mSandCargoLvl2 = cursor.getInt(SandCargoLvl2Idx);
@@ -300,6 +314,7 @@ public class ScoutMatchActivity extends AppCompatActivity {
                 mTeleCargoLvl1 = cursor.getInt(TeleCargoLvl1Idx);
                 mTeleCargoLvl2 = cursor.getInt(TeleCargoLvl2Idx);
                 mTeleCargoLvl3 = cursor.getInt(TeleCargoLvl3Idx);
+                Log.d(TAG, "mSandCargoLvl1 : " + mSandCargoLvl1);
 
                 mSandPanelLvl1 = cursor.getInt(SandPanelLvl1Idx);
                 mSandPanelLvl2 = cursor.getInt(SandPanelLvl2Idx);
@@ -307,20 +322,28 @@ public class ScoutMatchActivity extends AppCompatActivity {
                 mTelePanelLvl1 = cursor.getInt(TelePanelLvl1Idx);
                 mTelePanelLvl2 = cursor.getInt(TelePanelLvl2Idx);
                 mTelePanelLvl3 = cursor.getInt(TelePanelLvl3Idx);
+                Log.d(TAG, "mTelePanelLvl1 : " + mTelePanelLvl1);
 
                 mSandHabLvl1 = cursor.getInt(SandHabLvl1Idx);
                 mSandHabLvl2 = cursor.getInt(SandHabLvl2Idx);
                 mSandHabLvl3 = cursor.getInt(SandHabLvl3Idx);
+                Log.d(TAG, "mSandHabLvl1 : " + mSandHabLvl1);
 
                 mTeleHabLvl1 = cursor.getInt(TeleHabLvl1Idx);
                 mTeleHabLvl2 = cursor.getInt(TeleHabLvl2Idx);
                 mTeleHabLvl3 = cursor.getInt(TeleHabLvl3Idx);
+                Log.d(TAG, "mTeleHabLvl2 : " + mTeleHabLvl2);
+
+                mTeleBlocks = cursor.getInt(TeleBlocksIdx);
+                mTelePin = cursor.getInt(TelePinsIdx);
+                //mTeleBroken = cursor.getInt(TeleBrokenIdx);
 
                 alliance_score = cursor.getInt(gameAllyScoreColIdx);
                 enemy_score = cursor.getInt(gameEnemyScoreColIdx);
 
                 AllyScoreEditText.setText(alliance_score.toString());
                 EnemyScoreEditText.setText(enemy_score.toString());
+
 
             }
             catch(Exception throwable){
@@ -658,6 +681,7 @@ public class ScoutMatchActivity extends AppCompatActivity {
         values.put(ScoutEntry.COLUMN_SCOUT_SCOUTER, mScouter);
         values.put(ScoutEntry.COLUMN_SCOUT_MATCH, mMatch);
         values.put(ScoutEntry.COLUMN_SCOUT_ROBOT, mRobot);
+        values.put(ScoutEntry.COLUMN_SCOUT_SCHEDULE_MATCH, mScheduledMatch);
 
         values.put(ScoutEntry.COLUMN_SCOUT_SAND_CARGO_LVL1,mSandCargoLvl1 );
         values.put(ScoutEntry.COLUMN_SCOUT_TELE_CARGO_LVL1,mTeleCargoLvl1);

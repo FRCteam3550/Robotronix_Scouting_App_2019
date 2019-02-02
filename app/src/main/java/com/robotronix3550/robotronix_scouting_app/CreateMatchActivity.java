@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -43,16 +44,13 @@ public class CreateMatchActivity extends AppCompatActivity {
     String mScouter;
     Integer mMatch;
     Integer mRobot;
-
-    Integer db_id;
-    Integer db_match;
-    Integer db_robot;
-
-    Boolean mScheduledMatch;
+    Integer mScheduledMatch;
 
     ScoutInfo RobotInfo;
 
     private SharedPreferences mPrefs;
+
+    Uri mCurrentScoutUri;
 
     public static final String PREFS_SCOUTER = "MyPrefScouterFile";
 
@@ -69,12 +67,12 @@ public class CreateMatchActivity extends AppCompatActivity {
 
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
+        mCurrentScoutUri = intent.getData();
 
         // mPrefs = getPreferences(MODE_PRIVATE);
         mPrefs = getSharedPreferences(PREFS_SCOUTER, MODE_PRIVATE);
         mScouter = mPrefs.getString("PREF_SCOUTER", "Prenom");
         mMatch = mPrefs.getInt("PREF_MATCH", 0) + 1; // increment match number
-        mScheduledMatch = mPrefs.getBoolean("PREF_SCHEDULED", false);
 
         String message = "Scouter un Match";
 
@@ -93,60 +91,45 @@ public class CreateMatchActivity extends AppCompatActivity {
         String selection = null; // return all rows
         String[] selectionArgs = null; // not used
         String sortOrder = null;  // unordered
+        Cursor cursor = null;
+        boolean bSchedule = false;
 
-        if( mScheduledMatch ){
+        if( mCurrentScoutUri != null) {
 
-            Cursor cursor = getContentResolver().query(ScoutContract.ScoutEntry.CONTENT_URI, column, selection, selectionArgs, sortOrder);
-            // Show a toast message depending on whether or not the insertion was successful
-            if (cursor == null) {
+            cursor = getContentResolver().query(mCurrentScoutUri, column, selection, selectionArgs, sortOrder);
+            String debug = DatabaseUtils.dumpCursorToString(cursor);
+            Log.d(TAG, debug);
 
-                Toast.makeText(this, getString(R.string.queryDB_scout_failed),
-                        Toast.LENGTH_LONG).show();
-            } else {
+            int matchColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_MATCH);
+            int robotColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_ROBOT);
+            //int scouterColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_SCOUTER);
+            int scheduleColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_SCHEDULE_MATCH);
 
-                try{
-                    if (cursor.moveToFirst()) {
-                        while ( !cursor.isAfterLast() ) {
-                            db_id = cursor.getInt(0);
-                            db_match = cursor.getInt(1);
-                            db_robot = cursor.getInt(2);
+            cursor.moveToFirst();
+            boolean isFirst = cursor.isFirst();
 
-                            if( db_match == mMatch && db_robot == mRobot ) {
-                                RobotInfo = new ScoutInfo(db_id, db_match, db_robot);
-                                break;
-                            } else {
-                                cursor.moveToNext();
-                            }
-                        }
-                    }
-                }
-                catch(Exception throwable){
-                    Log.e(TAG, "Could not get the table names from db", throwable);
-                }
-                finally{
-                    if(cursor!=null)
-                        cursor.close();
-                }
+            mMatch = cursor.getInt(matchColIdx);
+            mRobot = cursor.getInt(robotColIdx);
+            mScheduledMatch = cursor.getInt(scheduleColIdx);
 
-            }
+            if ( mScheduledMatch == 1) bSchedule = true;
 
-            if (RobotInfo != null ) {
+            Log.d(TAG, "match : " + mMatch);
+            Log.d(TAG, "robot : " + mRobot);
+            Log.d(TAG, "schedule : " + mScheduledMatch);
+            RobotInfo = new ScoutInfo(0, mMatch, mRobot, mScouter, mScheduledMatch);
 
-                mMatchEditText.setText(RobotInfo.getMatch().toString());
-                mRobotEditText.setText(RobotInfo.getRobot().toString());
-                mRobotImage.setImageResource(RobotInfo.getRobotImageId());
-
-            } else {
-
-                mMatchEditText.setText(mMatch);
-                mRobotImage.setImageResource(R.drawable.robotronixlogo);
-
-            }
+            mRobotEditText.setText(RobotInfo.getRobot().toString());
+            mRobotImage.setImageResource(RobotInfo.getRobotImageId());
+            mScheduledMatchCheckedBox.setText("OUI");
 
         } else {
-            mMatchEditText.setText(mMatch.toString());
             mRobotImage.setImageResource(R.drawable.robotronixlogo);
+            mScheduledMatchCheckedBox.setText("NON");
         }
+
+        mMatchEditText.setText(mMatch.toString());
+        mScheduledMatchCheckedBox.setChecked(bSchedule);
 
 
 
@@ -168,7 +151,7 @@ public class CreateMatchActivity extends AppCompatActivity {
                     mRobot = Integer.parseInt(robotString);
                     mMatch = Integer.parseInt(matchString);
 
-                    ScoutInfo RobotInfo = new ScoutInfo(0, mMatch, mRobot);
+                    ScoutInfo RobotInfo = new ScoutInfo(0, mMatch, mRobot, "", 0);
                     mRobotImage.setImageResource(RobotInfo.getRobotImageId());
                 }
 
@@ -240,10 +223,14 @@ public class CreateMatchActivity extends AppCompatActivity {
             ed.commit();
 
             Intent intent = new Intent(this, ScoutMatchActivity.class);
-            // intent.putExtra(EXTRA_SCOUTER, mScouter);
-            // intent.putExtra(EXTRA_MATCH, match);
-            intent.putExtra(EXTRA_ROBOT, mRobot);
 
+            if( mCurrentScoutUri != null) {
+                intent.setData(mCurrentScoutUri);
+            } else {
+                // intent.putExtra(EXTRA_SCOUTER, mScouter);
+                // intent.putExtra(EXTRA_MATCH, match);
+                intent.putExtra(EXTRA_ROBOT, mRobot);
+            }
             startActivity(intent);
         }
 
