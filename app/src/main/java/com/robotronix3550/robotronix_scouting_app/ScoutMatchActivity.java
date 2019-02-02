@@ -1,10 +1,12 @@
 package com.robotronix3550.robotronix_scouting_app;
 
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,6 +31,8 @@ import static com.robotronix3550.robotronix_scouting_app.R.id.lvl1Button;
 public class ScoutMatchActivity extends AppCompatActivity {
 
     public static final String TAG = ScoutMatchActivity.class.getSimpleName();
+
+    MediaPlayer mMediaPlayer;
 
     Integer mRobot;
     String mScouter;
@@ -360,6 +364,8 @@ public class ScoutMatchActivity extends AppCompatActivity {
         //mRobotEditText.setText(mRobot.toString());
 
         updateTxtCnt();
+
+        mMediaPlayer = MediaPlayer.create(this, R.raw.laser_blaster);
     }
 
     public void saveHabLvlState() {
@@ -455,6 +461,7 @@ public class ScoutMatchActivity extends AppCompatActivity {
             mSandPanelLvl1++;
             TxtCntPanelLvl1.setText(mSandPanelLvl1.toString());
         }
+        mMediaPlayer.start();
     }
 
     public void DecPanelLvl1(View view) {
@@ -753,10 +760,62 @@ public class ScoutMatchActivity extends AppCompatActivity {
         ed.putInt("PREF_MATCH", mMatch);
         ed.commit();
 
-        Intent intent = new Intent(this, MainActivity.class);
-        //intent.putExtra(CreateMatchActivity.EXTRA_SCOUTER, mScouter);
+        Uri nextUri = null;
+        Uri tryUri = null;
 
-        startActivity(intent);
+        if( mCurrentScoutUri != null && mScheduledMatch == 1) {
+
+            long position = 0;
+            String[] column = null;  // return all columns
+            String selection = null; // db_id.toString(); // return all rows
+            String[] selectionArgs = null; // not used
+            String sortOrder = null;  // unordered
+            Cursor cursor = null;
+
+            // extract position of current uri
+            tryUri = mCurrentScoutUri;
+            position = ContentUris.parseId(mCurrentScoutUri);
+            Log.d(TAG, "mCurrentScoutUri : " + mCurrentScoutUri);
+            Log.d(TAG, "position : " + position);
+
+            // Look if next position in schedule match exist, if yes continue on next schedule match
+            tryUri = ContentUris.withAppendedId(ScoutContract.ScoutEntry.CONTENT_URI, (position + 1));
+            Log.d(TAG, "tryUri : " + tryUri);
+
+            try {
+
+                cursor = getContentResolver().query(tryUri, column, selection, selectionArgs, sortOrder);
+
+                if( cursor.getCount() != 0) {
+                    String debug = DatabaseUtils.dumpCursorToString(cursor);
+                    Log.d(TAG, debug);
+                    nextUri = tryUri;
+                }
+            }
+            catch(Exception throwable){
+                Log.e(TAG, "Could not get data from cursor", throwable);
+            }
+            finally {
+                if(cursor!=null)
+                    cursor.close();
+            }
+
+        }
+
+        if( nextUri == null) {
+
+            Log.e(TAG, "nextUri is null and going back to Main");
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+
+        } else {
+
+            Log.e(TAG, "nextUri is valid and go to create next schedule match");
+            Intent intent = new Intent(this, CreateMatchActivity.class);
+            intent.setData(nextUri);
+            startActivity(intent);
+
+        }
 
     }
 
