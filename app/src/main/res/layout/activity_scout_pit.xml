@@ -4,22 +4,84 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#681896"
     tools:context="com.robotronix3550.robotronix_scouting_app.ScoutPitActivity">
 
     <LinearLayout
-        android:layout_width="584dp"
-        android:layout_height="893dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:textColor="#ffffff"
+                android:layout_weight="1"
+                android:text="Team:"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/TeamNumberEditText"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#ffffff"
+                android:textColor="#ffffff"
+                android:ems="10"
+                android:inputType="number" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:text="Scout:"
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/ScoutNameEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:textColor="#ffffff"
+                android:backgroundTint="#ffffff"
+                android:inputType="textPersonName" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="0"
             android:orientation="horizontal">
 
             <Space
@@ -29,50 +91,26 @@
 
             <TextView
                 android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
-                android:text="Robot"
-                android:textAlignment="viewEnd"
-                android:textSize="24sp" />
+                android:textColor="#ffffff"
+                android:text="Ramasse Cargo au sol"
+                android:textSize="18sp" />
 
             <Space
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
-            <EditText
-                android:id="@+id/RobotEditText"
+            <ToggleButton
+                android:id="@+id/GroundCargoPickUpToggleButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:ems="10"
-                android:inputType="number" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/textView22"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Scout" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <EditText
-                android:id="@+id/PitScoutEditText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName" />
+                android:text="ToggleButton"
+                android:textOff="Non"
+                android:textOn="Oui" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -82,40 +120,11 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="20dp" />
+            android:layout_height="10dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/textView18"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Abileté en mode autonome"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:orientation="horizontal">
 
             <Space
@@ -125,10 +134,11 @@
 
             <TextView
                 android:id="@+id/textView7"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
-                android:text="Dépasser la ligne"
+                android:textColor="#ffffff"
+                android:text="Ramasse Panel au Sol"
                 android:textSize="18sp" />
 
             <Space
@@ -137,13 +147,13 @@
                 android:layout_weight="1" />
 
             <ToggleButton
-                android:id="@+id/AutoLineToggleButton"
+                android:id="@+id/GroundPanelPickUpToggleButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="ToggleButton"
-                android:textOff="NON"
-                android:textOn="OUI" />
+                android:textOff="Non"
+                android:textOn="Oui" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -153,11 +163,54 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="10dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:textColor="#ffffff"
+                android:text="Ramasse Cargo au Loading Station"
+                android:textSize="18sp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ToggleButton
+                android:id="@+id/LoadingStationCargoPickUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="ToggleButton"
+                android:textOff="Non"
+                android:textOn="Oui" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:orientation="horizontal">
 
             <Space
@@ -167,10 +220,11 @@
 
             <TextView
                 android:id="@+id/textView9"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:textColor="#ffffff"
                 android:layout_weight="1"
-                android:text="Déposer cube dans bascule"
+                android:text="Ramasse Panel au Loading Station"
                 android:textSize="18sp" />
 
             <Space
@@ -179,97 +233,13 @@
                 android:layout_weight="1" />
 
             <ToggleButton
-                android:id="@+id/AutoSwitchToggleButton"
+                android:id="@+id/LoadingStationPanelPickUp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="ToggleButton"
-                android:textOff="NON"
-                android:textOn="OUI" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/textView11"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Déposer cube dans balance"
-                android:textSize="18sp" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <ToggleButton
-                android:id="@+id/AutoScaleToggleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="ToggleButton"
-                android:textOff="NON"
-                android:textOn="OUI" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/textView16"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Ramasser un cube"
-                android:textSize="18sp" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <ToggleButton
-                android:id="@+id/AutoPickToggleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="ToggleButton"
-                android:textOff="NON"
-                android:textOn="OUI" />
+                android:textOff="Non"
+                android:textOn="Oui" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -283,7 +253,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:orientation="horizontal">
 
             <Space
@@ -292,11 +262,12 @@
                 android:layout_weight="1" />
 
             <TextView
-                android:id="@+id/textView17"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Abileté en mode TéléOp"
+                android:id="@+id/textView11"
+                android:layout_width="125dp"
+                android:layout_height="50dp"
+                android:layout_weight="0"
+                android:text="Drivetrain"
+                android:textColor="#ffffff"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -308,11 +279,11 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="10dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:orientation="horizontal">
 
             <Space
@@ -321,11 +292,12 @@
                 android:layout_weight="1" />
 
             <TextView
-                android:id="@+id/textView19"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/textView12"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
-                android:text="Pousser cube dans échangeur"
+                android:text="Type de Drivetrain"
+                android:textColor="#ffffff"
                 android:textSize="18sp" />
 
             <Space
@@ -333,14 +305,11 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
-            <ToggleButton
-                android:id="@+id/TeleExchangeToggleButton"
-                android:layout_width="wrap_content"
+            <Spinner
+                android:id="@+id/drivetainTypeSpinner"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="ToggleButton"
-                android:textOff="NON"
-                android:textOn="OUI" />
+                android:layout_weight="1" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -349,12 +318,12 @@
         </LinearLayout>
 
         <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_width="wrap_content"
+            android:layout_height="10dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:orientation="horizontal">
 
             <Space
@@ -363,263 +332,12 @@
                 android:layout_weight="1" />
 
             <TextView
-                android:id="@+id/textView19"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/textView14"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
-                android:text="Déposer cube dans bascule"
-                android:textSize="18sp" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <ToggleButton
-                android:id="@+id/TeleSwitchToggleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="ToggleButton"
-                android:textOff="NON"
-                android:textOn="OUI" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/textView19"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Déposer cube dans balance"
-                android:textSize="18sp" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <ToggleButton
-                android:id="@+id/TeleScaleToggleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="ToggleButton"
-                android:textOff="NON"
-                android:textOn="OUI" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/textView19"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Ramasser cube par terre"
-                android:textSize="18sp" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <ToggleButton
-                android:id="@+id/TelePickToggleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="ToggleButton"
-                android:textOff="NON"
-                android:textOn="OUI" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/textView19"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Recevoir cube du portail"
-                android:textSize="18sp" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <ToggleButton
-                android:id="@+id/TelePortalToggleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="ToggleButton"
-                android:textOff="NON"
-                android:textOn="OUI" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/textView19"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Grimper "
-                android:textSize="18sp" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <ToggleButton
-                android:id="@+id/TeleClimbToggleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="ToggleButton"
-                android:textOff="NON"
-                android:textOn="OUI" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/textView19"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Aide les autres à grimper"
-                android:textSize="18sp" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <ToggleButton
-                android:id="@+id/TeleHelpToggleButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="ToggleButton"
-                android:textOff="NON"
-                android:textOn="OUI" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/textView23"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Deplacement"
+                android:text="Poids du Robot"
+                android:textColor="#ffffff"
                 android:textSize="18sp" />
 
             <Space
@@ -628,48 +346,12 @@
                 android:layout_weight="1" />
 
             <EditText
-                android:id="@+id/DrivetrainEditText"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="roue standard" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/textView24"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Poids"
-                android:textSize="18sp" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <EditText
-                android:id="@+id/WeightEditText"
+                android:id="@+id/RobotWeightEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:backgroundTint="#ffffff"
+                android:textColor="#ffffff"
                 android:ems="10"
                 android:inputType="number" />
 
@@ -677,53 +359,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
-
-            <TextView
-                android:id="@+id/textView25"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="lbs"
-                android:textSize="18sp" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
         </LinearLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <Button
-                android:id="@+id/button9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="savePit"
-                android:text="SAUVER"
-                android:textSize="24sp" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
