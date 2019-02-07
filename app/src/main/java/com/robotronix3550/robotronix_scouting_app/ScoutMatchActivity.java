@@ -39,6 +39,8 @@ public class ScoutMatchActivity extends AppCompatActivity {
     Integer mMatch;
     Integer mScheduledMatch;
 
+    Boolean mSoundFX;
+
     Boolean SandTele;
 
     Integer mSandCargoLvl1;
@@ -92,6 +94,7 @@ public class ScoutMatchActivity extends AppCompatActivity {
 
 
     private SharedPreferences mPrefs;
+    private SharedPreferences mAppsPrefs;
 
     Uri mCurrentScoutUri;
 
@@ -140,6 +143,9 @@ public class ScoutMatchActivity extends AppCompatActivity {
         });
 
         mPrefs = getSharedPreferences(PREFS_SCOUTER, MODE_PRIVATE);
+        //mAppsPrefs = getPreferences(MODE_PRIVATE);
+        mSoundFX = mPrefs.getBoolean("PREF_SOUND_FX", false);
+        Log.d(TAG, "Sound FX : " + mSoundFX);
 
         // Comes from rotating the tablet
         //
@@ -365,7 +371,9 @@ public class ScoutMatchActivity extends AppCompatActivity {
 
         updateTxtCnt();
 
-        mMediaPlayer = MediaPlayer.create(this, R.raw.laser_blaster);
+        //mMediaPlayer = MediaPlayer.create(this, R.raw.laser_blaster);
+
+
     }
 
     public void saveHabLvlState() {
@@ -461,7 +469,11 @@ public class ScoutMatchActivity extends AppCompatActivity {
             mSandPanelLvl1++;
             TxtCntPanelLvl1.setText(mSandPanelLvl1.toString());
         }
-        mMediaPlayer.start();
+        if( mSoundFX ) {
+            mMediaPlayer = MediaPlayer.create(this, R.raw.laser_blaster);
+            mMediaPlayer.start();
+            //mMediaPlayer.release();
+        }
     }
 
     public void DecPanelLvl1(View view) {
@@ -488,6 +500,12 @@ public class ScoutMatchActivity extends AppCompatActivity {
             mSandCargoLvl1++;
             TxtCntClvl1.setText(mSandCargoLvl1.toString());
         }
+        if( mSoundFX ) {
+            mMediaPlayer = MediaPlayer.create(this, R.raw.sonic_boom);
+            mMediaPlayer.start();
+            //mMediaPlayer.release();
+        }
+
     }
 
     public void DecCargoLvl1(View view) {

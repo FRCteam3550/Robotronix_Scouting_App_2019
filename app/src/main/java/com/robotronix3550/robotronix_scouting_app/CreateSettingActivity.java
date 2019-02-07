@@ -9,11 +9,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.robotronix3550.robotronix_scouting_app.data.ScoutContract;
 
@@ -22,8 +24,12 @@ import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import static com.robotronix3550.robotronix_scouting_app.CreateMatchActivity.PREFS_SCOUTER;
 
 public class CreateSettingActivity extends AppCompatActivity {
+
+    public static final String TAG = CreateSettingActivity.class.getSimpleName();
+
     public Integer fl = 1;
 
     /** EditText field to enter the event name */
@@ -35,6 +41,8 @@ public class CreateSettingActivity extends AppCompatActivity {
     /** EditText field to enter the directory */
     private TextView mPathEditText;
 
+    private ToggleButton mSoundFXToglBtn;
+
     private String mFileName;
 
     private String mEvent;
@@ -42,8 +50,11 @@ public class CreateSettingActivity extends AppCompatActivity {
     private String mTablet;
 
     private SharedPreferences mPrefs;
+    private SharedPreferences mAppsPrefs;
 
     private MediaScannerConnection mConnection;
+
+    private Boolean mSoundEffects;
 
 
 
@@ -56,9 +67,11 @@ public class CreateSettingActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         mPrefs = getPreferences(MODE_PRIVATE);
-        // mPrefs = getSharedPreferences(PREFS_SCOUTER, MODE_PRIVATE);
         mTablet = mPrefs.getString("PREF_TABLET", "tab1");
         mEvent = mPrefs.getString("PREF_EVENT", "mtl");
+
+        mAppsPrefs = getSharedPreferences(PREFS_SCOUTER, MODE_PRIVATE);
+        mSoundEffects = mAppsPrefs.getBoolean("PREF_SOUND_FX", false);
 
         String message = "Paramètres";
 
@@ -84,6 +97,9 @@ public class CreateSettingActivity extends AppCompatActivity {
         mFileName = mPrefs.getString("PREF_FILENAME", DefaultFileName);
 
         fileNameTextView.setText(mFileName);
+
+        mSoundFXToglBtn = (ToggleButton) findViewById(R.id.SoundEffectToglBtn);
+        mSoundFXToglBtn.setChecked(mSoundEffects);
 
     }
     public void importSchedule(View view){
@@ -121,12 +137,17 @@ public class CreateSettingActivity extends AppCompatActivity {
 
             }
 
+            mSoundEffects = mSoundFXToglBtn.isChecked();
+
             SharedPreferences.Editor ed = mPrefs.edit();
             ed.putString("PREF_TABLET", mTablet);
             ed.putString("PREF_EVENT", mEvent);
             ed.putString("PREF_FILENAME", mFileName);
-            //ed.putBoolean( "PREF_SCHEDULE", true);
             ed.commit();
+
+            SharedPreferences.Editor ed1 = mAppsPrefs.edit();
+            ed1.putBoolean( "PREF_SOUND_FX", mSoundEffects);
+            ed1.commit();
 
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
@@ -212,11 +233,17 @@ public class CreateSettingActivity extends AppCompatActivity {
 
             }
 
+            mSoundEffects = mSoundFXToglBtn.isChecked();
+
             SharedPreferences.Editor ed = mPrefs.edit();
             ed.putString("PREF_TABLET", mTablet);
             ed.putString("PREF_EVENT", mEvent);
             ed.putString("PREF_FILENAME", mFileName);
             ed.commit();
+
+            SharedPreferences.Editor ed1 = mAppsPrefs.edit();
+            ed1.putBoolean( "PREF_SOUND_FX", mSoundEffects);
+            ed1.commit();
 
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
@@ -229,11 +256,17 @@ public class CreateSettingActivity extends AppCompatActivity {
 
         mTablet = mTabletNameEditText.getText().toString().trim();
         mEvent = mEventEditText.getText().toString().trim();
+        mSoundEffects = mSoundFXToglBtn.isChecked();
+        Log.d(TAG, "Sound FX : " + mSoundEffects);
 
         SharedPreferences.Editor ed = mPrefs.edit();
         ed.putString("PREF_TABLET", mTablet);
         ed.putString("PREF_EVENT", mEvent);
         ed.commit();
+
+        SharedPreferences.Editor ed1 = mAppsPrefs.edit();
+        ed1.putBoolean( "PREF_SOUND_FX", mSoundEffects);
+        ed1.commit();
 
         super.onBackPressed();
         finish();

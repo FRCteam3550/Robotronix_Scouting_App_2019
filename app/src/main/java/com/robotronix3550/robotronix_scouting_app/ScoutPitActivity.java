@@ -78,12 +78,13 @@ public class ScoutPitActivity extends AppCompatActivity {
         mPrefs = getSharedPreferences(PREFS_SCOUTER, MODE_PRIVATE);
         mScouter = mPrefs.getString("PREF_SCOUTER", "Prenom");
 
-        mRobotEditText = (EditText) findViewById(R.id.RobotEditText);
-        mNameEditText = (EditText) findViewById(R.id.PitScoutEditText);
+        mRobotEditText = (EditText) findViewById(R.id.TeamNumberEditText);
+        mNameEditText = (EditText) findViewById(R.id.ScoutNameEditText);
 
-        mRobotDrivetrainEditText = (EditText) findViewById(R.id.DrivetrainEditText);
-        mRobotWeightEditText = (EditText) findViewById(R.id.WeightEditText);
+        mRobotDrivetrainEditText = (EditText) findViewById(R.id.drivetainTypeSpinner);
+        mRobotWeightEditText = (EditText) findViewById(R.id.RobotWeightEditText);
 
+        /*
         mAutoLineTogglebutton = (ToggleButton) findViewById(R.id.AutoLineToggleButton);
         mAutoSwitchTogglebutton = (ToggleButton) findViewById(R.id.AutoSwitchToggleButton);
         mAutoScaleTogglebutton = (ToggleButton) findViewById(R.id.AutoScaleToggleButton);
@@ -95,6 +96,7 @@ public class ScoutPitActivity extends AppCompatActivity {
         mTelePortalTogglebutton = (ToggleButton) findViewById(R.id.TelePortalToggleButton);
         mTeleClimbTogglebutton = (ToggleButton) findViewById(R.id.TeleClimbToggleButton);
         mTeleHelpClimbTogglebutton = (ToggleButton) findViewById(R.id.TeleHelpToggleButton);
+        */
 
         Intent intent = getIntent();
         mCurrentScoutUri = intent.getData();
