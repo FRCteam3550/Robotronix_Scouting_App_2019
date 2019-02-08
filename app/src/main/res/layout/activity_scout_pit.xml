@@ -371,7 +371,7 @@
                 android:layout_height="wrap_content" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/RobotPhoto"
                 android:layout_width="300dp"
                 android:layout_height="match_parent"
                 app:srcCompat="@drawable/robot_3550" />
@@ -380,11 +380,37 @@
                 android:layout_width="50dp"
                 android:layout_height="wrap_content" />
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:text="photo click" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp" />
+
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:onClick="takePhoto"
+                    android:text="photo click" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp" />
+
+                <Button
+                    android:id="@+id/button3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="savePit"
+                    android:text="Save" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
             <Space
                 android:layout_width="wrap_content"

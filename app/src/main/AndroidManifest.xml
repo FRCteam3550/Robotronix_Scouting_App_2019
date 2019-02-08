@@ -3,6 +3,8 @@
     package="com.robotronix3550.robotronix_scouting_app">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
 
     <application
         android:allowBackup="true"
@@ -42,7 +44,12 @@
         <provider
             android:name=".data.ScoutProvider"
             android:authorities="com.robotronix3550.robotronix_scouting_app.scouts"
-            android:exported="true" />
+            android:grantUriPermissions="true"
+            android:exported="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
 
         <activity
             android:name=".ScoutMatchActivity"

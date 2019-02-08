@@ -1,22 +1,38 @@
 package com.robotronix3550.robotronix_scouting_app;
 
+import android.Manifest;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.robotronix3550.robotronix_scouting_app.data.FileUtils;
 import com.robotronix3550.robotronix_scouting_app.data.ScoutContract;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 import static com.robotronix3550.robotronix_scouting_app.CreateMatchActivity.PREFS_SCOUTER;
 
@@ -24,9 +40,12 @@ public class ScoutPitActivity extends AppCompatActivity {
 
     public static final String TAG = ScoutPitActivity.class.getSimpleName();
 
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    static final int REQUEST_TAKE_PHOTO = 1;
+
     private EditText mRobotEditText;
     private EditText mNameEditText;
-    private EditText mRobotDrivetrainEditText;
+    private Spinner mRobotDrivetrainSpinner;
     private EditText mRobotWeightEditText;
 
     private ToggleButton mAutoLineTogglebutton;
@@ -42,11 +61,14 @@ public class ScoutPitActivity extends AppCompatActivity {
     private ToggleButton mTeleHelpClimbTogglebutton;
 
     private SharedPreferences mPrefs;
+    private String mFileName;
+
+    ImageView mRobotPictureImageView;
 
     Uri mCurrentScoutUri;
 
     Integer mRobot;
-    String  mDrivetrain;
+    Integer  mDrivetrain;
     Integer mWeight;
     Integer mMatch;
     String  mScouter;
@@ -81,8 +103,10 @@ public class ScoutPitActivity extends AppCompatActivity {
         mRobotEditText = (EditText) findViewById(R.id.TeamNumberEditText);
         mNameEditText = (EditText) findViewById(R.id.ScoutNameEditText);
 
-        mRobotDrivetrainEditText = (EditText) findViewById(R.id.drivetainTypeSpinner);
+        mRobotDrivetrainSpinner = findViewById(R.id.drivetainTypeSpinner);
         mRobotWeightEditText = (EditText) findViewById(R.id.RobotWeightEditText);
+
+        mRobotPictureImageView = findViewById(R.id.RobotPhoto);
 
         /*
         mAutoLineTogglebutton = (ToggleButton) findViewById(R.id.AutoLineToggleButton);
@@ -97,6 +121,11 @@ public class ScoutPitActivity extends AppCompatActivity {
         mTeleClimbTogglebutton = (ToggleButton) findViewById(R.id.TeleClimbToggleButton);
         mTeleHelpClimbTogglebutton = (ToggleButton) findViewById(R.id.TeleHelpToggleButton);
         */
+
+        if(Build.VERSION.SDK_INT >=23) {
+
+            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+        }
 
         Intent intent = getIntent();
         mCurrentScoutUri = intent.getData();
@@ -163,7 +192,7 @@ public class ScoutPitActivity extends AppCompatActivity {
                 // db_id = cursor.getInt(0);
                 mMatch = cursor.getInt(matchColIdx);
                 mRobot = cursor.getInt(robotColIdx);
-                mDrivetrain = cursor.getString(drivetrainColIdx);
+                mDrivetrain = cursor.getInt(drivetrainColIdx);
                 mWeight = cursor.getInt(weightColIdx);
                 mScouter = cursor.getString(scouterColIdx);
 
@@ -183,7 +212,7 @@ public class ScoutPitActivity extends AppCompatActivity {
                 */
 
                 mRobotEditText.setText(mRobot.toString());
-                mRobotDrivetrainEditText.setText(mDrivetrain.toString());
+                mRobotDrivetrainSpinner.setSelection(mDrivetrain);
                 mRobotWeightEditText.setText(mWeight.toString());
 
 
@@ -230,6 +259,7 @@ public class ScoutPitActivity extends AppCompatActivity {
         boolean btele_help = true;
         if(tele_help == 0) btele_help = false;
 
+        /*
         mAutoLineTogglebutton.setChecked(bauto_line);
         mAutoSwitchTogglebutton.setChecked(bauto_switch);
         mAutoScaleTogglebutton.setChecked(bauto_scale);
@@ -241,6 +271,7 @@ public class ScoutPitActivity extends AppCompatActivity {
         mTelePortalTogglebutton.setChecked(btele_portal);
         mTeleClimbTogglebutton.setChecked(btele_climb);
         mTeleHelpClimbTogglebutton.setChecked(btele_climb);
+        */
 
         mNameEditText.setText(mScouter);
 
@@ -316,7 +347,7 @@ public class ScoutPitActivity extends AppCompatActivity {
         String weightString = mRobotWeightEditText.getText().toString().trim();
         Integer weight;
 
-        String robotDrivetrainString = mRobotDrivetrainEditText.getText().toString().trim();
+        Integer drivetrain = mRobotDrivetrainSpinner.getSelectedItemPosition();
 
         if (robotString.equals("")) {
 
@@ -364,7 +395,7 @@ public class ScoutPitActivity extends AppCompatActivity {
             values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_GAME_ALLY_SCORE, 0);
             values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_GAME_ENEMY_SCORE, 0);
 
-            values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_ROBOT_DRIVETRAIN, robotDrivetrainString);
+            values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_ROBOT_DRIVETRAIN, drivetrain);
             values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_ROBOT_WEIGHT, weight);
 
 
@@ -411,7 +442,98 @@ public class ScoutPitActivity extends AppCompatActivity {
         }
     }
 
+    public void takePhoto(View view) {
+
+        String robotString = mRobotEditText.getText().toString().trim();
+
+        if (robotString.equals("")) {
+            Toast.makeText(this, getString(R.string.missing_robot_failed),
+                    Toast.LENGTH_LONG).show();
+        } else {
+
+            dispatchTakePictureIntent();
+
+        }
+    }
+
+
+    private void dispatchTakePictureIntent() {
+
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+                Log.d(TAG, "photoFile:" + photoFile.getAbsolutePath() );
+
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+                Log.d(TAG, "Can't create Image file" );
+
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        "com.robotronix3550.robotronix_scouting_app.scouts",
+                        photoFile);
+
+                Log.d(TAG, "photoURI:" + photoURI );
+
+                //
+                // TO FIX : Something is wrong with the photoURI, preventing the camera
+                // to open the file and save the picture
+                //
+                // takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+
+                Log.d(TAG, "Start Activity take Picture Intent" );
+
+            }
+        }
+    }
+
+    String mCurrentPhotoPath;
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String robotString = mRobotEditText.getText().toString().trim();
+        String timeStamp = new SimpleDateFormat("MM-dd-hh-mm").format(new Date());
+        // String imageFileName = "JPEG_" + timeStamp + "_";
+        mFileName = robotString + "_" + timeStamp;
+
+        File DocumentDir = FileUtils.getDocumentDir("Scouting");
+        //File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+
+        File image = File.createTempFile(
+                // imageFileName,  /* prefix */
+                mFileName,
+                ".jpg",         /* suffix */
+                //storageDir      /* directory */
+                DocumentDir
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, "on Activity Result request code :" + requestCode );
+        Log.d(TAG, "on Activity Result result code :" + resultCode );
+        // Log.d(TAG, "on Activity Result data :" + requestCode );
+
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            mRobotPictureImageView.setImageBitmap(imageBitmap);
+        }
+    }
+        @Override
     public void onBackPressed(){
 
         // Intent intent = new Intent(this, MainActivity.class);
