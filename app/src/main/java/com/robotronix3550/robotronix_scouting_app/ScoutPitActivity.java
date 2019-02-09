@@ -15,9 +15,13 @@ import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -41,7 +45,6 @@ public class ScoutPitActivity extends AppCompatActivity {
     public static final String TAG = ScoutPitActivity.class.getSimpleName();
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
-    static final int REQUEST_TAKE_PHOTO = 1;
 
     private EditText mRobotEditText;
     private EditText mNameEditText;
@@ -68,7 +71,7 @@ public class ScoutPitActivity extends AppCompatActivity {
     Uri mCurrentScoutUri;
 
     Integer mRobot;
-    Integer  mDrivetrain;
+    Integer mDrivetrain;
     Integer mWeight;
     Integer mMatch;
     String  mScouter;
@@ -90,6 +93,14 @@ public class ScoutPitActivity extends AppCompatActivity {
     // Integer alliance_score;
     // Integer enemy_score;
 
+    private boolean mDrivetrainChanged = false;
+    private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            mDrivetrainChanged=true;
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -275,6 +286,18 @@ public class ScoutPitActivity extends AppCompatActivity {
 
         mNameEditText.setText(mScouter);
 
+
+
+        setupSpinner();
+
+    }
+
+    private void setupSpinner() {
+
+        String[] DrivetrainTypes = new String[] { "", "Tank drive", "Mecanum", "Swirl", "Mixte", "Autres"};
+
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, DrivetrainTypes);
+        mRobotDrivetrainSpinner.setAdapter(spinnerAdapter);
 
     }
 
@@ -475,9 +498,11 @@ public class ScoutPitActivity extends AppCompatActivity {
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.robotronix3550.robotronix_scouting_app.scouts",
-                        photoFile);
+                Uri photoURI = Uri.fromFile(photoFile);
+
+                //Uri photoURI = FileProvider.getUriForFile(this,
+                //        "com.robotronix3550.robotronix_scouting_app.scouts",
+                //        photoFile);
 
                 Log.d(TAG, "photoURI:" + photoURI );
 
@@ -485,7 +510,7 @@ public class ScoutPitActivity extends AppCompatActivity {
                 // TO FIX : Something is wrong with the photoURI, preventing the camera
                 // to open the file and save the picture
                 //
-                // takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
 
                 Log.d(TAG, "Start Activity take Picture Intent" );
@@ -515,7 +540,7 @@ public class ScoutPitActivity extends AppCompatActivity {
         );
 
         // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
+        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
         return image;
     }
 
@@ -528,9 +553,15 @@ public class ScoutPitActivity extends AppCompatActivity {
         // Log.d(TAG, "on Activity Result data :" + requestCode );
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            mRobotPictureImageView.setImageBitmap(imageBitmap);
+            // Bundle extras = data.getExtras();
+            // Bitmap imageBitmap = (Bitmap) extras.get("data");
+            try {
+                Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), Uri.parse(mCurrentPhotoPath));
+                mRobotPictureImageView.setImageBitmap(imageBitmap);
+            } catch (IOException e) {
+
+                e.printStackTrace();
+            }
         }
     }
         @Override
