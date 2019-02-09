@@ -490,7 +490,7 @@
                 android:layout_weight="1"
                 android:text="ToggleButton"
                 android:textOff="Level 3"
-                android:textOn="Level3 " />
+                android:textOn="Level 3 " />
 
             <Space
                 android:layout_width="wrap_content"

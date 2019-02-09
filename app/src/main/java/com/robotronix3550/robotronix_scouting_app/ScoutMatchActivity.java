@@ -472,7 +472,6 @@ public class ScoutMatchActivity extends AppCompatActivity {
         if( mSoundFX ) {
             mMediaPlayer = MediaPlayer.create(this, R.raw.laser_blaster);
             mMediaPlayer.start();
-            //mMediaPlayer.release();
         }
     }
 
@@ -489,6 +488,10 @@ public class ScoutMatchActivity extends AppCompatActivity {
             }
             TxtCntPanelLvl1.setText(mSandPanelLvl1.toString());
         }
+        if( mSoundFX ) {
+            mMediaPlayer = MediaPlayer.create(this, R.raw.lightsaber_turn_off);
+            mMediaPlayer.start();
+        }
     }
 
     public void IncCargoLvl1(View view) {
@@ -501,7 +504,7 @@ public class ScoutMatchActivity extends AppCompatActivity {
             TxtCntClvl1.setText(mSandCargoLvl1.toString());
         }
         if( mSoundFX ) {
-            mMediaPlayer = MediaPlayer.create(this, R.raw.sonic_boom);
+            mMediaPlayer = MediaPlayer.create(this, R.raw.pew_sound);
             mMediaPlayer.start();
             //mMediaPlayer.release();
         }
@@ -521,7 +524,10 @@ public class ScoutMatchActivity extends AppCompatActivity {
             }
             TxtCntCargoLvl1.setText(mSandCargoLvl1.toString());
         }
-
+        if( mSoundFX ) {
+            mMediaPlayer = MediaPlayer.create(this, R.raw.lightsaber_turn_off);
+            mMediaPlayer.start();
+        }
     }
 
     public void IncPanelLvl2(View view) {
@@ -532,6 +538,10 @@ public class ScoutMatchActivity extends AppCompatActivity {
         } else {
             mSandPanelLvl2++;
             TxtCntPanelLvl2.setText(mSandPanelLvl2.toString());
+        }
+        if( mSoundFX ) {
+            mMediaPlayer = MediaPlayer.create(this, R.raw.laser_blaster);
+            mMediaPlayer.start();
         }
     }
 
@@ -548,6 +558,10 @@ public class ScoutMatchActivity extends AppCompatActivity {
             }
             TxtCntPanelLvl2.setText(mSandPanelLvl2.toString());
         }
+        if( mSoundFX ) {
+            mMediaPlayer = MediaPlayer.create(this, R.raw.lightsaber_turn_off);
+            mMediaPlayer.start();
+        }
     }
 
 
@@ -559,6 +573,10 @@ public class ScoutMatchActivity extends AppCompatActivity {
         } else {
             mSandCargoLvl2++;
             TxtCntCargoLvl2.setText(mSandCargoLvl2.toString());
+        }
+        if( mSoundFX ) {
+            mMediaPlayer = MediaPlayer.create(this, R.raw.pew_sound);
+            mMediaPlayer.start();
         }
     }
 
@@ -575,6 +593,10 @@ public class ScoutMatchActivity extends AppCompatActivity {
             }
             TxtCntCargoLvl2.setText(mSandCargoLvl2.toString());
         }
+        if( mSoundFX ) {
+            mMediaPlayer = MediaPlayer.create(this, R.raw.lightsaber_turn_off);
+            mMediaPlayer.start();
+        }
     }
 
     public void IncPanelLvl3(View view) {
@@ -585,6 +607,10 @@ public class ScoutMatchActivity extends AppCompatActivity {
         } else {
             mSandPanelLvl3++;
             TxtCntPanelLvl3.setText(mSandPanelLvl3.toString());
+        }
+        if( mSoundFX ) {
+            mMediaPlayer = MediaPlayer.create(this, R.raw.laser_blaster);
+            mMediaPlayer.start();
         }
     }
     public void DecPanelLvl3(View view) {
@@ -600,6 +626,10 @@ public class ScoutMatchActivity extends AppCompatActivity {
             }
             TxtCntPanelLvl3.setText(mSandPanelLvl3.toString());
         }
+        if( mSoundFX ) {
+            mMediaPlayer = MediaPlayer.create(this, R.raw.lightsaber_turn_off);
+            mMediaPlayer.start();
+        }
     }
 
     public void IncCargoLvl3(View view) {
@@ -610,6 +640,10 @@ public class ScoutMatchActivity extends AppCompatActivity {
         } else {
             mSandCargoLvl3++;
             TxtCntCargoLvl3.setText(mSandCargoLvl3.toString());
+        }
+        if( mSoundFX ) {
+            mMediaPlayer = MediaPlayer.create(this, R.raw.pew_sound);
+            mMediaPlayer.start();
         }
     }
     public void DecCargoLvl3(View view) {
@@ -625,11 +659,19 @@ public class ScoutMatchActivity extends AppCompatActivity {
             }
             TxtCntCargoLvl3.setText(mSandCargoLvl3.toString());
         }
+        if( mSoundFX ) {
+            mMediaPlayer = MediaPlayer.create(this, R.raw.lightsaber_turn_off);
+            mMediaPlayer.start();
+        }
     }
     public void IncPins(View view) {
         TextView TxtCountPins = (TextView) findViewById(R.id.TxtCountPins);
         mTelePin++;
         TxtCountPins.setText(mTelePin.toString());
+        if( mSoundFX ) {
+            mMediaPlayer = MediaPlayer.create(this, R.raw.r2d2_again);
+            mMediaPlayer.start();
+        }
     }
 
     public void DecPins(View view) {
@@ -638,11 +680,19 @@ public class ScoutMatchActivity extends AppCompatActivity {
             mTelePin--;
         }
         TxtCountPins.setText(mTelePin.toString());
+        if( mSoundFX ) {
+            mMediaPlayer = MediaPlayer.create(this, R.raw.lightsaber_turn_on);
+            mMediaPlayer.start();
+        }
     }
     public void IncBlocks(View view) {
         TextView TxtCountBlocks = (TextView) findViewById(R.id.TxtCountBlock);
         mTeleBlocks++;
         TxtCountBlocks.setText(mTeleBlocks.toString());
+        if( mSoundFX ) {
+            mMediaPlayer = MediaPlayer.create(this, R.raw.mechanical_arm);
+            mMediaPlayer.start();
+        }
     }
 
     public void DecBlocks(View view) {
@@ -651,6 +701,10 @@ public class ScoutMatchActivity extends AppCompatActivity {
             mTeleBlocks--;
         }
         TxtCountBlocks.setText(mTeleBlocks.toString());
+        if( mSoundFX ) {
+            mMediaPlayer = MediaPlayer.create(this, R.raw.lightsaber_turn_on);
+            mMediaPlayer.start();
+        }
     }
     @Override
     protected void onSaveInstanceState(Bundle outState)
@@ -846,18 +900,18 @@ public class ScoutMatchActivity extends AppCompatActivity {
     private void releaseMediaPlayer() {
         // If the media player is not null, then it may be currently playing a sound.
         if (mMediaPlayer != null) {
-            // Regardless of the current state of the media player, release its resources
-            // because we no longer need it.
+            /*Regardless of the current state of the media player, release its resources
+            because we no longer need it.*/
             mMediaPlayer.release();
-
-            // Set the media player back to null. For our code, we've decided that
-            // setting the media player to null is an easy way to tell that the media player
-            // is not configured to play an audio file at the moment.
+            /*
+            Set the media player back to null. For our code, we've decided that
+            setting the media player to null is an easy way to tell that the media player
+            is not configured to play an audio file at the moment.*/
             mMediaPlayer = null;
-
-            // Regardless of whether or not we were granted audio focus, abandon it. This also
-            // unregisters the AudioFocusChangeListener so we don't get anymore callbacks.
-            // mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener);
+            /*
+            Regardless of whether or not we were granted audio focus, abandon it. This also
+            unregisters the AudioFocusChangeListener so we don't get anymore callbacks.
+            mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener);*/
         }
     }
 
