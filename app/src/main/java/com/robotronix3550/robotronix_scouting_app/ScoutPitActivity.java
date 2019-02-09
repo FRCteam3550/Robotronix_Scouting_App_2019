@@ -47,21 +47,14 @@ public class ScoutPitActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
     private EditText mRobotEditText;
-    private EditText mNameEditText;
+    private EditText mScoutNameEditText;
     private Spinner mRobotDrivetrainSpinner;
     private EditText mRobotWeightEditText;
 
-    private ToggleButton mAutoLineTogglebutton;
-    private ToggleButton mAutoSwitchTogglebutton;
-    private ToggleButton mAutoScaleTogglebutton;
-    private ToggleButton mAutoPickTogglebutton;
-    private ToggleButton mTeleExchangeTogglebutton;
-    private ToggleButton mTeleSwitchTogglebutton;
-    private ToggleButton mTeleScaleTogglebutton;
-    private ToggleButton mTelePickTogglebutton;
-    private ToggleButton mTelePortalTogglebutton;
-    private ToggleButton mTeleClimbTogglebutton;
-    private ToggleButton mTeleHelpClimbTogglebutton;
+    private ToggleButton GroundCargoPickUpToggleButton;
+    private ToggleButton GroundPanelPickUpToggleButton;
+    private ToggleButton LoadingStationCargoPickUpToggleButton;
+    private ToggleButton LoadingStationPanelPickUpToggleButton;
 
     private SharedPreferences mPrefs;
     private String mFileName;
@@ -74,24 +67,18 @@ public class ScoutPitActivity extends AppCompatActivity {
     Integer mDrivetrain;
     Integer mWeight;
     Integer mMatch;
-    String  mScouter;
+    String  mScoutName;
 
-    Integer auto_line;
-    Integer auto_pick;
-    Integer auto_scale;
-    Integer auto_switch;
+    Boolean mGroundCargoPickUp;
+    Boolean mGroundPanelPickUp;
+    Boolean mLoadingStationCargoPickUp;
+    Boolean mLoadingStationPanelPickUp;
 
-    Integer tele_exchange;
-    Integer tele_switch;
-    Integer tele_portal;
-    Integer tele_scale;
+    Integer mIntGroundCargoPickUp;
+    Integer mIntGroundPanelPickUp;
+    Integer mIntLoadingStationCargoPickUp;
+    Integer mIntLoadingStationPanelPickUp;
 
-    Integer tele_pick;
-    Integer tele_climb;
-    Integer tele_help;
-
-    // Integer alliance_score;
-    // Integer enemy_score;
 
     private boolean mDrivetrainChanged = false;
     private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
@@ -109,29 +96,21 @@ public class ScoutPitActivity extends AppCompatActivity {
 
         // mPrefs = getPreferences(MODE_PRIVATE );
         mPrefs = getSharedPreferences(PREFS_SCOUTER, MODE_PRIVATE);
-        mScouter = mPrefs.getString("PREF_SCOUTER", "Prenom");
+        mScoutName = mPrefs.getString("PREF_SCOUTER", "Prenom");
 
         mRobotEditText = (EditText) findViewById(R.id.TeamNumberEditText);
-        mNameEditText = (EditText) findViewById(R.id.ScoutNameEditText);
+        mScoutNameEditText = (EditText) findViewById(R.id.ScoutNameEditText);
 
         mRobotDrivetrainSpinner = findViewById(R.id.drivetainTypeSpinner);
         mRobotWeightEditText = (EditText) findViewById(R.id.RobotWeightEditText);
 
         mRobotPictureImageView = findViewById(R.id.RobotPhoto);
 
-        /*
-        mAutoLineTogglebutton = (ToggleButton) findViewById(R.id.AutoLineToggleButton);
-        mAutoSwitchTogglebutton = (ToggleButton) findViewById(R.id.AutoSwitchToggleButton);
-        mAutoScaleTogglebutton = (ToggleButton) findViewById(R.id.AutoScaleToggleButton);
-        mAutoPickTogglebutton = (ToggleButton) findViewById(R.id.AutoPickToggleButton);
-        mTeleExchangeTogglebutton = (ToggleButton) findViewById(R.id.TeleExchangeToggleButton);
-        mTeleSwitchTogglebutton = (ToggleButton) findViewById(R.id.TeleSwitchToggleButton);
-        mTeleScaleTogglebutton = (ToggleButton) findViewById(R.id.TeleScaleToggleButton);
-        mTelePickTogglebutton = (ToggleButton) findViewById(R.id.TelePickToggleButton);
-        mTelePortalTogglebutton = (ToggleButton) findViewById(R.id.TelePortalToggleButton);
-        mTeleClimbTogglebutton = (ToggleButton) findViewById(R.id.TeleClimbToggleButton);
-        mTeleHelpClimbTogglebutton = (ToggleButton) findViewById(R.id.TeleHelpToggleButton);
-        */
+
+        GroundCargoPickUpToggleButton = (ToggleButton) findViewById(R.id.GroundCargoPickUpToggleButton);
+        GroundPanelPickUpToggleButton = (ToggleButton) findViewById(R.id.GroundPanelPickUpToggleButton);
+        LoadingStationCargoPickUpToggleButton = (ToggleButton) findViewById(R.id.LoadingStationCargoPickUpToggleButton);
+        LoadingStationPanelPickUpToggleButton = (ToggleButton) findViewById(R.id.LoadingStationPanelPickUpToggleButton);
 
         if(Build.VERSION.SDK_INT >=23) {
 
@@ -143,18 +122,10 @@ public class ScoutPitActivity extends AppCompatActivity {
 
         if( mCurrentScoutUri == null) {
 
-            auto_line = 0;
-            auto_pick = 0;
-            auto_scale = 0;
-            auto_switch = 0;
-
-            tele_exchange = 0;
-            tele_switch = 0;
-            tele_scale = 0;
-            tele_pick = 0;
-            tele_portal = 0;
-            tele_climb = 0;
-            tele_help = 0;
+            mGroundCargoPickUp = false;
+            mGroundPanelPickUp = false;
+            mLoadingStationCargoPickUp = false;
+            mLoadingStationPanelPickUp = false;
 
         } else {
 
@@ -173,6 +144,10 @@ public class ScoutPitActivity extends AppCompatActivity {
                 int weightColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_ROBOT_WEIGHT);
                 int drivetrainColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_ROBOT_DRIVETRAIN);
                 int scouterColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_SCOUTER);
+                int groundpanelColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_PIT_GROUND_PANEL_PICKUP);
+                int groundcargoColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_PIT_GROUND_CARGO_PICKUP);
+                int lscargoColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_PIT_LS_CARGO_PICKUP);
+                int lspanelColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_PIT_LS_PANEL_PICKUP);
 
                 /*
                 int autoLineColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_AUTO_LINE);
@@ -205,22 +180,23 @@ public class ScoutPitActivity extends AppCompatActivity {
                 mRobot = cursor.getInt(robotColIdx);
                 mDrivetrain = cursor.getInt(drivetrainColIdx);
                 mWeight = cursor.getInt(weightColIdx);
-                mScouter = cursor.getString(scouterColIdx);
+                mScoutName = cursor.getString(scouterColIdx);
+                mIntGroundCargoPickUp = cursor.getInt(groundcargoColIdx);
+                mIntGroundPanelPickUp = cursor.getInt(groundpanelColIdx);
+                mIntLoadingStationCargoPickUp = cursor.getInt(lscargoColIdx);
+                mIntLoadingStationPanelPickUp = cursor.getInt(lspanelColIdx);
 
-                /*
-                auto_line = cursor.getInt(autoLineColIdx);
-                auto_pick = cursor.getInt(autoPickColIdx);
-                auto_scale = cursor.getInt(autoScaleColIdx);
-                auto_switch = cursor.getInt(autoSwitchColIdx);
+                mGroundCargoPickUp = true;
+                if(mIntGroundCargoPickUp == 0) mGroundCargoPickUp = false;
 
-                tele_help = cursor.getInt(endHelpColIdx);
-                tele_climb = cursor.getInt(endClimbColIdx);
-                tele_exchange = cursor.getInt(teleExchColIdx);
-                tele_switch = cursor.getInt(teleAllySwitchColIdx);
-                tele_scale = cursor.getInt(teleScaleColIdx);
-                tele_portal = cursor.getInt(telePortalColIdx);
-                tele_pick = cursor.getInt(telePickColIdx);
-                */
+                mGroundPanelPickUp = true;
+                if(mIntGroundPanelPickUp== 0) mGroundPanelPickUp = false;
+
+                mLoadingStationCargoPickUp = true;
+                if(mIntLoadingStationCargoPickUp == 0) mLoadingStationCargoPickUp = false;
+
+                mLoadingStationPanelPickUp = true;
+                if(mIntLoadingStationPanelPickUp == 0) mLoadingStationPanelPickUp = false;
 
                 mRobotEditText.setText(mRobot.toString());
                 mRobotDrivetrainSpinner.setSelection(mDrivetrain);
@@ -237,56 +213,15 @@ public class ScoutPitActivity extends AppCompatActivity {
             }
         }
 
-        boolean bauto_line = true;
-        if(auto_line == 0) bauto_line = false;
-
-        boolean bauto_pick = true;
-        if(auto_pick == 0) bauto_pick = false;
-
-        boolean bauto_scale = true;
-        if(auto_scale == 0) bauto_scale = false;
-
-        boolean bauto_switch = true;
-        if(auto_switch == 0) bauto_switch = false;
-
-        boolean btele_exchange = true;
-        if(tele_exchange == 0) btele_exchange = false;
-
-        boolean btele_switch = true;
-        if(tele_switch == 0) btele_switch = false;
-
-        boolean btele_scale = true;
-        if(tele_scale == 0) btele_scale = false;
-
-        boolean btele_pick = true;
-        if(tele_pick == 0) btele_pick = false;
-
-        boolean btele_portal = true;
-        if(tele_portal == 0) btele_portal = false;
-
-        boolean btele_climb = true;
-        if(tele_climb == 0) btele_climb = false;
-
-        boolean btele_help = true;
-        if(tele_help == 0) btele_help = false;
-
-        /*
-        mAutoLineTogglebutton.setChecked(bauto_line);
-        mAutoSwitchTogglebutton.setChecked(bauto_switch);
-        mAutoScaleTogglebutton.setChecked(bauto_scale);
-        mAutoPickTogglebutton.setChecked(bauto_pick);
-        mTeleExchangeTogglebutton.setChecked(btele_exchange);
-        mTeleSwitchTogglebutton.setChecked(btele_switch);
-        mTeleScaleTogglebutton.setChecked(btele_scale);
-        mTelePickTogglebutton.setChecked(btele_pick);
-        mTelePortalTogglebutton.setChecked(btele_portal);
-        mTeleClimbTogglebutton.setChecked(btele_climb);
-        mTeleHelpClimbTogglebutton.setChecked(btele_climb);
-        */
-
-        mNameEditText.setText(mScouter);
+         GroundCargoPickUpToggleButton.setChecked(mGroundCargoPickUp);
+        GroundPanelPickUpToggleButton.setChecked(mGroundPanelPickUp);
+        LoadingStationCargoPickUpToggleButton.setChecked(mLoadingStationCargoPickUp);
+        LoadingStationPanelPickUpToggleButton.setChecked(mLoadingStationPanelPickUp);
+        //
 
 
+
+        mScoutNameEditText.setText(mScoutName);
 
         setupSpinner();
 
@@ -306,69 +241,39 @@ public class ScoutPitActivity extends AppCompatActivity {
         // Use trim to eliminate leading or trailing white space
 
 
-        if(mAutoLineTogglebutton.isChecked())
-            auto_line = 1;
+
+        if(GroundCargoPickUpToggleButton.isChecked())
+            mIntGroundCargoPickUp = 1;
         else
-            auto_line = 0;
+            mIntGroundCargoPickUp = 1;
 
-        if(mAutoPickTogglebutton.isChecked())
-            auto_pick = 1;
+        if(GroundPanelPickUpToggleButton.isChecked())
+            mIntGroundPanelPickUp = 1;
         else
-            auto_pick = 0;
+            mIntGroundPanelPickUp = 1;
 
-        if(mAutoScaleTogglebutton.isChecked())
-            auto_scale= 1;
+        if(LoadingStationCargoPickUpToggleButton.isChecked())
+            mIntLoadingStationCargoPickUp = 1;
         else
-            auto_scale = 0;
+            mIntLoadingStationCargoPickUp = 1;
 
-        if(mAutoSwitchTogglebutton.isChecked())
-            auto_switch = 1;
+        if(LoadingStationPanelPickUpToggleButton.isChecked())
+            mIntLoadingStationPanelPickUp = 1;
         else
-            auto_switch = 0;
+            mIntLoadingStationPanelPickUp = 1;
 
-
-        if(mTeleExchangeTogglebutton.isChecked())
-            tele_exchange = 1;
-        else
-            tele_exchange = 0;
-
-        if(mTeleSwitchTogglebutton.isChecked())
-            tele_switch = 1;
-        else
-            tele_switch = 0;
-
-        if(mTeleScaleTogglebutton.isChecked())
-            tele_scale = 1;
-        else
-            tele_scale = 0;
-
-        if(mTelePickTogglebutton.isChecked())
-            tele_pick = 1;
-        else
-            tele_pick = 0;
-
-        if(mTelePortalTogglebutton.isChecked())
-            tele_portal = 1;
-        else
-            tele_portal = 0;
-
-        if(mTeleClimbTogglebutton.isChecked())
-            tele_climb = 1;
-        else
-            tele_climb = 0;
-
-        if(mTeleHelpClimbTogglebutton.isChecked())
-            tele_help = 1;
-        else
-            tele_help = 0;
-
-        mScouter = mNameEditText.getText().toString().trim();
+        mScoutName = mScoutNameEditText.getText().toString().trim();
 
         String robotString = mRobotEditText.getText().toString().trim();
         Integer robot;
 
         String weightString = mRobotWeightEditText.getText().toString().trim();
         Integer weight;
+        if(weightString.equals("")) {
+            weight = 0;
+        } else {
+            weight = Integer.parseInt(weightString);
+        }
 
         Integer drivetrain = mRobotDrivetrainSpinner.getSelectedItemPosition();
 
@@ -377,7 +282,7 @@ public class ScoutPitActivity extends AppCompatActivity {
             Toast.makeText(this, getString(R.string.missing_robot_failed),
                     Toast.LENGTH_LONG).show();
 
-        } else if (mScouter.equals("")) {
+        } else if (mScoutName.equals("")) {
 
             Toast.makeText(this, getString(R.string.missing_scouter_failed),
                     Toast.LENGTH_LONG).show();
@@ -386,37 +291,18 @@ public class ScoutPitActivity extends AppCompatActivity {
 
 
             robot = Integer.parseInt(robotString);
-            weight = Integer.parseInt(weightString);
 
             // Create a ContentValues object where column names are the keys,
             // and scout attributes from the editor are the values.
             ContentValues values = new ContentValues();
-            values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_SCOUTER, mScouter);
+            values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_SCOUTER, mScoutName);
             values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_MATCH, 0);
             values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_ROBOT, robot);
 
-            /*
-            values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_AUTO_LINE, auto_line);
-            values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_AUTO_CUBE, auto_pick);
-            values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_AUTO_SCALE, auto_scale);
-            values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_AUTO_SWITCH, auto_switch);
-
-            values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_TELE_EXCHANGE, tele_exchange);
-            values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_TELE_ALLY_SWITCH, tele_switch);
-            values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_TELE_ENEMY_SWITCH, tele_switch);
-            values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_TELE_SCALE, tele_scale);
-
-            values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_TELE_CUBE, tele_pick);
-            values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_TELE_PORTAL, tele_portal);
-            values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_TELE_CLIMB, tele_climb);
-            values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_TELE_HELP_CLIMB, tele_help);
-            values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_TELE_PARK, 0);
-            */
-
-            values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_TELE_BROKEN, 0);
-
-            values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_GAME_ALLY_SCORE, 0);
-            values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_GAME_ENEMY_SCORE, 0);
+            values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_PIT_GROUND_CARGO_PICKUP, mIntGroundCargoPickUp);
+            values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_PIT_GROUND_PANEL_PICKUP, mIntGroundPanelPickUp);
+            values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_PIT_LS_CARGO_PICKUP, mIntLoadingStationCargoPickUp);
+            values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_PIT_LS_PANEL_PICKUP, mIntLoadingStationPanelPickUp);
 
             values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_ROBOT_DRIVETRAIN, drivetrain);
             values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_ROBOT_WEIGHT, weight);
@@ -452,12 +338,10 @@ public class ScoutPitActivity extends AppCompatActivity {
                     Toast.makeText(this, getString(R.string.editor_update_scout_successful),
                             Toast.LENGTH_SHORT).show();
                 }
-
-
             }
 
             SharedPreferences.Editor ed = mPrefs.edit();
-            ed.putString("PREF_SCOUTER", mScouter);
+            ed.putString("PREF_SCOUTER", mScoutName);
             ed.commit();
 
             Intent intent = new Intent(this, MainActivity.class);
@@ -572,8 +456,8 @@ public class ScoutPitActivity extends AppCompatActivity {
         // intent.putExtra(EXTRA_SCOUTER, mScouter);
 
         SharedPreferences.Editor ed = mPrefs.edit();
-        mScouter = mNameEditText.getText().toString().trim();
-        ed.putString("PREF_SCOUTER", mScouter);
+        mScoutName = mScoutNameEditText.getText().toString().trim();
+        ed.putString("PREF_SCOUTER", mScoutName);
         ed.commit();
 
         super.onBackPressed();

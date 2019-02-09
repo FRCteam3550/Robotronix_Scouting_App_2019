@@ -64,12 +64,16 @@ public class ScoutDBHelper extends SQLiteOpenHelper {
                 + ScoutEntry.COLUMN_SCOUT_TELE_BLOCKS + " INTEGER NOT NULL DEFAULT 0, "
                 + ScoutEntry.COLUMN_SCOUT_TELE_PINS + " INTEGER NOT NULL DEFAULT 0, "
                 + ScoutEntry.COLUMN_SCOUT_TELE_BROKEN + " INTEGER NOT NULL DEFAULT 0, "
+                + ScoutEntry.COLUMN_SCOUT_PIT_GROUND_CARGO_PICKUP + " INTEGER NOT NULL DEFAULT 0, "
+                + ScoutEntry.COLUMN_SCOUT_PIT_GROUND_PANEL_PICKUP + " INTEGER NOT NULL DEFAULT 0, "
+                + ScoutEntry.COLUMN_SCOUT_PIT_LS_CARGO_PICKUP + " INTEGER NOT NULL DEFAULT 0, "
+                + ScoutEntry.COLUMN_SCOUT_PIT_LS_PANEL_PICKUP + " INTEGER NOT NULL DEFAULT 0, "
                 + ScoutEntry.COLUMN_SCOUT_GAME_ALLY_SCORE + " INTEGER NOT NULL DEFAULT 0, "
                 + ScoutEntry.COLUMN_SCOUT_GAME_ENEMY_SCORE + " INTEGER NOT NULL DEFAULT 0, "
                 + ScoutEntry.COLUMN_SCOUT_ROBOT_DRIVETRAIN + " INTEGER NOT NULL DEFAULT 0, "
                 + ScoutEntry.COLUMN_SCOUT_ROBOT_WEIGHT + " INTEGER NOT NULL DEFAULT 0 );";
 
-        // Execute the SQL statement
+                // Execute the SQL statement
         db.execSQL(SQL_CREATE_SCOUTS_TABLE);
     }
 

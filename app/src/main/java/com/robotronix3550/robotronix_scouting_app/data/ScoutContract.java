@@ -148,6 +148,12 @@ public final class ScoutContract {
         public final static String COLUMN_SCOUT_SAND_HAB_LVL2   = "SandHabLvl2";
         public final static String COLUMN_SCOUT_SAND_HAB_LVL3   = "SandHabLvl3";
 
+        //public final static String COLUMN_SCOUT_PIT_ROBOT_WEIGHT    = "RobotWeight";
+        //public final static String COLUMN_SCOUT_PIT_ROBOT_DRIVETRAIN    = "RobotDrivetrain";
+        public final static String COLUMN_SCOUT_PIT_GROUND_CARGO_PICKUP     = "RobotGroundCargoPickUp";
+        public final static String COLUMN_SCOUT_PIT_GROUND_PANEL_PICKUP     = "RobotGroundPanelPickup";
+        public final static String COLUMN_SCOUT_PIT_LS_CARGO_PICKUP     ="RobotLSCargoPickUp";
+        public final static String COLUMN_SCOUT_PIT_LS_PANEL_PICKUP     = "RobotLSPanelPickUp";
         /**
          * Returns robot is valid.
          */

@@ -190,7 +190,7 @@
                 android:layout_weight="1" />
 
             <ToggleButton
-                android:id="@+id/LoadingStationCargoPickUp"
+                android:id="@+id/LoadingStationCargoPickUpToggleButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -233,7 +233,7 @@
                 android:layout_weight="1" />
 
             <ToggleButton
-                android:id="@+id/LoadingStationPanelPickUp"
+                android:id="@+id/LoadingStationPanelPickUpToggleButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
