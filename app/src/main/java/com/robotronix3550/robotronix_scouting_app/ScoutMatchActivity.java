@@ -138,6 +138,7 @@ public class ScoutMatchActivity extends AppCompatActivity {
                     SandTeleSwitch.setText("Sandstorm");
                     SandTele = false;
                 }
+
                 updateTxtCnt();
             }
         });
@@ -431,6 +432,12 @@ public class ScoutMatchActivity extends AppCompatActivity {
         if( mTeleHabLvl2 != 0) bTeleHabLvl2 = true;
         if( mTeleHabLvl3 != 0) bTeleHabLvl3 = true;
 
+        if( mSoundFX ) {
+            mMediaPlayer = MediaPlayer.create(this, R.raw.tornado);
+            mMediaPlayer.start();
+        }
+
+
         if (SandTele == false){
             TxtCntPanelLvl1.setText(mSandPanelLvl1.toString());
             TxtCntPanelLvl2.setText(mSandPanelLvl2.toString());
@@ -706,6 +713,25 @@ public class ScoutMatchActivity extends AppCompatActivity {
             mMediaPlayer.start();
         }
     }
+
+    // TODO : A faire pour level 2 et 3
+    //
+    public void HabitatLevel1(View view) {
+
+        if( HabLvl1.isChecked() ) {
+
+            if( HabLvl2.isChecked()) {
+                HabLvl2.setChecked( false );
+            }
+
+            if( HabLvl3.isChecked()) {
+                HabLvl3.setChecked( false );
+            }
+        }
+
+    }
+
+
     @Override
     protected void onSaveInstanceState(Bundle outState)
     {
