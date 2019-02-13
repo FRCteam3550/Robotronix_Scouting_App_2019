@@ -380,38 +380,28 @@ public class ScoutMatchActivity extends AppCompatActivity {
     public void saveHabLvlState() {
 
         if( SandTele ) {
+            mTeleHabLvl1 = 0;
 
             if(HabLvl1.isChecked())
                 mTeleHabLvl1 = 1;
-            else
-                mTeleHabLvl1 = 0;
 
             if(HabLvl2.isChecked())
-                mTeleHabLvl2 = 1;
-            else
-                mTeleHabLvl2 = 0;
+                mTeleHabLvl1 = 2;
 
             if(HabLvl3.isChecked())
-                mTeleHabLvl3= 1;
-            else
-                mTeleHabLvl3= 0;
+                mTeleHabLvl1= 3;
 
         } else {
 
             if(HabLvl1.isChecked())
                 mSandHabLvl1 = 1;
-            else
-                mSandHabLvl1 = 0;
 
             if(HabLvl2.isChecked())
-                mSandHabLvl2 = 1;
-            else
-                mSandHabLvl2 = 0;
+                mSandHabLvl1 = 2;
 
             if(HabLvl3.isChecked())
-                mSandHabLvl3= 1;
-            else
-                mSandHabLvl3= 0;
+                mSandHabLvl1= 3;
+
         }
 
     }
@@ -714,8 +704,6 @@ public class ScoutMatchActivity extends AppCompatActivity {
         }
     }
 
-    // TODO : A faire pour level 2 et 3
-    //
     public void HabitatLevel1(View view) {
 
         if( HabLvl1.isChecked() ) {
@@ -730,7 +718,34 @@ public class ScoutMatchActivity extends AppCompatActivity {
         }
 
     }
+    public void HabitatLevel2(View view) {
 
+        if( HabLvl2.isChecked() ) {
+
+            if( HabLvl1.isChecked()) {
+                HabLvl1.setChecked( false );
+            }
+
+            if( HabLvl3.isChecked()) {
+                HabLvl3.setChecked( false );
+            }
+        }
+
+    }
+    public void HabitatLevel3(View view) {
+
+        if( HabLvl3.isChecked() ) {
+
+            if( HabLvl1.isChecked()) {
+                HabLvl1.setChecked( false );
+            }
+
+            if( HabLvl2.isChecked()) {
+                HabLvl2.setChecked( false );
+            }
+        }
+
+    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState)
@@ -776,6 +791,9 @@ public class ScoutMatchActivity extends AppCompatActivity {
         } else {
             enemy_score = Integer.parseInt(EnemyScoreString);
         }
+        if (mTeleHabLvl1.equals( true )){
+            mTeleHabLvl1= 1 ;
+        }
 
         saveHabLvlState();
 
@@ -811,13 +829,6 @@ public class ScoutMatchActivity extends AppCompatActivity {
         values.put(ScoutEntry.COLUMN_SCOUT_SAND_HAB_LVL1,mSandHabLvl1);
         values.put(ScoutEntry.COLUMN_SCOUT_SAND_HAB_LVL2,mSandHabLvl2);
         values.put(ScoutEntry.COLUMN_SCOUT_SAND_HAB_LVL3,mSandHabLvl3);
-
-        /*
-        values.put(ScoutEntry.COLUMN_SCOUT_TELE_HELP_CLIMB, end_help );
-        values.put(ScoutEntry.COLUMN_SCOUT_TELE_BROKEN, end_broken );
-        values.put(ScoutEntry.COLUMN_SCOUT_TELE_CLIMB, end_climb );
-        values.put(ScoutEntry.COLUMN_SCOUT_TELE_PARK, end_park );
-        */
 
         values.put(ScoutEntry.COLUMN_SCOUT_GAME_ALLY_SCORE, alliance_score);
         values.put(ScoutEntry.COLUMN_SCOUT_GAME_ENEMY_SCORE, enemy_score);
@@ -934,8 +945,7 @@ public class ScoutMatchActivity extends AppCompatActivity {
             setting the media player to null is an easy way to tell that the media player
             is not configured to play an audio file at the moment.*/
             mMediaPlayer = null;
-            /*
-            Regardless of whether or not we were granted audio focus, abandon it. This also
+            /*Regardless of whether or not we were granted audio focus, abandon it. This also
             unregisters the AudioFocusChangeListener so we don't get anymore callbacks.
             mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener);*/
         }

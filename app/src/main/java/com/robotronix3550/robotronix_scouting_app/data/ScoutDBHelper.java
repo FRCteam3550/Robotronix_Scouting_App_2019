@@ -71,7 +71,10 @@ public class ScoutDBHelper extends SQLiteOpenHelper {
                 + ScoutEntry.COLUMN_SCOUT_GAME_ALLY_SCORE + " INTEGER NOT NULL DEFAULT 0, "
                 + ScoutEntry.COLUMN_SCOUT_GAME_ENEMY_SCORE + " INTEGER NOT NULL DEFAULT 0, "
                 + ScoutEntry.COLUMN_SCOUT_ROBOT_DRIVETRAIN + " INTEGER NOT NULL DEFAULT 0, "
-                + ScoutEntry.COLUMN_SCOUT_ROBOT_WEIGHT + " INTEGER NOT NULL DEFAULT 0 );";
+                + ScoutEntry.COLUMN_SCOUT_ROBOT_WEIGHT + " INTEGER NOT NULL DEFAULT 0, "
+                + ScoutEntry.COLUMN_SCOUT_MATCH_VICTORY + "INTEGER NOT NULL DEFAULT 0, "
+                + ScoutEntry.COLUMN_SCOUT_MATCH_DEFEAT + "INTEGER NOT NULL DEFAULT 0, "
+                + ScoutEntry.COLUMN_SCOUT_MATCH_TIE + "INTEGER NOT NULL DEAFAULT 0 ) ;";
 
                 // Execute the SQL statement
         db.execSQL(SQL_CREATE_SCOUTS_TABLE);

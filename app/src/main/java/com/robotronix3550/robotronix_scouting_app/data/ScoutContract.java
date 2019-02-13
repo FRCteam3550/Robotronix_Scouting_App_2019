@@ -154,6 +154,10 @@ public final class ScoutContract {
         public final static String COLUMN_SCOUT_PIT_GROUND_PANEL_PICKUP     = "RobotGroundPanelPickup";
         public final static String COLUMN_SCOUT_PIT_LS_CARGO_PICKUP     ="RobotLSCargoPickUp";
         public final static String COLUMN_SCOUT_PIT_LS_PANEL_PICKUP     = "RobotLSPanelPickUp";
+
+        public final static String COLUMN_SCOUT_MATCH_VICTORY   = "MatchVictory ";
+        public final static String COLUMN_SCOUT_MATCH_DEFEAT    = "MatchDefeat";
+        public final static String COLUMN_SCOUT_MATCH_TIE   = "MatchTie";
         /**
          * Returns robot is valid.
          */
