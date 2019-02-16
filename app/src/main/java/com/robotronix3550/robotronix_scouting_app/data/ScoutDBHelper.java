@@ -58,9 +58,9 @@ public class ScoutDBHelper extends SQLiteOpenHelper {
                 + ScoutEntry.COLUMN_SCOUT_GAME_ALLY_SCORE + " INTEGER NOT NULL DEFAULT 0, "
                 + ScoutEntry.COLUMN_SCOUT_GAME_ENEMY_SCORE + " INTEGER NOT NULL DEFAULT 0, "
                 + ScoutEntry.COLUMN_SCOUT_TELE_BROKEN + " INTEGER NOT NULL DEFAULT 0, "
-                + ScoutEntry.COLUMN_SCOUT_MATCH_VICTORY + "INTEGER NOT NULL DEFAULT 0, "
-                + ScoutEntry.COLUMN_SCOUT_MATCH_DEFEAT + "INTEGER NOT NULL DEFAULT 0, "
-                + ScoutEntry.COLUMN_SCOUT_MATCH_TIE + "INTEGER NOT NULL DEFAULT 0, "
+                + ScoutEntry.COLUMN_SCOUT_MATCH_VICTORY + " INTEGER NOT NULL DEFAULT 0, "
+                + ScoutEntry.COLUMN_SCOUT_MATCH_DEFEAT + " INTEGER NOT NULL DEFAULT 0, "
+                + ScoutEntry.COLUMN_SCOUT_MATCH_TIE + " INTEGER NOT NULL DEFAULT 0, "
                 + ScoutEntry.COLUMN_SCOUT_PIT_GROUND_CARGO_PICKUP + " INTEGER NOT NULL DEFAULT 0, "
                 + ScoutEntry.COLUMN_SCOUT_PIT_GROUND_PANEL_PICKUP + " INTEGER NOT NULL DEFAULT 0, "
                 + ScoutEntry.COLUMN_SCOUT_PIT_LS_CARGO_PICKUP + " INTEGER NOT NULL DEFAULT 0, "
@@ -71,7 +71,7 @@ public class ScoutDBHelper extends SQLiteOpenHelper {
                 + ScoutEntry.COLUMN_SCOUT_SAND_PANEL_LVL2 + " INTEGER NOT NULL DEFAULT 0, "
                 + ScoutEntry.COLUMN_SCOUT_SAND_CARGO_LVL3 + " INTEGER NOT NULL DEFAULT 0, "
                 + ScoutEntry.COLUMN_SCOUT_SAND_PANEL_LVL3 + " INTEGER NOT NULL DEFAULT 0, "
-                + ScoutEntry.COLUMN_SCOUT_IMAGE_ID + "INTEGER NOT NULL DEFAULT 0 ) ;";
+                + ScoutEntry.COLUMN_SCOUT_IMAGE_ID + " INTEGER NOT NULL DEFAULT 0 ) ;";
 
                 // Execute the SQL statement
         db.execSQL(SQL_CREATE_SCOUTS_TABLE);
