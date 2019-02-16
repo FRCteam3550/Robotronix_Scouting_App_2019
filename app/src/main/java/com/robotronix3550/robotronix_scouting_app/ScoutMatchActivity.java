@@ -58,12 +58,12 @@ public class ScoutMatchActivity extends AppCompatActivity {
     Integer mTelePanelLvl3;
 
     Integer mTeleHabLvl1;
-    Integer mTeleHabLvl2;
-    Integer mTeleHabLvl3;
+    //Integer mTeleHabLvl2;
+    //Integer mTeleHabLvl3;
 
     Integer mSandHabLvl1;
-    Integer mSandHabLvl2;
-    Integer mSandHabLvl3;
+    //Integer mSandHabLvl2;
+    //Integer mSandHabLvl3;
 
     Integer mTeleBlocks;
     Integer mTelePin;
@@ -189,12 +189,12 @@ public class ScoutMatchActivity extends AppCompatActivity {
             mTelePin = 0;
 
             mSandHabLvl1 = 0;
-            mSandHabLvl2 = 0;
-            mSandHabLvl3 = 0;
+            //mSandHabLvl2 = 0;
+            //mSandHabLvl3 = 0;
 
             mTeleHabLvl1 = 0;
-            mTeleHabLvl2 = 0;
-            mTeleHabLvl3 = 0;
+            //mTeleHabLvl2 = 0;
+            //mTeleHabLvl3 = 0;
 
 
             alliance_score = 0;
@@ -232,11 +232,11 @@ public class ScoutMatchActivity extends AppCompatActivity {
             mTelePin = 0;
 
             mSandHabLvl1 = 0;
-            mSandHabLvl2 = 0;
-            mSandHabLvl3 = 0;
+            //mSandHabLvl2 = 0;
+            //mSandHabLvl3 = 0;
             mTeleHabLvl1 = 0;
-            mTeleHabLvl2 = 0;
-            mTeleHabLvl3 = 0;
+            //mTeleHabLvl2 = 0;
+            //mTeleHabLvl3 = 0;
             alliance_score = 0;
             enemy_score = 0;
 
@@ -336,14 +336,14 @@ public class ScoutMatchActivity extends AppCompatActivity {
                 Log.d(TAG, "mTelePanelLvl1 : " + mTelePanelLvl1);
 
                 mSandHabLvl1 = cursor.getInt(SandHabLvl1Idx);
-                mSandHabLvl2 = cursor.getInt(SandHabLvl2Idx);
-                mSandHabLvl3 = cursor.getInt(SandHabLvl3Idx);
+                //mSandHabLvl2 = cursor.getInt(SandHabLvl2Idx);
+                //mSandHabLvl3 = cursor.getInt(SandHabLvl3Idx);
                 Log.d(TAG, "mSandHabLvl1 : " + mSandHabLvl1);
 
                 mTeleHabLvl1 = cursor.getInt(TeleHabLvl1Idx);
-                mTeleHabLvl2 = cursor.getInt(TeleHabLvl2Idx);
-                mTeleHabLvl3 = cursor.getInt(TeleHabLvl3Idx);
-                Log.d(TAG, "mTeleHabLvl2 : " + mTeleHabLvl2);
+                //mTeleHabLvl2 = cursor.getInt(TeleHabLvl2Idx);
+                //mTeleHabLvl3 = cursor.getInt(TeleHabLvl3Idx);
+                //Log.d(TAG, "mTeleHabLvl2 : " + mTeleHabLvl2);
 
                 mTeleBlocks = cursor.getInt(TeleBlocksIdx);
                 mTelePin = cursor.getInt(TelePinsIdx);
@@ -415,12 +415,17 @@ public class ScoutMatchActivity extends AppCompatActivity {
         boolean bTeleHabLvl2 = false;
         boolean bTeleHabLvl3 = false;
 
-        if( mSandHabLvl1 != 0) bSandHabLvl1 = true;
-        if( mSandHabLvl2 != 0) bSandHabLvl2 = true;
-        if( mSandHabLvl3 != 0) bSandHabLvl3 = true;
-        if( mTeleHabLvl1 != 0) bTeleHabLvl1 = true;
-        if( mTeleHabLvl2 != 0) bTeleHabLvl2 = true;
-        if( mTeleHabLvl3 != 0) bTeleHabLvl3 = true;
+        switch (mSandHabLvl1) {
+            case 1 : bSandHabLvl1 = true;
+            case 2 : bSandHabLvl2 = true;
+            case 3 : bSandHabLvl3 = true;
+        }
+
+        switch (mTeleHabLvl1) {
+            case 1 : bTeleHabLvl1 = true;
+            case 2 : bTeleHabLvl2 = true;
+            case 3 : bTeleHabLvl3 = true;
+        }
 
         if( mSoundFX ) {
             mMediaPlayer = MediaPlayer.create(this, R.raw.tornado);
@@ -824,11 +829,11 @@ public class ScoutMatchActivity extends AppCompatActivity {
 
 
         values.put(ScoutEntry.COLUMN_SCOUT_TELE_HAB_LVL1,mTeleHabLvl1);
-        values.put(ScoutEntry.COLUMN_SCOUT_TELE_HAB_LVL2,mTeleHabLvl2);
-        values.put(ScoutEntry.COLUMN_SCOUT_TELE_HAB_LVL3,mTeleHabLvl3);
+        //values.put(ScoutEntry.COLUMN_SCOUT_TELE_HAB_LVL2,mTeleHabLvl2);
+        //values.put(ScoutEntry.COLUMN_SCOUT_TELE_HAB_LVL3,mTeleHabLvl3);
         values.put(ScoutEntry.COLUMN_SCOUT_SAND_HAB_LVL1,mSandHabLvl1);
-        values.put(ScoutEntry.COLUMN_SCOUT_SAND_HAB_LVL2,mSandHabLvl2);
-        values.put(ScoutEntry.COLUMN_SCOUT_SAND_HAB_LVL3,mSandHabLvl3);
+        //values.put(ScoutEntry.COLUMN_SCOUT_SAND_HAB_LVL2,mSandHabLvl2);
+        //values.put(ScoutEntry.COLUMN_SCOUT_SAND_HAB_LVL3,mSandHabLvl3);
 
         values.put(ScoutEntry.COLUMN_SCOUT_GAME_ALLY_SCORE, alliance_score);
         values.put(ScoutEntry.COLUMN_SCOUT_GAME_ENEMY_SCORE, enemy_score);

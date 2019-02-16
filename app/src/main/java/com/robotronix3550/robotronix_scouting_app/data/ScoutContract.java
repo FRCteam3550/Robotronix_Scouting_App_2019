@@ -158,6 +158,8 @@ public final class ScoutContract {
         public final static String COLUMN_SCOUT_MATCH_VICTORY   = "MatchVictory ";
         public final static String COLUMN_SCOUT_MATCH_DEFEAT    = "MatchDefeat";
         public final static String COLUMN_SCOUT_MATCH_TIE   = "MatchTie";
+        public final static String COLUMN_SCOUT_IMAGE_ID   = "ImageID";
+
         /**
          * Returns robot is valid.
          */
