@@ -309,6 +309,8 @@
                 android:id="@+id/drivetainTypeSpinner"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
                 android:layout_weight="1" />
 
             <Space

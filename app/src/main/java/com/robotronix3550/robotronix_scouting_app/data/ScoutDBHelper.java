@@ -71,7 +71,7 @@ public class ScoutDBHelper extends SQLiteOpenHelper {
                 + ScoutEntry.COLUMN_SCOUT_SAND_PANEL_LVL2 + " INTEGER NOT NULL DEFAULT 0, "
                 + ScoutEntry.COLUMN_SCOUT_SAND_CARGO_LVL3 + " INTEGER NOT NULL DEFAULT 0, "
                 + ScoutEntry.COLUMN_SCOUT_SAND_PANEL_LVL3 + " INTEGER NOT NULL DEFAULT 0, "
-                + ScoutEntry.COLUMN_SCOUT_IMAGE_ID + "INTEGER NOT NULL DEFAULT 0 ) ;";
+                + ScoutEntry.COLUMN_SCOUT_IMAGE_ID + " TEXT ) ;";
 
                 // Execute the SQL statement
         db.execSQL(SQL_CREATE_SCOUTS_TABLE);
