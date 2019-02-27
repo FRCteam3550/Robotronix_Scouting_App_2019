@@ -135,7 +135,7 @@ public class ScoutMatchActivity extends AppCompatActivity {
                     SandTeleSwitch.setText("Tele");
                     SandTele = true;
                 } else {
-                    SandTeleSwitch.setText("Sandstorm");
+                    SandTeleSwitch.setText("Sand");
                     SandTele = false;
                 }
 
@@ -741,12 +741,19 @@ public class ScoutMatchActivity extends AppCompatActivity {
 
         if( HabLvl3.isChecked() ) {
 
-            if( HabLvl1.isChecked()) {
-                HabLvl1.setChecked( false );
-            }
+            if( SandTele ) {
+                if (HabLvl1.isChecked()) {
+                    HabLvl1.setChecked(false);
+                }
 
-            if( HabLvl2.isChecked()) {
-                HabLvl2.setChecked( false );
+                if (HabLvl2.isChecked()) {
+                    HabLvl2.setChecked(false);
+                }
+            } else {
+
+                HabLvl3.setChecked(false);
+                Toast.makeText(this, "Peux pas commencer au niveau 3 en Sandstorm",
+                        Toast.LENGTH_SHORT).show();
             }
         }
 

@@ -54,6 +54,10 @@
                 android:layout_weight="1" />
         </LinearLayout>
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="90dp"
@@ -111,7 +115,8 @@
                 android:layout_height="70dp"
                 android:layout_weight="0"
                 android:onClick="IncPanelLvl1"
-                android:text="+" />
+                android:text="+"
+                android:textSize="16pt" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -176,7 +181,8 @@
                 android:layout_height="70dp"
                 android:layout_weight="0"
                 android:onClick="IncCargoLvl1"
-                android:text="+" />
+                android:text="+"
+                android:textSize="16pt" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -241,7 +247,8 @@
                 android:layout_height="70dp"
                 android:layout_weight="0"
                 android:onClick="IncPanelLvl2"
-                android:text="+" />
+                android:text="+"
+                android:textSize="16pt" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -302,11 +309,12 @@
 
             <Button
                 android:id="@+id/IncrementButton4"
-                android:layout_width="75dp"
+                android:layout_width="80dp"
                 android:layout_height="70dp"
                 android:layout_weight="0"
                 android:onClick="IncCargoLvl2"
-                android:text="+" />
+                android:text="+"
+                android:textSize="16pt" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -367,11 +375,12 @@
 
             <Button
                 android:id="@+id/IncrementButton5"
-                android:layout_width="75dp"
+                android:layout_width="80dp"
                 android:layout_height="70dp"
                 android:layout_weight="0"
                 android:onClick="IncPanelLvl3"
-                android:text="+" />
+                android:text="+"
+                android:textSize="16pt" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -436,7 +445,8 @@
                 android:layout_height="70dp"
                 android:layout_weight="0"
                 android:onClick="IncCargoLvl3"
-                android:text="+" />
+                android:text="+"
+                android:textSize="16pt" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -463,7 +473,7 @@
                 android:onClick="HabitatLevel1"
                 android:text="Level 1"
                 android:textOff="Level 1"
-                android:textOn="Level 1" />
+                android:textOn="Sur Level 1" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -478,7 +488,7 @@
                 android:onClick="HabitatLevel2"
                 android:text="ToggleButton"
                 android:textOff="Level 2"
-                android:textOn="Level 2" />
+                android:textOn="Sur Level 2" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -493,13 +503,17 @@
                 android:onClick="HabitatLevel3"
                 android:text="ToggleButton"
                 android:textOff="Level 3"
-                android:textOn="Level 3 " />
+                android:textOn="Sur Level 3" />
 
             <Space
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
         </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -513,7 +527,7 @@
 
             <TextView
                 android:id="@+id/textView33"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Alliance's Points"
@@ -523,11 +537,11 @@
             <Space
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="0" />
 
             <EditText
                 android:id="@+id/editNumber1"
-                android:layout_width="30dp"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="#ffffff"
@@ -536,10 +550,14 @@
                 android:textColor="#ffffff" />
 
             <Space
-                android:layout_width="wrap_content"
+                android:layout_width="25dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="0" />
         </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -553,7 +571,7 @@
 
             <TextView
                 android:id="@+id/textView34"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Ennemy Allinace Points"
@@ -561,13 +579,13 @@
                 android:textSize="18sp" />
 
             <Space
-                android:layout_width="68dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0" />
 
             <EditText
                 android:id="@+id/editNumber2"
-                android:layout_width="30dp"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="#ffffff"
@@ -576,10 +594,14 @@
                 android:textColor="#ffffff" />
 
             <Space
-                android:layout_width="wrap_content"
+                android:layout_width="25dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="0" />
         </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -593,7 +615,7 @@
 
             <TextView
                 android:id="@+id/textView27"
-                android:layout_width="90dp"
+                android:layout_width="123dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:text="Defense"
@@ -665,7 +687,8 @@
                 android:layout_height="50dp"
                 android:layout_weight="0"
                 android:onClick="IncPins"
-                android:text="+" />
+                android:text="+"
+                android:textSize="11pt" />
 
             <Space
                 android:layout_width="50dp"
@@ -719,7 +742,8 @@
                 android:layout_height="50dp"
                 android:layout_weight="0"
                 android:onClick="IncBlocks"
-                android:text="+" />
+                android:text="+"
+                android:textSize="11pt" />
 
             <Space
                 android:layout_width="wrap_content"

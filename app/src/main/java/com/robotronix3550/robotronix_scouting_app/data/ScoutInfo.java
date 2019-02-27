@@ -175,7 +175,7 @@ public class ScoutInfo {
             case 7700: robotImageId = R.drawable.robot_7700;
                 break;
 
-                default: robotImageId = R.drawable.robotronixlogo;
+                default: robotImageId = R.drawable.dont_know;
             break;
         }
     }
