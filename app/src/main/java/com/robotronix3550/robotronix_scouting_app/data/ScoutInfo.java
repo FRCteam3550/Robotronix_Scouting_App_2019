@@ -74,7 +74,7 @@ public class ScoutInfo {
                 break;
             case 3532: robotImageId = R.drawable.robot_3532;
                 break;
-            case 3533: robotImageId = R.drawable.robot_3544;
+            case 3544: robotImageId = R.drawable.robot_3544;
                 break;
             case 3550: robotImageId = R.drawable.robot_3550;
                 break;
@@ -140,6 +140,8 @@ public class ScoutInfo {
                 break;
             case 6540: robotImageId = R.drawable.robot_6540;
                 break;
+            case 6541: robotImageId = R.drawable.robot_6541;
+                break;
             case 6622: robotImageId = R.drawable.robot_6622;
                 break;
             case 6851: robotImageId = R.drawable.robot_6851;
@@ -173,6 +175,8 @@ public class ScoutInfo {
             case 7615: robotImageId = R.drawable.robot_7615;
                 break;
             case 7700: robotImageId = R.drawable.robot_7700;
+                break;
+            case 7701: robotImageId = R.drawable.robot_7701;
                 break;
 
                 default: robotImageId = R.drawable.dont_know;

@@ -91,6 +91,7 @@ public class ScoutMatchActivity extends AppCompatActivity {
     private TextView TxtCntCargoLvl3;
     private TextView TxtCountBlocks;
     private TextView TxtCountPins;
+    private TextView TxtAlliance;
 
 
     private SharedPreferences mPrefs;
@@ -124,6 +125,7 @@ public class ScoutMatchActivity extends AppCompatActivity {
 
         AllyScoreEditText = findViewById(R.id.editNumber1);
         EnemyScoreEditText = findViewById(R.id.editNumber2);
+        TxtAlliance = findViewById(R.id.AllianceText);
 
         SandTele = SandTeleSwitch.isChecked();
         SandTeleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -393,6 +395,8 @@ public class ScoutMatchActivity extends AppCompatActivity {
 
         } else {
 
+            mSandHabLvl1 = 0;
+
             if(HabLvl1.isChecked())
                 mSandHabLvl1 = 1;
 
@@ -414,17 +418,24 @@ public class ScoutMatchActivity extends AppCompatActivity {
         boolean bTeleHabLvl1 = false;
         boolean bTeleHabLvl2 = false;
         boolean bTeleHabLvl3 = false;
+        String sAllianceText;
 
         switch (mSandHabLvl1) {
             case 1 : bSandHabLvl1 = true;
+            break;
             case 2 : bSandHabLvl2 = true;
+            break;
             case 3 : bSandHabLvl3 = true;
+            break;
         }
 
         switch (mTeleHabLvl1) {
             case 1 : bTeleHabLvl1 = true;
+            break;
             case 2 : bTeleHabLvl2 = true;
+            break;
             case 3 : bTeleHabLvl3 = true;
+            break;
         }
 
         if( mSoundFX ) {
@@ -456,6 +467,9 @@ public class ScoutMatchActivity extends AppCompatActivity {
             TxtCntCargoLvl3.setText(mTeleCargoLvl3.toString());
 
         }
+
+        sAllianceText = mRobot.toString() + " - Alliance's Points";
+        TxtAlliance.setText(sAllianceText);
 
     }
 
