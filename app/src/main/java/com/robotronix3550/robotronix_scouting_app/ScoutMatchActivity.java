@@ -682,7 +682,12 @@ public class ScoutMatchActivity extends AppCompatActivity {
     }
     public void IncPins(View view) {
         TextView TxtCountPins = (TextView) findViewById(R.id.TxtCountPins);
-        mTelePin++;
+        if( SandTele ) {
+            mTelePin++;
+        } else {
+            Toast.makeText(this, "Peux pas defense en Sandstorm",
+                    Toast.LENGTH_SHORT).show();
+        }
         TxtCountPins.setText(mTelePin.toString());
         if( mSoundFX ) {
             mMediaPlayer = MediaPlayer.create(this, R.raw.r2d2_again);
@@ -703,7 +708,13 @@ public class ScoutMatchActivity extends AppCompatActivity {
     }
     public void IncBlocks(View view) {
         TextView TxtCountBlocks = (TextView) findViewById(R.id.TxtCountBlock);
-        mTeleBlocks++;
+        if(SandTele) {
+            mTeleBlocks++;
+        }  else {
+            Toast.makeText(this, "Peux pas defense en Sandstorm",
+                Toast.LENGTH_SHORT).show();
+        }
+
         TxtCountBlocks.setText(mTeleBlocks.toString());
         if( mSoundFX ) {
             mMediaPlayer = MediaPlayer.create(this, R.raw.mechanical_arm);
