@@ -178,7 +178,7 @@ public class CreateSettingActivity extends AppCompatActivity {
             *  that potentially copy-paste the previous .csv file and not the latest updated one
             *
             * */
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-hh-mm");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-HH-mm");
             String format = simpleDateFormat.format(new Date());
 
             mFileName = "scout_" + mEvent + "_" + mTablet + "_" + format + ".csv";

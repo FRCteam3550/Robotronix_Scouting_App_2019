@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -126,6 +127,7 @@ public class ScoutPitActivity extends AppCompatActivity {
             mGroundPanelPickUp = false;
             mLoadingStationCargoPickUp = false;
             mLoadingStationPanelPickUp = false;
+            mDrivetrain = 0;
 
         } else {
 
@@ -148,30 +150,8 @@ public class ScoutPitActivity extends AppCompatActivity {
                 int groundcargoColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_PIT_GROUND_CARGO_PICKUP);
                 int lscargoColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_PIT_LS_CARGO_PICKUP);
                 int lspanelColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_PIT_LS_PANEL_PICKUP);
+                int imageColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_IMAGE_ID);
 
-                /*
-                int autoLineColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_AUTO_LINE);
-                int autoPickColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_AUTO_CUBE);
-                int autoScaleColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_AUTO_SCALE);
-                int autoSwitchColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_AUTO_SWITCH);
-
-                int endHelpColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_TELE_HELP_CLIMB);
-                int endClimbColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_TELE_CLIMB);
-                int teleExchColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_TELE_EXCHANGE);
-                int teleAllySwitchColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_TELE_ALLY_SWITCH);
-                int teleScaleColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_TELE_SCALE);
-                int telePortalColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_TELE_PORTAL);
-                int telePickColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_TELE_CUBE);
-                */
-
-                /*
-                int count = cursor.getCount();
-                int pos = cursor.getPosition();
-                boolean isAfterLast = cursor.isAfterLast();
-                boolean isBeforeFirst = cursor.isBeforeFirst();
-                boolean isFirst = cursor.isFirst();
-                boolean isLast = cursor.isLast();
-                */
                 cursor.moveToFirst();
                 boolean isFirst = cursor.isFirst();
 
@@ -185,6 +165,7 @@ public class ScoutPitActivity extends AppCompatActivity {
                 mIntGroundPanelPickUp = cursor.getInt(groundpanelColIdx);
                 mIntLoadingStationCargoPickUp = cursor.getInt(lscargoColIdx);
                 mIntLoadingStationPanelPickUp = cursor.getInt(lspanelColIdx);
+                mCurrentPhotoPath = cursor.getString(imageColIdx);
 
                 mGroundCargoPickUp = true;
                 if(mIntGroundCargoPickUp == 0) mGroundCargoPickUp = false;
@@ -202,6 +183,19 @@ public class ScoutPitActivity extends AppCompatActivity {
                 mRobotDrivetrainSpinner.setSelection(mDrivetrain);
                 mRobotWeightEditText.setText(mWeight.toString());
 
+                File imageFile = new  File(mCurrentPhotoPath);
+                if(imageFile.exists()){
+                    Log.d(TAG, "image found, setting image view ");
+
+                    mRobotPictureImageView.setImageBitmap(BitmapFactory.decodeFile(imageFile.getAbsolutePath()));
+                } else {
+
+                    Log.d(TAG, "image File doesn't exist ");
+
+                }
+
+                //Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), Uri.parse(mCurrentPhotoPath));
+                //mRobotPictureImageView.setImageBitmap(imageBitmap);
 
             }
             catch(Exception throwable){
@@ -229,10 +223,13 @@ public class ScoutPitActivity extends AppCompatActivity {
 
     private void setupSpinner() {
 
-        String[] DrivetrainTypes = new String[] { "", "Tank drive", "Mecanum", "Swirl", "Mixte", "Autres"};
+        String[] DrivetrainTypes = new String[] { "", "Tank drive", "Mecanum", "Swirv", "H drive", "Autres"};
 
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, DrivetrainTypes);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, DrivetrainTypes);
         mRobotDrivetrainSpinner.setAdapter(spinnerAdapter);
+
+
+        mRobotDrivetrainSpinner.setSelection(mDrivetrain);
 
     }
 
@@ -245,24 +242,26 @@ public class ScoutPitActivity extends AppCompatActivity {
         if(GroundCargoPickUpToggleButton.isChecked())
             mIntGroundCargoPickUp = 1;
         else
-            mIntGroundCargoPickUp = 1;
+            mIntGroundCargoPickUp = 0;
 
         if(GroundPanelPickUpToggleButton.isChecked())
             mIntGroundPanelPickUp = 1;
         else
-            mIntGroundPanelPickUp = 1;
+            mIntGroundPanelPickUp = 0;
 
         if(LoadingStationCargoPickUpToggleButton.isChecked())
             mIntLoadingStationCargoPickUp = 1;
         else
-            mIntLoadingStationCargoPickUp = 1;
+            mIntLoadingStationCargoPickUp = 0;
 
         if(LoadingStationPanelPickUpToggleButton.isChecked())
             mIntLoadingStationPanelPickUp = 1;
         else
-            mIntLoadingStationPanelPickUp = 1;
+            mIntLoadingStationPanelPickUp = 0;
 
         mScoutName = mScoutNameEditText.getText().toString().trim();
+
+        if(mCurrentPhotoPath == null) mCurrentPhotoPath = "";
 
         String robotString = mRobotEditText.getText().toString().trim();
         Integer robot;
@@ -306,6 +305,7 @@ public class ScoutPitActivity extends AppCompatActivity {
 
             values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_ROBOT_DRIVETRAIN, drivetrain);
             values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_ROBOT_WEIGHT, weight);
+            values.put(ScoutContract.ScoutEntry.COLUMN_SCOUT_IMAGE_ID, mFileName);
 
 
 
@@ -425,6 +425,7 @@ public class ScoutPitActivity extends AppCompatActivity {
 
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+        mFileName = image.getAbsolutePath();
         return image;
     }
 

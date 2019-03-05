@@ -307,9 +307,11 @@
 
             <Spinner
                 android:id="@+id/drivetainTypeSpinner"
-                android:layout_width="50dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -374,7 +376,7 @@
                 android:id="@+id/RobotPhoto"
                 android:layout_width="300dp"
                 android:layout_height="match_parent"
-                app:srcCompat="@drawable/robot_3550" />
+                app:srcCompat="@drawable/dont_know" />
 
             <Space
                 android:layout_width="50dp"
