@@ -526,13 +526,13 @@
                 android:layout_weight="0" />
 
             <TextView
-                android:id="@+id/textView33"
+                android:id="@+id/AllianceText"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Alliance's Points"
                 android:textColor="#ffffff"
-                android:textSize="18sp" />
+                android:textSize="24sp" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -574,9 +574,9 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Ennemy Allinace Points"
+                android:text="Ennemy Alliance Points"
                 android:textColor="#ffffff"
-                android:textSize="18sp" />
+                android:textSize="24sp" />
 
             <Space
                 android:layout_width="wrap_content"

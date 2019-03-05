@@ -91,6 +91,7 @@ public class ScoutMatchActivity extends AppCompatActivity {
     private TextView TxtCntCargoLvl3;
     private TextView TxtCountBlocks;
     private TextView TxtCountPins;
+    private TextView TxtAlliance;
 
 
     private SharedPreferences mPrefs;
@@ -124,6 +125,7 @@ public class ScoutMatchActivity extends AppCompatActivity {
 
         AllyScoreEditText = findViewById(R.id.editNumber1);
         EnemyScoreEditText = findViewById(R.id.editNumber2);
+        TxtAlliance = findViewById(R.id.AllianceText);
 
         SandTele = SandTeleSwitch.isChecked();
         SandTeleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -393,6 +395,8 @@ public class ScoutMatchActivity extends AppCompatActivity {
 
         } else {
 
+            mSandHabLvl1 = 0;
+
             if(HabLvl1.isChecked())
                 mSandHabLvl1 = 1;
 
@@ -414,17 +418,24 @@ public class ScoutMatchActivity extends AppCompatActivity {
         boolean bTeleHabLvl1 = false;
         boolean bTeleHabLvl2 = false;
         boolean bTeleHabLvl3 = false;
+        String sAllianceText;
 
         switch (mSandHabLvl1) {
             case 1 : bSandHabLvl1 = true;
+            break;
             case 2 : bSandHabLvl2 = true;
+            break;
             case 3 : bSandHabLvl3 = true;
+            break;
         }
 
         switch (mTeleHabLvl1) {
             case 1 : bTeleHabLvl1 = true;
+            break;
             case 2 : bTeleHabLvl2 = true;
+            break;
             case 3 : bTeleHabLvl3 = true;
+            break;
         }
 
         if( mSoundFX ) {
@@ -456,6 +467,9 @@ public class ScoutMatchActivity extends AppCompatActivity {
             TxtCntCargoLvl3.setText(mTeleCargoLvl3.toString());
 
         }
+
+        sAllianceText = mRobot.toString() + " - Alliance's Points";
+        TxtAlliance.setText(sAllianceText);
 
     }
 
@@ -668,7 +682,12 @@ public class ScoutMatchActivity extends AppCompatActivity {
     }
     public void IncPins(View view) {
         TextView TxtCountPins = (TextView) findViewById(R.id.TxtCountPins);
-        mTelePin++;
+        if( SandTele ) {
+            mTelePin++;
+        } else {
+            Toast.makeText(this, "Peux pas defense en Sandstorm",
+                    Toast.LENGTH_SHORT).show();
+        }
         TxtCountPins.setText(mTelePin.toString());
         if( mSoundFX ) {
             mMediaPlayer = MediaPlayer.create(this, R.raw.r2d2_again);
@@ -689,7 +708,13 @@ public class ScoutMatchActivity extends AppCompatActivity {
     }
     public void IncBlocks(View view) {
         TextView TxtCountBlocks = (TextView) findViewById(R.id.TxtCountBlock);
-        mTeleBlocks++;
+        if(SandTele) {
+            mTeleBlocks++;
+        }  else {
+            Toast.makeText(this, "Peux pas defense en Sandstorm",
+                Toast.LENGTH_SHORT).show();
+        }
+
         TxtCountBlocks.setText(mTeleBlocks.toString());
         if( mSoundFX ) {
             mMediaPlayer = MediaPlayer.create(this, R.raw.mechanical_arm);
