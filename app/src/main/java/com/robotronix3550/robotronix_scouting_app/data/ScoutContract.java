@@ -148,6 +148,8 @@ public final class ScoutContract {
         public final static String COLUMN_SCOUT_SAND_HAB_LVL2   = "SandHabLvl2";
         public final static String COLUMN_SCOUT_SAND_HAB_LVL3   = "SandHabLvl3";
 
+        public final static String COLUMN_SCOUT_CLIMBTIME  = "ClimbTime";
+
         //public final static String COLUMN_SCOUT_PIT_ROBOT_WEIGHT    = "RobotWeight";
         //public final static String COLUMN_SCOUT_PIT_ROBOT_DRIVETRAIN    = "RobotDrivetrain";
         public final static String COLUMN_SCOUT_PIT_GROUND_CARGO_PICKUP     = "RobotGroundCargoPickUp";

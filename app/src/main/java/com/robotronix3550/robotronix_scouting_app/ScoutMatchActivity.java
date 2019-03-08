@@ -65,6 +65,8 @@ public class ScoutMatchActivity extends AppCompatActivity {
     //Integer mSandHabLvl2;
     //Integer mSandHabLvl3;
 
+    Integer mClimbTime;
+
     Integer mTeleBlocks;
     Integer mTelePin;
 
@@ -89,6 +91,7 @@ public class ScoutMatchActivity extends AppCompatActivity {
     private TextView TxtCntCargoLvl1;
     private TextView TxtCntCargoLvl2;
     private TextView TxtCntCargoLvl3;
+    private TextView TxtCntClimbTime;
     private TextView TxtCountBlocks;
     private TextView TxtCountPins;
     private TextView TxtAlliance;
@@ -120,6 +123,7 @@ public class ScoutMatchActivity extends AppCompatActivity {
         TxtCntCargoLvl1 = findViewById(R.id.TxtCntCargoLvl1);
         TxtCntCargoLvl2 = findViewById(R.id.TxtCntCargoLvl2);
         TxtCntCargoLvl3 = findViewById(R.id.TxtCntCargoLvl3);
+        TxtCntClimbTime = findViewById(R.id.ClimbTimeTxtView);
         TxtCountPins = findViewById(R.id.TxtCountPins);
         TxtCountBlocks = findViewById(R.id.TxtCountBlock);
 
@@ -187,6 +191,7 @@ public class ScoutMatchActivity extends AppCompatActivity {
             mTelePanelLvl1 = 0;
             mTelePanelLvl2 = 0;
             mTelePanelLvl3 = 0;
+            mClimbTime = 0;
             mTeleBlocks = 0;
             mTelePin = 0;
 
@@ -230,6 +235,7 @@ public class ScoutMatchActivity extends AppCompatActivity {
             mTelePanelLvl1 = 0;
             mTelePanelLvl2 = 0;
             mTelePanelLvl3 = 0;
+            mClimbTime = 0;
             mTeleBlocks = 0;
             mTelePin = 0;
 
@@ -278,6 +284,8 @@ public class ScoutMatchActivity extends AppCompatActivity {
                 int TelePanelLvl1Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_TELE_PANEL_LVL1);
                 int TelePanelLvl2Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_TELE_PANEL_LVL2);
                 int TelePanelLvl3Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_TELE_PANEL_LVL3);
+
+                int ClimbTimeIdx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_CLIMBTIME);
 
                 int SandHabLvl1Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_SAND_HAB_LVL1);
                 int SandHabLvl2Idx = cursor.getColumnIndex(ScoutEntry.COLUMN_SCOUT_SAND_HAB_LVL2);
@@ -346,6 +354,8 @@ public class ScoutMatchActivity extends AppCompatActivity {
                 //mTeleHabLvl2 = cursor.getInt(TeleHabLvl2Idx);
                 //mTeleHabLvl3 = cursor.getInt(TeleHabLvl3Idx);
                 //Log.d(TAG, "mTeleHabLvl2 : " + mTeleHabLvl2);
+
+                mClimbTime = cursor.getInt(ClimbTimeIdx);
 
                 mTeleBlocks = cursor.getInt(TeleBlocksIdx);
                 mTelePin = cursor.getInt(TelePinsIdx);
@@ -732,6 +742,39 @@ public class ScoutMatchActivity extends AppCompatActivity {
             mMediaPlayer = MediaPlayer.create(this, R.raw.lightsaber_turn_on);
             mMediaPlayer.start();
         }
+    }
+    public void IncrementClimbTime(View view) {
+        TextView ClimbTimeTxtView = (TextView) findViewById(R.id.ClimbTimeTxtView);
+        if( SandTele ) {
+            mClimbTime++;
+            ClimbTimeTxtView.setText(mClimbTime.toString());
+        } else {
+            mClimbTime++;
+            TxtCntClimbTime.setText(mClimbTime.toString());
+        }
+        if( mSoundFX ) {
+            mMediaPlayer = MediaPlayer.create(this, R.raw.pew_sound);
+            mMediaPlayer.start();
+        }
+    }
+    public void ClimbTimeDecrement(View view) {
+        TextView ClimbTimeTxtView = (TextView) findViewById(R.id.ClimbTimeTxtView);
+        if( SandTele ) {
+            if(mClimbTime > 0) {
+                mClimbTime--;
+            }
+            TxtCntClimbTime.setText(mClimbTime.toString());
+        } else {
+            if(mClimbTime> 0) {
+                mClimbTime--;
+            }
+            ClimbTimeTxtView.setText(mClimbTime.toString());
+        }
+        if( mSoundFX ) {
+            mMediaPlayer = MediaPlayer.create(this, R.raw.lightsaber_turn_off);
+            mMediaPlayer.start();
+        }
+
     }
 
     public void HabitatLevel1(View view) {
