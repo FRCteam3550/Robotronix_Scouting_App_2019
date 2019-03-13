@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -65,10 +66,13 @@ public class ScoutMatchActivity extends AppCompatActivity {
     //Integer mSandHabLvl2;
     //Integer mSandHabLvl3;
 
-    Integer mClimbTime;
+    Double mClimbTime;
 
     Integer mTeleBlocks;
     Integer mTelePin;
+
+    long lastDown;
+    long lastDuration;
 
 
     Integer alliance_score;
@@ -116,6 +120,36 @@ public class ScoutMatchActivity extends AppCompatActivity {
         HabLvl1 = findViewById(R.id.lvl1Button);
         HabLvl2 = findViewById(R.id.lvl2Button);
         HabLvl3 = findViewById(R.id.lvl3Button);
+
+        HabLvl3.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                    lastDown = System.currentTimeMillis();
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    lastDuration = System.currentTimeMillis() - lastDown;
+                    mClimbTime = (double)lastDuration/1000;
+                    TxtCntClimbTime.setText(mClimbTime.toString());
+                }
+
+                return true;
+            }
+        });
+
+        HabLvl2.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                    lastDown = System.currentTimeMillis();
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    lastDuration = System.currentTimeMillis() - lastDown;
+                    mClimbTime = (double)lastDuration/1000;
+                    TxtCntClimbTime.setText(mClimbTime.toString());
+                }
+
+                return true;
+            }
+        });
 
         TxtCntPanelLvl1 = findViewById(R.id.TxtCntPanelLvl1);
         TxtCntPanelLvl2 = findViewById(R.id.TxtCntPanelLvl2);
@@ -191,7 +225,7 @@ public class ScoutMatchActivity extends AppCompatActivity {
             mTelePanelLvl1 = 0;
             mTelePanelLvl2 = 0;
             mTelePanelLvl3 = 0;
-            mClimbTime = 0;
+            mClimbTime = 0.00;
             mTeleBlocks = 0;
             mTelePin = 0;
 
@@ -235,7 +269,7 @@ public class ScoutMatchActivity extends AppCompatActivity {
             mTelePanelLvl1 = 0;
             mTelePanelLvl2 = 0;
             mTelePanelLvl3 = 0;
-            mClimbTime = 0;
+            mClimbTime = 0.00;
             mTeleBlocks = 0;
             mTelePin = 0;
 
@@ -355,7 +389,7 @@ public class ScoutMatchActivity extends AppCompatActivity {
                 //mTeleHabLvl3 = cursor.getInt(TeleHabLvl3Idx);
                 //Log.d(TAG, "mTeleHabLvl2 : " + mTeleHabLvl2);
 
-                mClimbTime = cursor.getInt(ClimbTimeIdx);
+                mClimbTime = cursor.getDouble(ClimbTimeIdx);
 
                 mTeleBlocks = cursor.getInt(TeleBlocksIdx);
                 mTelePin = cursor.getInt(TelePinsIdx);
@@ -742,39 +776,6 @@ public class ScoutMatchActivity extends AppCompatActivity {
             mMediaPlayer = MediaPlayer.create(this, R.raw.lightsaber_turn_on);
             mMediaPlayer.start();
         }
-    }
-    public void IncrementClimbTime(View view) {
-        TextView ClimbTimeTxtView = (TextView) findViewById(R.id.ClimbTimeTxtView);
-        if( SandTele ) {
-            mClimbTime++;
-            ClimbTimeTxtView.setText(mClimbTime.toString());
-        } else {
-            mClimbTime++;
-            TxtCntClimbTime.setText(mClimbTime.toString());
-        }
-        if( mSoundFX ) {
-            mMediaPlayer = MediaPlayer.create(this, R.raw.pew_sound);
-            mMediaPlayer.start();
-        }
-    }
-    public void ClimbTimeDecrement(View view) {
-        TextView ClimbTimeTxtView = (TextView) findViewById(R.id.ClimbTimeTxtView);
-        if( SandTele ) {
-            if(mClimbTime > 0) {
-                mClimbTime--;
-            }
-            TxtCntClimbTime.setText(mClimbTime.toString());
-        } else {
-            if(mClimbTime> 0) {
-                mClimbTime--;
-            }
-            ClimbTimeTxtView.setText(mClimbTime.toString());
-        }
-        if( mSoundFX ) {
-            mMediaPlayer = MediaPlayer.create(this, R.raw.lightsaber_turn_off);
-            mMediaPlayer.start();
-        }
-
     }
 
     public void HabitatLevel1(View view) {
