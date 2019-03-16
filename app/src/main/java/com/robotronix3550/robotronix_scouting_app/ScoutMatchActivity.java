@@ -121,6 +121,15 @@ public class ScoutMatchActivity extends AppCompatActivity {
         HabLvl2 = findViewById(R.id.lvl2Button);
         HabLvl3 = findViewById(R.id.lvl3Button);
 
+        HabLvl3.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                //System.out.println(" clicked ");
+                HabitatLevel3(v);
+            }
+        });
+
         HabLvl3.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -130,9 +139,19 @@ public class ScoutMatchActivity extends AppCompatActivity {
                     lastDuration = System.currentTimeMillis() - lastDown;
                     mClimbTime = (double)lastDuration/1000;
                     TxtCntClimbTime.setText(mClimbTime.toString());
+                    //HabitatLevel3(v);
                 }
 
-                return true;
+                return false;
+            }
+        });
+
+        HabLvl2.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                //System.out.println(" clicked ");
+                HabitatLevel2(v);
             }
         });
 
@@ -141,13 +160,15 @@ public class ScoutMatchActivity extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction() == MotionEvent.ACTION_DOWN) {
                     lastDown = System.currentTimeMillis();
+                    return false;
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     lastDuration = System.currentTimeMillis() - lastDown;
                     mClimbTime = (double)lastDuration/1000;
                     TxtCntClimbTime.setText(mClimbTime.toString());
+                    HabitatLevel2(v);
                 }
 
-                return true;
+                return false;
             }
         });
 
@@ -789,6 +810,9 @@ public class ScoutMatchActivity extends AppCompatActivity {
             if( HabLvl3.isChecked()) {
                 HabLvl3.setChecked( false );
             }
+            mClimbTime = 0.00;
+            TxtCntClimbTime.setText(mClimbTime.toString());
+
         }
 
     }
