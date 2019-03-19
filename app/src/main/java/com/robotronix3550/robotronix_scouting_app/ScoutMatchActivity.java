@@ -99,6 +99,7 @@ public class ScoutMatchActivity extends AppCompatActivity {
     private TextView TxtCountBlocks;
     private TextView TxtCountPins;
     private TextView TxtAlliance;
+    private TextView ScouterNameText;
 
 
     private SharedPreferences mPrefs;
@@ -185,6 +186,7 @@ public class ScoutMatchActivity extends AppCompatActivity {
         AllyScoreEditText = findViewById(R.id.editNumber1);
         EnemyScoreEditText = findViewById(R.id.editNumber2);
         TxtAlliance = findViewById(R.id.AllianceText);
+        ScouterNameText = findViewById(R.id.scouterName);
 
         SandTele = SandTeleSwitch.isChecked();
         SandTeleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -535,6 +537,10 @@ public class ScoutMatchActivity extends AppCompatActivity {
 
         sAllianceText = mRobot.toString() + " - Alliance's Points";
         TxtAlliance.setText(sAllianceText);
+
+        TxtCntClimbTime.setText(mClimbTime.toString());
+        ScouterNameText.setText(mScouter);
+
 
     }
 
@@ -934,6 +940,7 @@ public class ScoutMatchActivity extends AppCompatActivity {
         values.put(ScoutEntry.COLUMN_SCOUT_SAND_HAB_LVL1,mSandHabLvl1);
         //values.put(ScoutEntry.COLUMN_SCOUT_SAND_HAB_LVL2,mSandHabLvl2);
         //values.put(ScoutEntry.COLUMN_SCOUT_SAND_HAB_LVL3,mSandHabLvl3);
+        values.put(ScoutEntry.COLUMN_SCOUT_CLIMBTIME, mClimbTime);
 
         values.put(ScoutEntry.COLUMN_SCOUT_GAME_ALLY_SCORE, alliance_score);
         values.put(ScoutEntry.COLUMN_SCOUT_GAME_ENEMY_SCORE, enemy_score);

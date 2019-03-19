@@ -39,7 +39,7 @@ public class ScoutDBHelper extends SQLiteOpenHelper {
         // Create a String that contains the SQL statement to create the Scouts table
         String SQL_CREATE_SCOUTS_TABLE =  "CREATE TABLE " + ScoutEntry.TABLE_NAME + " ("
                 + ScoutEntry.SCOUT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + ScoutEntry.COLUMN_SCOUT_MATCH + "INTEGER NOT NULL DEFAULT 0, "
+                + ScoutEntry.COLUMN_SCOUT_MATCH + " INTEGER NOT NULL DEFAULT 0, "
                 + ScoutEntry.COLUMN_SCOUT_ROBOT + " INTEGER NOT NULL DEFAULT 0, "
                 + ScoutEntry.COLUMN_SCOUT_SCOUTER + " TEXT, "
                 + ScoutEntry.COLUMN_SCOUT_SCHEDULE_MATCH + " INTEGER NOT NULL DEFAULT 0, "
@@ -71,7 +71,7 @@ public class ScoutDBHelper extends SQLiteOpenHelper {
                 + ScoutEntry.COLUMN_SCOUT_SAND_PANEL_LVL2 + " INTEGER NOT NULL DEFAULT 0, "
                 + ScoutEntry.COLUMN_SCOUT_SAND_CARGO_LVL3 + " INTEGER NOT NULL DEFAULT 0, "
                 + ScoutEntry.COLUMN_SCOUT_SAND_PANEL_LVL3 + " INTEGER NOT NULL DEFAULT 0, "
-                + ScoutEntry.COLUMN_SCOUT_CLIMBTIME + "INTEGER NOT NULL DEFAULT 0, "
+                + ScoutEntry.COLUMN_SCOUT_CLIMBTIME + " REAL NOT NULL DEFAULT 0, "
                 + ScoutEntry.COLUMN_SCOUT_IMAGE_ID + " TEXT ) ;";
 
                 // Execute the SQL statement

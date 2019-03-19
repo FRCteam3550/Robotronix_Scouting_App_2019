@@ -68,7 +68,7 @@ public class CreateSettingActivity extends AppCompatActivity {
 
         mPrefs = getPreferences(MODE_PRIVATE);
         mTablet = mPrefs.getString("PREF_TABLET", "tab1");
-        mEvent = mPrefs.getString("PREF_EVENT", "mtl");
+        mEvent = mPrefs.getString("PREF_EVENT", "qc");
 
         mAppsPrefs = getSharedPreferences(PREFS_SCOUTER, MODE_PRIVATE);
         mSoundEffects = mAppsPrefs.getBoolean("PREF_SOUND_FX", false);

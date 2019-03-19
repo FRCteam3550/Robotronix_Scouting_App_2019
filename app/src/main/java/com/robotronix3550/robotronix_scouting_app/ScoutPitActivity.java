@@ -165,7 +165,11 @@ public class ScoutPitActivity extends AppCompatActivity {
                 mIntGroundPanelPickUp = cursor.getInt(groundpanelColIdx);
                 mIntLoadingStationCargoPickUp = cursor.getInt(lscargoColIdx);
                 mIntLoadingStationPanelPickUp = cursor.getInt(lspanelColIdx);
-                mCurrentPhotoPath = cursor.getString(imageColIdx);
+                if(cursor.isNull(imageColIdx)) {
+                    mCurrentPhotoPath = null;
+                } else {
+                    mCurrentPhotoPath = cursor.getString(imageColIdx);
+                }
 
                 mGroundCargoPickUp = true;
                 if(mIntGroundCargoPickUp == 0) mGroundCargoPickUp = false;
@@ -183,14 +187,19 @@ public class ScoutPitActivity extends AppCompatActivity {
                 mRobotDrivetrainSpinner.setSelection(mDrivetrain);
                 mRobotWeightEditText.setText(mWeight.toString());
 
-                File imageFile = new  File(mCurrentPhotoPath);
-                if(imageFile.exists()){
-                    Log.d(TAG, "image found, setting image view ");
+                if( mCurrentPhotoPath != null ) {
+                    File imageFile = new File(mCurrentPhotoPath);
+                    if (imageFile.exists()) {
+                        Log.d(TAG, "image found, setting image view ");
 
-                    mRobotPictureImageView.setImageBitmap(BitmapFactory.decodeFile(imageFile.getAbsolutePath()));
+                        mRobotPictureImageView.setImageBitmap(BitmapFactory.decodeFile(imageFile.getAbsolutePath()));
+                    } else {
+
+                        Log.d(TAG, "image File doesn't exist ");
+
+                    }
                 } else {
-
-                    Log.d(TAG, "image File doesn't exist ");
+                    Log.d(TAG, "no image File");
 
                 }
 
@@ -403,7 +412,7 @@ public class ScoutPitActivity extends AppCompatActivity {
         }
     }
 
-    String mCurrentPhotoPath;
+    String mCurrentPhotoPath = "";
 
     private File createImageFile() throws IOException {
         // Create an image file name

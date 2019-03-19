@@ -42,6 +42,8 @@ public class CreateMatchActivity extends AppCompatActivity {
     private ImageView mRobotImage;
 
     String mScouter;
+    String mOrigScouter;
+
     Integer mMatch;
     Integer mRobot;
     Integer mScheduledMatch;
@@ -102,7 +104,7 @@ public class CreateMatchActivity extends AppCompatActivity {
 
             int matchColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_MATCH);
             int robotColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_ROBOT);
-            //int scouterColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_SCOUTER);
+            int scouterColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_SCOUTER);
             int scheduleColIdx = cursor.getColumnIndex(ScoutContract.ScoutEntry.COLUMN_SCOUT_SCHEDULE_MATCH);
 
             cursor.moveToFirst();
@@ -111,6 +113,11 @@ public class CreateMatchActivity extends AppCompatActivity {
             mMatch = cursor.getInt(matchColIdx);
             mRobot = cursor.getInt(robotColIdx);
             mScheduledMatch = cursor.getInt(scheduleColIdx);
+
+            mOrigScouter = cursor.getString(scouterColIdx);
+            if(mOrigScouter != null) {
+                mScouter = mOrigScouter;
+            }
 
             if ( mScheduledMatch == 1) bSchedule = true;
 
@@ -216,6 +223,10 @@ public class CreateMatchActivity extends AppCompatActivity {
 
             mMatch = Integer.parseInt(matchString);
             mRobot = Integer.parseInt(robotString);
+
+            if(mOrigScouter != null) {
+                mScouter = mOrigScouter;
+            }
 
             SharedPreferences.Editor ed = mPrefs.edit();
             ed.putString("PREF_SCOUTER", mScouter);
