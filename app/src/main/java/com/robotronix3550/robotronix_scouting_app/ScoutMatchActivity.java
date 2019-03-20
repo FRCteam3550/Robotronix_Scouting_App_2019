@@ -945,6 +945,10 @@ public class ScoutMatchActivity extends AppCompatActivity {
         values.put(ScoutEntry.COLUMN_SCOUT_GAME_ALLY_SCORE, alliance_score);
         values.put(ScoutEntry.COLUMN_SCOUT_GAME_ENEMY_SCORE, enemy_score);
 
+        values.put(ScoutEntry.COLUMN_SCOUT_MATCH_VICTORY,alliance_score>enemy_score);
+        values.put(ScoutEntry.COLUMN_SCOUT_MATCH_DEFEAT,alliance_score<enemy_score);
+        values.put(ScoutEntry.COLUMN_SCOUT_MATCH_TIE,alliance_score=enemy_score);
+
         Uri newUri = null;
 
         if( mCurrentScoutUri == null) {
