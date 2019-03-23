@@ -71,6 +71,8 @@ public class ScoutMatchActivity extends AppCompatActivity {
     Integer mTeleBlocks;
     Integer mTelePin;
 
+    Integer TieInt;
+
     long lastDown;
     long lastDuration;
 
@@ -264,8 +266,7 @@ public class ScoutMatchActivity extends AppCompatActivity {
             alliance_score = 0;
             enemy_score = 0;
 
-            alliance_score = 0;
-            enemy_score = 0;
+            TieInt = 0;
 
         } else if( mCurrentScoutUri == null) {
 
@@ -879,6 +880,9 @@ public class ScoutMatchActivity extends AppCompatActivity {
     }
 
     public void saveMatch(View view) {
+        if (alliance_score == enemy_score) {
+            TieInt=1;
+        }
         // Read from input fields
         // Use trim to eliminate leading or trailing white space
 
@@ -947,7 +951,7 @@ public class ScoutMatchActivity extends AppCompatActivity {
 
         values.put(ScoutEntry.COLUMN_SCOUT_MATCH_VICTORY,alliance_score>enemy_score);
         values.put(ScoutEntry.COLUMN_SCOUT_MATCH_DEFEAT,alliance_score<enemy_score);
-        values.put(ScoutEntry.COLUMN_SCOUT_MATCH_TIE,alliance_score=enemy_score);
+        values.put(ScoutEntry.COLUMN_SCOUT_MATCH_TIE,TieInt);
 
         Uri newUri = null;
 
