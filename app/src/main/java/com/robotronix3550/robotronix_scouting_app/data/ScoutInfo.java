@@ -164,6 +164,8 @@ public class ScoutInfo {
                 break;
             case 7162: robotImageId = R.drawable.robot_7162;
                 break;
+            case 7251: robotImageId = R.drawable.robot_7251;
+                break;
             case 7471: robotImageId = R.drawable.robot_7471;
                 break;
             case 7555: robotImageId = R.drawable.robot_7555;
