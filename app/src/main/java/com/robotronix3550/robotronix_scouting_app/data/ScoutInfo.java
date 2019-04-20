@@ -208,7 +208,7 @@ public class ScoutInfo {
                 break;
             case 1091: robotImageId = R.drawable.robot_1091;
                 break;
-            case 1418: robotImageId = R.drawable.dont_know; // robot_1418;
+            case 1418: robotImageId = R.drawable.robot_1418;
                 break;
             case 1506: robotImageId = R.drawable.robot_1506;
                 break;
@@ -220,7 +220,7 @@ public class ScoutInfo {
                 break;
             case 1787: robotImageId = R.drawable.robot_1787;
                 break;
-            case 1885: robotImageId = R.drawable.dont_know; //robot_1885;
+            case 1885: robotImageId = R.drawable.robot_1885;
                 break;
             case 1922: robotImageId = R.drawable.robot_1922;
                 break;
@@ -236,7 +236,7 @@ public class ScoutInfo {
                 break;
             case 2614: robotImageId = R.drawable.dont_know;
                 break;
-            case 2619: robotImageId = R.drawable.dont_know; //robot_2619;
+            case 2619: robotImageId = R.drawable.robot_2619;
                 break;
             case 2638: robotImageId = R.drawable.robot_2638;
                 break;
@@ -260,7 +260,7 @@ public class ScoutInfo {
                 break;
             case 3630: robotImageId = R.drawable.dont_know;
                 break;
-            case 3641: robotImageId = R.drawable.dont_know; //robot_3641;
+            case 3641: robotImageId = R.drawable.robot_3641;
                 break;
             case 4003: robotImageId = R.drawable.robot_4003;
                 break;
@@ -282,7 +282,7 @@ public class ScoutInfo {
                 break;
             case 4903: robotImageId = R.drawable.dont_know;
                 break;
-            case 4946: robotImageId = R.drawable.dont_know; // robot_4946;
+            case 4946: robotImageId = R.drawable.robot_4946;
                 break;
             case 4980: robotImageId = R.drawable.dont_know;
                 break;
