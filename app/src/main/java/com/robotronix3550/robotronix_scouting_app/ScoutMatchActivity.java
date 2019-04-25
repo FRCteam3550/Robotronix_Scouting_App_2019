@@ -880,6 +880,7 @@ public class ScoutMatchActivity extends AppCompatActivity {
     }
 
     public void saveMatch(View view) {
+        TieInt = 0;
         if (alliance_score == enemy_score) {
             TieInt=1;
         }
